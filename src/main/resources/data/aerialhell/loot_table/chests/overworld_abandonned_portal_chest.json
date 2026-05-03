@@ -3,7 +3,7 @@
     {
       "rolls": 1,
       "entries": [
-	{
+        {
           "type": "item",
           "name": "aerialhell:stellar_lighter",
           "weight": 1
@@ -11,9 +11,19 @@
       ]
     },
     {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "aerialhell:aerial_hell_book",
+          "weight": 1
+        }
+      ]
+    },
+    {
       "rolls": 2,
       "entries": [
-	{
+        {
           "type": "item",
           "name": "minecraft:iron_ingot",
           "weight": 1,
@@ -27,7 +37,7 @@
             }
           ]
         },
-	{
+        {
           "type": "item",
           "name": "minecraft:gold_ingot",
           "weight": 1,
