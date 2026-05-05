@@ -1178,5 +1178,13 @@
   "item.aerialhell.block_cracker.desc" : "Le Block Cracker de nicochart (clic droit)",
   "item.aerialhell.structure_void_placer" : "Placeur de Structure Void",
   "item.aerialhell.structure_void_placer.desc" : "Placeur de Structure Void de nicochart",
-  "item.aerialhell.structure_void_placer.radius" : "Rayon : "
+  "item.aerialhell.structure_void_placer.radius" : "Rayon : ",
+
+  "_comment.book": "===LIVRE DE GUIDE===",
+  "book.aerialhell.welcome.title": "✦ Bienvenue ✦",
+  "book.aerialhell.locked": "Accès verrouillé",
+  "book.aerialhell.content.tab_0": "La page 1 est rajoutée.",
+  "item.aerialhell.torn_page_mobs": "Page Arrachée - Mobs",
+  "item.aerialhell.torn_page_mobs.tooltip.tab_0": "Page des Mobs"
+
 }

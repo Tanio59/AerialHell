@@ -72,6 +72,8 @@ public class AerialHellItems
 
     //book
     public static final DeferredItem<Item> AERIAL_HELL_BOOK = ITEMS.register("aerial_hell_book", () -> new AerialHellBookItem(new Item.Properties().setId(Keys.AERIAL_HELL_BOOK)));
+    public static final DeferredItem<Item> TORN_PAGE_MOBS = ITEMS.register("torn_page_mobs", () -> new TornPageItem("tab_0", new Item.Properties().setId(Keys.TORN_PAGE_MOBS)));
+    public static final DeferredItem<Item> TORN_PAGE_BOSS = ITEMS.register("torn_page_boss", () -> new TornPageItem("tab_1", new Item.Properties().setId(Keys.TORN_PAGE_BOSS)));
     //portal
     public static final DeferredItem<Item> STELLAR_PORTAL_FRAME_BLOCK = ITEMS.register(Keys.STELLAR_PORTAL_FRAME_BLOCK.identifier().getPath(), () -> new BlockItem(AerialHellBlocks.STELLAR_PORTAL_FRAME_BLOCK.get(), new Item.Properties().setId(Keys.STELLAR_PORTAL_FRAME_BLOCK).useBlockDescriptionPrefix()));
     public static final DeferredItem<Item> STELLAR_PORTAL_FRAME_ORE = ITEMS.register(Keys.STELLAR_PORTAL_FRAME_ORE.identifier().getPath(), () -> new BlockItem(AerialHellBlocks.STELLAR_PORTAL_FRAME_ORE.get(), new Item.Properties().setId(Keys.STELLAR_PORTAL_FRAME_ORE).useBlockDescriptionPrefix()));
@@ -1048,6 +1050,8 @@ public class AerialHellItems
     {
         //book
         public static final ResourceKey<Item> AERIAL_HELL_BOOK = createKey("aerial_hell_book");
+        public static final ResourceKey<Item> TORN_PAGE_MOBS = createKey("torn_page_mobs");
+        public static final ResourceKey<Item> TORN_PAGE_BOSS = createKey("torn_page_boss");
         //portal
         public static final ResourceKey<Item> STELLAR_PORTAL_FRAME_BLOCK = createKey("stellar_portal_frame_block");
         public static final ResourceKey<Item> STELLAR_PORTAL_FRAME_ORE = createKey("stellar_portal_frame_ore");

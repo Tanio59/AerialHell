@@ -9,6 +9,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -24,7 +25,6 @@ public class AerialHellBookItem extends Item
     {
         if (!level.isClientSide() && player instanceof ServerPlayer sp)
         {
-            // Vérifie si le joueur a déjà l'advancement et informe le client
             var advHolder = sp.level().getServer().getAdvancements().get(
                     Identifier.fromNamespaceAndPath("aerialhell", "story/enter_aerial_hell"));
             boolean hasAdv = advHolder != null &&
@@ -35,7 +35,8 @@ public class AerialHellBookItem extends Item
 
         if (level.isClientSide())
         {
-            Minecraft.getInstance().setScreen(new AerialHellBookScreen());
+            ItemStack stack = player.getItemInHand(hand);
+            Minecraft.getInstance().setScreen(new AerialHellBookScreen(stack));
         }
         return InteractionResult.SUCCESS;
     }

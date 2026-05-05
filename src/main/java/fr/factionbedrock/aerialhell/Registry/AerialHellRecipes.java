@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import fr.factionbedrock.aerialhell.Recipe.BookPageRecipe;
 
 public class AerialHellRecipes
 {
@@ -26,5 +27,6 @@ public class AerialHellRecipes
 
 		public static final DeferredHolder<RecipeType<?>, RecipeType<OscillatingRecipe>> OSCILLATING = RECIPE_TYPES.register("oscillating", () -> RecipeType.simple(Identifier.fromNamespaceAndPath(AerialHell.MODID, "oscillating")));
 		public static final DeferredHolder<RecipeType<?>, RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.register("freezing", () -> RecipeType.simple(Identifier.fromNamespaceAndPath(AerialHell.MODID, "freezing")));
+		public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BookPageRecipe>> BOOK_PAGE_RECIPE = RECIPE_SERIALIZERS.register("book_page", () -> BookPageRecipe.SERIALIZER);
 	}
 }

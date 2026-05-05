@@ -2,20 +2,25 @@ package fr.factionbedrock.aerialhell.Client.Gui.Screen.Inventory;
 
 import fr.factionbedrock.aerialhell.AerialHell;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
-
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.core.component.DataComponents;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AerialHellBookScreen extends Screen
 {
@@ -30,31 +35,30 @@ public class AerialHellBookScreen extends Screen
     private static final int LOGO_SRC_W = 1484;
     private static final int LOGO_SRC_H = 430;
 
-    // ── Advancement unlock ────────────────────────────────────────────
-    public static boolean aerialHellUnlocked = false;
-
     // ── Pages ─────────────────────────────────────────────────────
     private static final int PAGE_SUMMARY = 0;
 
     // ── Tabs ──────────────────────────────────────────────────────
-    private record Tab(String name, int color, int page) {}
+    private record Tab(String name, int color, int page, String translationKey) {}
 
     private static final List<Tab> TABS_LEFT = List.of(
-            new Tab("Mobs",  0xFF4CAF50, 1),
-            new Tab("Boss",  0xFFE53935, 2),
-            new Tab("Items", 0xFFFFB300, 3)
+            new Tab("Mobs",  0xFF4CAF50, 1, "book.aerialhell.tab.mobs"),
+            new Tab("Boss",  0xFFE53935, 2, "book.aerialhell.tab.boss"),
+            new Tab("Items", 0xFFFFB300, 3, "book.aerialhell.tab.items")
     );
 
-    // Ces tabs sont verrouillés sans l'advancement
     private static final List<Tab> TABS_RIGHT = List.of(
-            new Tab("Armures",  0xFF1E88E5, 4),
-            new Tab("Armes",    0xFFFF6D00, 5),
-            new Tab("Utilités", 0xFF8E24AA, 6)
+            new Tab("Armures",  0xFF1E88E5, 4, "book.aerialhell.tab.armures"),
+            new Tab("Armes",    0xFFFF6D00, 5, "book.aerialhell.tab.armes"),
+            new Tab("Utilités", 0xFF8E24AA, 6, "book.aerialhell.tab.utilities")
     );
 
     private static final int TAB_W   = 16;
     private static final int TAB_H   = 32;
     private static final int TAB_GAP = 8;
+
+    // ── Advancement unlock ────────────────────────────────────────
+    public static boolean aerialHellUnlocked = false;
 
     // ── Dimensions dynamiques ─────────────────────────────────────
     private int bookW, bookH;
@@ -68,19 +72,40 @@ public class AerialHellBookScreen extends Screen
     // ── État ──────────────────────────────────────────────────────
     private int hoveredTab  = -1;
     private int currentPage = PAGE_SUMMARY;
+    private Set<String> insertedPages = new HashSet<>();
+    private final ItemStack bookStack;
 
-    public AerialHellBookScreen() { super(Component.empty()); }
+    public AerialHellBookScreen(ItemStack bookStack)
+    {
+        super(Component.empty());
+        this.bookStack = bookStack;
+        loadInsertedPages();
+    }
+
+    // ── Lecture des pages insérées depuis le NBT du livre ─────────
+
+    private void loadInsertedPages()
+    {
+        insertedPages.clear();
+        CompoundTag tag = bookStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        if (tag.contains("inserted_pages"))
+        {
+            ListTag list = tag.getList("inserted_pages").orElse(new ListTag());
+            for (int i = 0; i < list.size(); i++)
+                list.getString(i).ifPresent(insertedPages::add);
+        }
+    }
+
+    private boolean hasPage(String pageId)
+    {
+        return insertedPages.contains(pageId);
+    }
 
     // ── Vérification advancement ──────────────────────────────────
 
     private boolean hasAerialHellAdvancement()
     {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.player.connection == null) return false;
-        ClientAdvancements advancements = mc.player.connection.getAdvancements();
-        AdvancementNode node = advancements.getTree().get(
-                Identifier.fromNamespaceAndPath("aerialhell", "story/enter_aerial_hell"));
-        return node != null && AerialHellBookScreen.aerialHellUnlocked;
+        return aerialHellUnlocked;
     }
 
     @Override
@@ -135,7 +160,7 @@ public class AerialHellBookScreen extends Screen
         for (int i = 0; i < TABS_RIGHT.size(); i++)
             if (isHoveringTab(event.x(), event.y(), i, false))
             {
-                if (!hasAerialHellAdvancement()) return true; // bloqué
+                if (!hasAerialHellAdvancement()) return true;
                 currentPage = TABS_RIGHT.get(i).page();
                 return true;
             }
@@ -182,7 +207,7 @@ public class AerialHellBookScreen extends Screen
     }
 
     private void renderTab(GuiGraphicsExtractor graphics, int index, boolean isLeft,
-                           int mx, int my, boolean unlocked)
+                            int mx, int my, boolean unlocked)
     {
         int[]   pos     = getTabPos(index, isLeft);
         int     x       = pos[0];
@@ -194,7 +219,6 @@ public class AerialHellBookScreen extends Screen
         int w     = hovered ? TAB_W + 4 : TAB_W;
         int xDraw = isLeft ? x - (hovered ? 4 : 0) : x;
 
-        // Couleur grisée si verrouillé
         int color = locked ? 0xFF555555 : tab.color();
         graphics.fill(xDraw, y, xDraw + w, y + TAB_H, color);
         graphics.fill(xDraw,         y,             xDraw + w,    y + 1,       0xFF1A1A1A);
@@ -202,7 +226,6 @@ public class AerialHellBookScreen extends Screen
         graphics.fill(xDraw,         y,             xDraw + 1,    y + TAB_H,  0xFF1A1A1A);
         graphics.fill(xDraw + w - 1, y,             xDraw + w,    y + TAB_H,  0xFF1A1A1A);
 
-        // Icône cadenas sur les tabs verrouillés
         if (locked)
         {
             String padlock = "🔒";
@@ -218,16 +241,17 @@ public class AerialHellBookScreen extends Screen
 
             if (locked)
             {
-                String msg = "Accès verrouillé";
+                Component msg = Component.translatable("book.aerialhell.locked");
                 int tw = this.font.width(msg) + 6;
                 graphics.fill(textX - 3, textY - 2, textX + tw, textY + 10, 0xCC000000);
-                graphics.text(this.font, Component.literal(msg), textX, textY, 0xFFAAAAAA, false);
+                graphics.text(this.font, msg, textX, textY, 0xFFAAAAAA, false);
             }
             else
             {
-                int tw = this.font.width(tab.name()) + 6;
+                Component label = Component.translatable(tab.translationKey());
+                int tw = this.font.width(label) + 6;
                 graphics.fill(textX - 3, textY - 2, textX + tw, textY + 10, 0xCC000000);
-                graphics.text(this.font, Component.literal(tab.name()), textX, textY, 0xFFFFFFFF, false);
+                graphics.text(this.font, label, textX, textY, 0xFFFFFFFF, false);
             }
         }
     }
@@ -261,23 +285,67 @@ public class AerialHellBookScreen extends Screen
 
             int startLine = (sepY - firstLineY) / lineGap + 1;
             renderTextOnLines(graphics,
-                    "Clique sur un marque-page pour explorer le guide d'Aerial Hell.",
+                    Component.translatable("book.aerialhell.welcome.text").getString(),
                     startLine);
         }
         else
         {
+            // Trouve le tab actif
             Tab active = null;
-            for (Tab t : TABS_LEFT)  if (t.page() == currentPage) active = t;
-            for (Tab t : TABS_RIGHT) if (t.page() == currentPage) active = t;
+            String pageId = null;
+            for (int i = 0; i < TABS_LEFT.size(); i++)
+                if (TABS_LEFT.get(i).page() == currentPage) { active = TABS_LEFT.get(i); pageId = "tab_" + i; }
+            for (int i = 0; i < TABS_RIGHT.size(); i++)
+                if (TABS_RIGHT.get(i).page() == currentPage) { active = TABS_RIGHT.get(i); pageId = "tab_right_" + i; }
 
             if (active != null)
             {
                 int titleY = firstLineY - this.font.lineHeight + 1;
-                renderCenteredText(graphics, "✦ " + active.name() + " ✦", pxStartL, pxEndL, titleY, 0xFF5C3A1E);
+                Component title = Component.literal("✦ ").append(Component.translatable(active.translationKey())).append(" ✦");
+                renderCenteredText(graphics, title, pxStartL, pxEndL, titleY, 0xFF5C3A1E);
                 graphics.fill(pxStartL, firstLineY, pxEndL, firstLineY + 1, 0xFF5C3A1E);
-                renderTextOnLines(graphics, "(contenu à venir)", 1);
+
+                if (pageId != null && hasPage(pageId))
+                {
+                    // Contenu déverrouillé
+                    renderTextOnLines(graphics,
+                            Component.translatable("book.aerialhell.content." + pageId).getString(), 1);
+                }
+                else
+                {
+                    // Page non insérée → affiche un slot vide
+                    renderLockedPageSlot(graphics);
+                }
             }
         }
+    }
+
+    private void renderLockedPageSlot(GuiGraphicsExtractor graphics)
+    {
+        // Zone centrale de la page gauche
+        int slotSize = lineGap * 4;
+        int slotX    = pxStartL + (pxWidthL - slotSize) / 2;
+        int slotY    = firstLineY + lineGap * 2;
+
+        // Fond du slot
+        graphics.fill(slotX, slotY, slotX + slotSize, slotY + slotSize, 0x44000000);
+
+        // Bordure pointillée (simulée)
+        graphics.fill(slotX,              slotY,              slotX + slotSize, slotY + 1,              0xFF5C3A1E);
+        graphics.fill(slotX,              slotY + slotSize-1, slotX + slotSize, slotY + slotSize,       0xFF5C3A1E);
+        graphics.fill(slotX,              slotY,              slotX + 1,        slotY + slotSize,       0xFF5C3A1E);
+        graphics.fill(slotX + slotSize-1, slotY,              slotX + slotSize, slotY + slotSize,       0xFF5C3A1E);
+
+        // Texte "?" centré
+        String q = "?";
+        graphics.text(this.font, Component.literal(q),
+                slotX + (slotSize - this.font.width(q)) / 2,
+                slotY + (slotSize - this.font.lineHeight) / 2,
+                0xFF5C3A1E, false);
+
+        // Message sous le slot
+        Component msg = Component.translatable("book.aerialhell.page_missing");
+        renderTextOnLines(graphics, msg.getString(), (slotY - firstLineY) / lineGap + 5);
     }
 
     private void renderTextOnLines(GuiGraphicsExtractor graphics, String text, int startLine)
@@ -310,11 +378,11 @@ public class AerialHellBookScreen extends Screen
         }
     }
 
-    private void renderCenteredText(GuiGraphicsExtractor graphics, String text,
-                                    int xStart, int xEnd, int y, int color)
+    private void renderCenteredText(GuiGraphicsExtractor graphics, Component text,
+                                     int xStart, int xEnd, int y, int color)
     {
         int x = xStart + (xEnd - xStart - this.font.width(text)) / 2;
-        graphics.text(this.font, Component.literal(text), x, y, color, false);
+        graphics.text(this.font, text, x, y, color, false);
     }
 
     private List<String> wrapText(String text, int maxWidth)
