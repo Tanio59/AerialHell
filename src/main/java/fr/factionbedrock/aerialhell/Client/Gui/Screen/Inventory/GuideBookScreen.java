@@ -308,19 +308,26 @@ public class GuideBookScreen extends Screen
     private List<String> wrapText(String text, int maxWidth)
     {
         List<String> lines = new ArrayList<>();
-        String[] words = text.split(" ");
-        StringBuilder current = new StringBuilder();
-        for (String word : words)
+        for (String paragraph : text.split("\n", -1))
         {
-            String test = current.isEmpty() ? word : current + " " + word;
-            if (this.font.width(test) <= maxWidth) current = new StringBuilder(test);
-            else
+            String line = paragraph.replace("\t", "    ");
+            if (line.isEmpty()) { lines.add(""); continue; }
+
+            String[] words = line.split(" ");
+            StringBuilder current = new StringBuilder();
+            for (String word : words)
             {
-                if (!current.isEmpty()) lines.add(current.toString());
-                current = new StringBuilder(word);
+                String test = current.isEmpty() ? word : current + " " + word;
+                if (this.font.width(test) <= maxWidth)
+                    current = new StringBuilder(test);
+                else
+                {
+                    if (!current.isEmpty()) lines.add(current.toString());
+                    current = new StringBuilder(word);
+                }
             }
+            if (!current.isEmpty()) lines.add(current.toString());
         }
-        if (!current.isEmpty()) lines.add(current.toString());
         return lines;
     }
 
