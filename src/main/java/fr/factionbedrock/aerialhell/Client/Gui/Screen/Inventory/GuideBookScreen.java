@@ -8,6 +8,7 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.joml.Matrix3x2fStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -236,30 +237,37 @@ public class GuideBookScreen extends Screen
         return new int[]{x, y};
     }
 
+    private void renderSmallText(GuiGraphicsExtractor graphics, String text, int x, int y, int color)
+    {
+        float scale = 0.8f; // Taille de police
+        var pose = graphics.pose();
+        pose.pushMatrix();
+        pose.translate(x, y);
+        pose.scale(scale, scale);
+        graphics.text(this.font, Component.literal(text), 0, 0, color, false);
+        pose.popMatrix();
+    }
     private void renderPageContent(GuiGraphicsExtractor graphics)
     {
         Page currentPage = null;
-        for (Page page : ALL_PAGES)  if (page.pageIndex() == this.currentPage) currentPage = page;
-        if (currentPage == null) {return;}
+        for (Page page : ALL_PAGES) if (page.pageIndex() == this.currentPage) currentPage = page;
+        if (currentPage == null) return;
 
         int currentLineIndex = 0;
 
-        //centered title
+        // Titre centré
         String pageTitle = "- " + currentPage.name() + " -";
         graphics.text(this.font, Component.literal(pageTitle), Lines.get(currentLineIndex).centerX(pageTitle, this.font), Lines.get(currentLineIndex).startY(), 0xFF5C3A1E, false);
-
         currentLineIndex++;
 
-        //content text
-        String pageText = this.currentPage == 0 ? "Click on a tab to start exploring ! Et licet quocumque oculos flexeris feminas adfatim multas spectare cirratas, quibus, si nupsissent, per aetatem ter iam nixus poterat suppetere liberorum, ad usque taedium pedibus pavimenta tergentes iactari volucriter gyris, dum exprimunt innumera simulacra, quae finxere fabulae theatrales.\n" +
-                "\n" +
-                "Hanc regionem praestitutis celebritati diebus invadere parans dux ante edictus per solitudines Aboraeque amnis herbidas ripas, suorum indicio proditus, qui admissi flagitii metu exagitati ad praesidia descivere Romana. absque ullo egressus effectu deinde tabescebat immobilis." : "WIP";
+        // Contenu
+        String pageText = this.currentPage == 0 ? "Click on a tab to start exploring !..." : "WIP";
 
         List<String> textLines = this.wrapText(pageText, LINE_WIDTH_NO_MARGIN);
         for (int i = 0; i < textLines.size() && currentLineIndex < MAX_LINES_PER_TECHNICAL_PAGE - 1; i++)
         {
             currentLineIndex++;
-            graphics.text(this.font, Component.literal(textLines.get(i)), Lines.get(currentLineIndex).startX, Lines.get(currentLineIndex).startY, 0xFF7A5C3A, false);
+            renderSmallText(graphics, textLines.get(i), Lines.get(currentLineIndex).startX, Lines.get(currentLineIndex).startY, 0xFF7A5C3A);
         }
     }
 
