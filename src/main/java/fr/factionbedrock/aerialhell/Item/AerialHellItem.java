@@ -109,9 +109,9 @@ public class AerialHellItem extends WithInformationItem
 		if (this.abilitySelector != null) {this.abilitySelector.tryUseAbility(new AbilityUseSituation.OnMining(itemStack, itemOwner, miningInfo));}
 	}
 
-	@Override public void appendAbilityDescriptionHoverText(Item.TooltipContext context, Consumer<Component> tooltipAdder)
+	@Override public void appendAbilityDescriptionHoverText(Player player, Item.TooltipContext context, Consumer<Component> tooltipAdder)
 	{
-		if (!context.player().level().isClientSide() || this.abilitySelector == null) {return;}
+		if (!player.level().isClientSide() || this.abilitySelector == null) {return;}
 
 		//context.player().isShiftKeyDown() do not work here because there is a screen open
 		boolean shiftDown = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) || InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT);
