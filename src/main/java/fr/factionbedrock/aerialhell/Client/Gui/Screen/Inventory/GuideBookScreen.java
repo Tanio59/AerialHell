@@ -262,11 +262,12 @@ public class GuideBookScreen extends Screen
 
         // Contenu texte
         String pageText = this.currentPage == 0
-                ? "Click on a tab to start exploring !"
+                ? "Click on a tab to start exploring ! cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
                 : "WIP";
 
         Set<Integer> blacklist = getBlacklistedLines();
-        List<String> textLines = this.wrapText(pageText, LINE_WIDTH_NO_MARGIN);
+        float scale = 0.8f;
+        List<String> textLines = this.wrapText(pageText, (int)(LINE_WIDTH_NO_MARGIN / scale));
 
         for (int i = 0; i < textLines.size() && currentLineIndex < MAX_LINES_PER_TECHNICAL_PAGE - 1; i++)
         {
@@ -360,7 +361,8 @@ public class GuideBookScreen extends Screen
                         }
                         chunk.append(c);
                     }
-                    if (!chunk.isEmpty()) current = chunk;
+                    if (!chunk.isEmpty()) { lines.add(chunk.toString()); }
+                    current = new StringBuilder();
                     continue;
                 }
 
