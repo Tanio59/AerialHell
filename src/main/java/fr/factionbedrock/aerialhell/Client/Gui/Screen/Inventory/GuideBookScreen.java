@@ -317,6 +317,24 @@ public class GuideBookScreen extends Screen
             StringBuilder current = new StringBuilder();
             for (String word : words)
             {
+                // Mot trop long : le découpe caractère par caractère
+                if (this.font.width(word) > maxWidth)
+                {
+                    if (!current.isEmpty()) { lines.add(current.toString()); current = new StringBuilder(); }
+                    StringBuilder chunk = new StringBuilder();
+                    for (char c : word.toCharArray())
+                    {
+                        if (this.font.width(chunk.toString() + c) > maxWidth)
+                        {
+                            lines.add(chunk.toString());
+                            chunk = new StringBuilder();
+                        }
+                        chunk.append(c);
+                    }
+                    if (!chunk.isEmpty()) current = chunk;
+                    continue;
+                }
+
                 String test = current.isEmpty() ? word : current + " " + word;
                 if (this.font.width(test) <= maxWidth)
                     current = new StringBuilder(test);
