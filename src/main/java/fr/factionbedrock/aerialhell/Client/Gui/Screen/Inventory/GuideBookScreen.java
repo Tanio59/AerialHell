@@ -191,40 +191,50 @@ public class GuideBookScreen extends Screen
         for (Page page : ALL_PAGES) if (page.pageIndex() == this.currentPage) currentPageObj = page;
         if (currentPageObj == null) return;
 
-        // Titre centré sur la page gauche
+        // Lignes de la texture : espacement 10px, première à Y=16
+        final int LINE_GAP    = 10;
+        final int FIRST_LINE  = bookTop + 16;
+        final int TEXT_OFFSET = -this.font.lineHeight + 1; // texte juste au-dessus de la ligne
+
+        // Titre sur la ligne 0 (Y=16)
         String pageTitle = "- " + currentPageObj.name() + " -";
         int titleX = bookLeft + (BOOK_TEXTURE_WIDTH / 2 - this.font.width(pageTitle)) / 2;
-        graphics.text(this.font, Component.literal(pageTitle), titleX, bookTop + 20, 0xFF5C3A1E, false);
+        graphics.text(this.font, Component.literal(pageTitle), titleX, FIRST_LINE + TEXT_OFFSET, 0xFF5C3A1E, false);
 
-        String pageText = this.currentPage == 0 ? "Click on a tab to start exploring ! Et licet quocumque oculos flexeris feminas adfatim multas spectare cirratas, quibus, si nupsissent, per aetatem ter iam nixus poterat suppetere liberorum, ad usque taedium pedibus pavimenta tergentes iactari volucriter gyris, dum exprimunt innumera simulacra, quae finxere fabulae theatrales.\n" +
+        // Contenu à partir de la ligne 3 (Y=46), largeur limitée à la page gauche
+        String pageText  = this.currentPage == 0 ? "Click on a tab to start exploring ! Et licet quocumque oculos flexeris feminas adfatim multas spectare cirratas, quibus, si nupsissent, per aetatem ter iam nixus poterat suppetere liberorum, ad usque taedium pedibus pavimenta tergentes iactari volucriter gyris, dum exprimunt innumera simulacra, quae finxere fabulae theatrales.\n" +
                 "\n" +
-                "Hanc regionem praestitutis celebritati diebus invadere parans dux ante edictus per solitudines Aboraeque amnis herbidas ripas, suorum indicio proditus, qui admissi flagitii metu exagitati ad praesidia descivere Romana. absque ullo egressus effectu deinde tabescebat immobilis." : "WIP";
-        int maxWidth   = (BOOK_TEXTURE_WIDTH / 2) - 45;
-        int lineHeight = this.font.lineHeight + 2;
-        int maxLines   = (BOOK_TEXTURE_HEIGHT - 65) / lineHeight; // lignes disponibles par page
+                "Hanc regionem praestitutis celebritati diebus invadere parans dux ante edictus per solitudines Aboraeque amnis herbidas ripas, suorum indicio proditus, qui admissi flagitii metu exagitati ad praesidia descivere Romana. absque ullo egressus effectu deinde tabescebat immobilis.\n" +
+                "\n" +
+                "Nihil est enim virtute amabilius, nihil quod magis adliciat ad diligendum, quippe cum propter virtutem et probitatem etiam eos, quos numquam vidimus, quodam modo diligamus. Quis est qui C. Fabrici, M'. Curi non cum caritate aliqua benevola memoriam usurpet, quos numquam viderit? quis autem est, qui Tarquinium Superbum, qui Sp. Cassium, Sp. Maelium non oderit? Cum duobus ducibus de imperio in Italia est decertatum, Pyrrho et Hannibale; ab altero propter probitatem eius non nimis alienos animos habemus, alterum propter crudelitatem semper haec civitas oderit." : "WIP";
+        int maxWidth     = (BOOK_TEXTURE_WIDTH / 2) - 45;
+        int textX        = bookLeft + 20;
+        int startLineIdx = 3; // commence 3 lignes après le titre
+        int maxLines     = (BOOK_TEXTURE_HEIGHT - 16) / LINE_GAP - startLineIdx - 2; // lignes dispo
 
         List<String> lines = wrapText(pageText, maxWidth);
 
         // Page gauche
-        int textX = bookLeft + 20;
-        int textY = bookTop + 45;
         int rendered = 0;
         for (int i = 0; i < lines.size() && rendered < maxLines; i++)
         {
-            graphics.text(this.font, Component.literal(lines.get(i)), textX, textY, 0xFF7A5C3A, false);
-            textY += lineHeight;
+            int y = FIRST_LINE + (startLineIdx + rendered) * LINE_GAP + TEXT_OFFSET;
+            graphics.text(this.font, Component.literal(lines.get(i)), textX, y, 0xFF7A5C3A, false);
             rendered++;
         }
 
         // Page droite si débordement
         if (rendered < lines.size())
         {
-            int rightX = bookLeft + BOOK_TEXTURE_WIDTH / 2 + 25;
-            int rightY = bookTop + 20;
-            for (int i = rendered; i < lines.size() && i - rendered < maxLines; i++)
+            int rightX        = bookLeft + BOOK_TEXTURE_WIDTH / 2 + 25;
+            int rightMaxWidth = (BOOK_TEXTURE_WIDTH / 2) - 45;
+            List<String> rightLines = wrapText(pageText, rightMaxWidth);
+            int rightLine = 0;
+            for (int i = rendered; i < rightLines.size() && rightLine < maxLines + startLineIdx; i++)
             {
-                graphics.text(this.font, Component.literal(lines.get(i)), rightX, rightY, 0xFF7A5C3A, false);
-                rightY += lineHeight;
+                int y = FIRST_LINE + rightLine * LINE_GAP + TEXT_OFFSET;
+                graphics.text(this.font, Component.literal(rightLines.get(i)), rightX, y, 0xFF7A5C3A, false);
+                rightLine++;
             }
         }
     }
