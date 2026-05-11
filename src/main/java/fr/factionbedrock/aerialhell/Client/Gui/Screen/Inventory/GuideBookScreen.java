@@ -157,17 +157,17 @@ public class GuideBookScreen extends Screen
                     .addParagraph(2, false, "content_1")
     );
 
-    private record Tab(String name, int color, int pageIndex) {}
+    private record Tab(String name, String translationKey, int color, int pageIndex) {}
 
     private static final List<Tab> TABS_LEFT = List.of(
-            new Tab("Mobs",  0xFF4CAF50, 1),
-            new Tab("Bosses",  0xFFE53935, 4),
-            new Tab("Items", 0xFFFFB300, 6));
+            new Tab("Mobs",    "aerialhell.guide_book.tab.mobs",      0xFF4CAF50, 1),
+            new Tab("Bosses",  "aerialhell.guide_book.tab.bosses",    0xFFE53935, 4),
+            new Tab("Items",   "aerialhell.guide_book.tab.items",     0xFFFFB300, 6));
 
     private static final List<Tab> TABS_RIGHT = List.of(
-            new Tab("Armors",  0xFF1E88E5, 11),
-            new Tab("Tools",    0xFFFF6D00, 15),
-            new Tab("Utilities", 0xFF8E24AA, 20));
+            new Tab("Armors",    "aerialhell.guide_book.tab.armors",    0xFF1E88E5, 11),
+            new Tab("Tools",     "aerialhell.guide_book.tab.tools",     0xFFFF6D00, 15),
+            new Tab("Utilities", "aerialhell.guide_book.tab.utilities", 0xFF8E24AA, 20));
 
     //book position
     private int bookLeft, bookRight, bookTop, bookBottom, leftPageLeft;
@@ -295,13 +295,29 @@ public class GuideBookScreen extends Screen
 
     @Override public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick)
     {
-        graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK_TEXTURE, this.bookLeft, this.bookTop, 0f, 0f, BOOK_TEXTURE_WIDTH, BOOK_TEXTURE_HEIGHT, BOOK_TEXTURE_WIDTH, BOOK_TEXTURE_HEIGHT);
-
-        for (int i = 0; i < TABS_LEFT.size(); i++) {this.renderTab(graphics, i, true, mouseX, mouseY);}
-        for (int i = 0; i < TABS_RIGHT.size(); i++) {this.renderTab(graphics, i, false, mouseX, mouseY);}
+        for (int i = 0; i < TABS_LEFT.size();  i++) this.renderTab(graphics, i, true,  mouseX, mouseY);
+        for (int i = 0; i < TABS_RIGHT.size(); i++) this.renderTab(graphics, i, false, mouseX, mouseY);
 
         this.renderPageContent(graphics);
         this.renderNavigationButtons(graphics, mouseX, mouseY);
+
+        // Tooltip tabs au curseur
+        for (int i = 0; i < TABS_LEFT.size(); i++)
+            if (this.isHoveringTab(mouseX, mouseY, i, true))
+            {
+                graphics.setTooltipForNextFrame(this.font,
+                        Component.translatable(TABS_LEFT.get(i).translationKey()),
+                        mouseX, mouseY);
+                break;
+            }
+        for (int i = 0; i < TABS_RIGHT.size(); i++)
+            if (this.isHoveringTab(mouseX, mouseY, i, false))
+            {
+                graphics.setTooltipForNextFrame(this.font,
+                        Component.translatable(TABS_RIGHT.get(i).translationKey()),
+                        mouseX, mouseY);
+                break;
+            }
 
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
     }
@@ -324,17 +340,6 @@ public class GuideBookScreen extends Screen
         graphics.fill(xDraw, y + TAB_HEIGHT - 1, xDraw + tabWidth, y + TAB_HEIGHT, 0xFF1A1A1A);
         graphics.fill(xDraw, y, xDraw + 1, y + TAB_HEIGHT, 0xFF1A1A1A);
         graphics.fill(xDraw + tabWidth - 1, y, xDraw + tabWidth, y + TAB_HEIGHT, 0xFF1A1A1A);
-
-        //hover text
-        if (hovered)
-        {
-            int textX = isLeft ? xDraw - this.font.width(tab.name()) - 5 : xDraw + tabWidth + 3;
-            int textY = y + (TAB_HEIGHT - 8) / 2;
-            int textWidth = this.font.width(tab.name()) + 6;
-
-            graphics.fill(textX - 3, textY - 2, textX + textWidth, textY + 10, 0xCC000000);
-            ClientHelper.renderText(this.font, graphics, Component.literal(tab.name()), textX, textY, 0xFFFFFFFF, this.textScale);
-        }
     }
 
     private int[] getTabPos(int tabIndex, boolean isLeft)

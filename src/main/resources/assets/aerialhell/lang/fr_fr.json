@@ -1239,6 +1239,13 @@
   "ability.aerialhell.cursed_totem.desc_3" : "Biome Crystal: Wither et Nausée",
   "ability.aerialhell.cursed_totem.desc_4" : "Autre Biome: Faiblesse et Lenteur, sauf si vous équipez une Armure des Ombres complète",
 
+  "aerialhell.guide_book.tab.mobs":      "Mobs",
+  "aerialhell.guide_book.tab.bosses":    "Bosses",
+  "aerialhell.guide_book.tab.items":     "Items",
+  "aerialhell.guide_book.tab.armors":    "Armures",
+  "aerialhell.guide_book.tab.tools":     "Outils",
+  "aerialhell.guide_book.tab.utilities": "Utilities",
+
   "aerialhell.guide_book.summary.title": "- Bienvenue- ",
   "aerialhell.guide_book.summary.welcome_text": "Vous lisez le Guide pour Aerial Hell.",
 
