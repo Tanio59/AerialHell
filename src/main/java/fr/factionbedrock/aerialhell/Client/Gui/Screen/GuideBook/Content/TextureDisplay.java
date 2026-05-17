@@ -1,0 +1,35 @@
+package fr.factionbedrock.aerialhell.Client.Gui.Screen.GuideBook.Content;
+
+import fr.factionbedrock.aerialhell.Client.Util.TextureInfo;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
+
+import java.util.List;
+
+public record TextureDisplay(int lineIndex, Alignment alignment, float scale, TextureInfo textureInfo) implements PageElement
+{
+    @Override public void render(Font font, GuiGraphicsExtractor graphics, float scale, List<Line> lines, int bookLeft, int bookTop, int mouseX, int mouseY)
+    {
+        Line line = lines.get(this.lineIndex());
+
+        int scaledWidth = (int)(this.textureInfo.width() * this.scale());
+
+        int startX = switch (this.alignment())
+        {
+            case LEFT -> line.startX();
+            case CENTER -> line.centerX() - scaledWidth / 2;
+            case RIGHT -> line.rightX() - scaledWidth;
+        };
+
+        graphics.pose().pushMatrix();
+
+        graphics.pose().translate(startX, line.startY());
+        graphics.pose().scale(this.scale(), this.scale());
+
+        graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureInfo.texture(), 0, 0, 0f, 0f, this.textureInfo.width(), this.textureInfo.height(), this.textureInfo.width(), this.textureInfo.height());
+
+        graphics.pose().popMatrix();
+    }
+}

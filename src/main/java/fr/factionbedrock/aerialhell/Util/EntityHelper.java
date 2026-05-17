@@ -238,7 +238,7 @@ public class EntityHelper
         return list;
     }
 
-    public static List<EquippedItemStack> getEquippepItemStackList(LivingEntity livingEntity)
+    public static List<EquippedItemStack> getEquippedItemStackList(LivingEntity livingEntity)
     {
         List<EquippedItemStack> list = new ArrayList<>();
         addInHandsItemToList(list, livingEntity, EquippedItemStack::new);

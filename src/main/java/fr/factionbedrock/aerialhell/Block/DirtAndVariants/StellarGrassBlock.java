@@ -5,6 +5,7 @@ import fr.factionbedrock.aerialhell.Registry.Worldgen.AerialHellPlacedFeatures;
 import fr.factionbedrock.aerialhell.Util.BlockHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.*;
@@ -23,9 +24,9 @@ public class StellarGrassBlock extends AerialHellGrassBlock
 		this.registerDefaultState(this.defaultBlockState());
 	}
 
-	@Override protected Optional<Holder.Reference<PlacedFeature>> getBonemealFeature(ServerLevel level)
+	@Override protected ResourceKey<PlacedFeature> getBonemealFeature()
 	{
-		return level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(AerialHellPlacedFeatures.STELLAR_GRASS_BONEMEAL);
+		return AerialHellPlacedFeatures.STELLAR_GRASS_BONEMEAL;
 	}
 
 	@Override

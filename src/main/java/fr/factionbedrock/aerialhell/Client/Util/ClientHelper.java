@@ -1,5 +1,6 @@
 package fr.factionbedrock.aerialhell.Client.Util;
 
+import fr.factionbedrock.aerialhell.Client.Gui.Screen.GuideBook.GuideBookScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -12,6 +13,11 @@ import java.util.List;
 public class ClientHelper
 {
     public static Player getLocalPlayer() {return Minecraft.getInstance().player;}
+
+    public static void openAerialHellGuideBookScreen()
+    {
+        Minecraft.getInstance().setScreen(new GuideBookScreen());
+    }
 
     public static void renderText(Font font, GuiGraphicsExtractor graphics, Component text, int x, int y, int color, float scale)
     {
@@ -33,10 +39,9 @@ public class ClientHelper
         List<String> lines = new ArrayList<>();
         for (String paragraph : text.split("\n", -1))
         {
-            String line = paragraph;
-            if (line.isEmpty()) {lines.add(""); continue; }
+            if (paragraph.isEmpty()) {lines.add(""); continue; }
 
-            String[] words = line.split(" ");
+            String[] words = paragraph.split(" ");
             StringBuilder currentLine = new StringBuilder();
             for (String word : words)
             {

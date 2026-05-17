@@ -2,8 +2,7 @@ package fr.factionbedrock.aerialhell.Block.DirtAndVariants;
 
 import fr.factionbedrock.aerialhell.Registry.Worldgen.AerialHellPlacedFeatures;
 import fr.factionbedrock.aerialhell.Util.BlockHelper;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -11,8 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.server.level.ServerLevel;
-
-import java.util.Optional;
 
 import fr.factionbedrock.aerialhell.Registry.AerialHellBlocks;
 
@@ -24,9 +21,9 @@ public class ShadowGrassBlock extends AerialHellGrassBlock
 		this.registerDefaultState(this.defaultBlockState());
 	}
 
-	@Override protected Optional<Holder.Reference<PlacedFeature>> getBonemealFeature(ServerLevel level)
+	@Override protected ResourceKey<PlacedFeature> getBonemealFeature()
 	{
-		return level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(AerialHellPlacedFeatures.SHADOW_GRASS_BONEMEAL);
+		return AerialHellPlacedFeatures.SHADOW_GRASS_BONEMEAL;
 	}
 
 	@Override
