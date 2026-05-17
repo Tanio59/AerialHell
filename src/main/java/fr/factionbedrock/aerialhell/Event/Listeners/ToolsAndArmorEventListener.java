@@ -92,8 +92,14 @@ public class ToolsAndArmorEventListener
 		//mining speed multiplier value is changed internally in item abilities (onMining)
 		event.setNewSpeed(speed * miningSpeedMultiplier.get());
 
+		//player mining a lunar dungeon core as a lunar misleader OR mining a shadow dungeon core as a shadow misleader
+		if (state.is(AerialHellBlocks.LUNATIC_DUNGEON_CORE) && EntityHelper.isLivingEntityMisleadingLunar(itemOwner) || (state.is(AerialHellBlocks.SHADOW_CATACOMBS_DUNGEON_CORE) && EntityHelper.isLivingEntityMisleadingShadow(itemOwner)))
+		{
+			EntityHelper.applyTraitorEffectTo(itemOwner);
+		}
+
 		//player mining a block that needs lunar tool
-		if (state != null && state.is(AerialHellTags.Blocks.NEEDS_LUNAR_TOOL))
+		if (state.is(AerialHellTags.Blocks.NEEDS_LUNAR_TOOL))
 		{
 			if (!BlockHelper.isItemCorrectForHarvesting(state, miningItemStack.getItem()))
 			{
@@ -104,13 +110,13 @@ public class ToolsAndArmorEventListener
 			}
 		}
 
-		if (state != null && state.is(AerialHellBlocks.EYE_SHADOW_PINE_LOG.get()) && !EntityHelper.isLivingEntityShadowImmune(itemOwner) && !itemOwner.isCreative())
+		if (state.is(AerialHellBlocks.EYE_SHADOW_PINE_LOG.get()) && !EntityHelper.isLivingEntityShadowImmune(itemOwner) && !itemOwner.isCreative())
 		{
 			itemOwner.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30, 0));
 			itemOwner.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 30, 0));
 		}
 
-		if (state != null && state.is(AerialHellTags.Blocks.GHOST_BLOCK))
+		if (state.is(AerialHellTags.Blocks.GHOST_BLOCK))
 		{
 			if (EntityHelper.isImmuneToGhostBlockCollision(itemOwner)) {event.setNewSpeed(Math.min(speed, 0.1F));}
 		}

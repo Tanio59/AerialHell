@@ -38,9 +38,9 @@ public interface MisleadableEntity extends BaseMobEntityInterface
         {
             if (this.canMisleaderHurt())
             {
-                if (this.doesApplyTraitorEffectToMisleaderHurtSource(livingSource))
+                if (this.traitorTrigger(source) == TraitorTrigger.ON_HURT)
                 {
-                    livingSource.addEffect(new MobEffectInstance(AerialHellMobEffects.TRAITOR.getDelegate(), 12000, 0));
+                    EntityHelper.applyTraitorEffectTo(livingSource);
                 }
                 return superReference.apply(serverLevel, source, amount); //calling super
             }
@@ -51,6 +51,20 @@ public interface MisleadableEntity extends BaseMobEntityInterface
             return superReference.apply(serverLevel, source, amount); //calling super
         }
     }
+
+    default void misleadableDie(DamageSource damageSource) //call in die() before super.die(..)
+    {
+        Entity sourceEntity = damageSource.getEntity();
+        if (sourceEntity instanceof LivingEntity livingSource && this.isMisleadedBy(livingSource) && !EntityHelper.isCreaOrSpecPlayer(livingSource) && this.traitorTrigger(damageSource) == TraitorTrigger.ON_DEATH)
+        {
+            EntityHelper.applyTraitorEffectTo(livingSource);
+        }
+    }
+
+    default boolean misleadableCanAttack(LivingEntity target, SuperCanAttackReference superReference) //call & return in canAttack(target) - do not call super !
+    {
+        return (!this.isMisleadedBy(target) || EntityHelper.isLivingEntityATraitor(target)) && superReference.apply(target);
+    }
     /* ----------------------------------------------- */
     /* ----------------------------------------------- */
     /* ----------------------------------------------- */
@@ -60,7 +74,7 @@ public interface MisleadableEntity extends BaseMobEntityInterface
     /* -------------------------------------------------------------- */
     default boolean canMisleaderHurt() {return true;}
 
-    default boolean doesApplyTraitorEffectToMisleaderHurtSource(LivingEntity hurtSource) {return this.canMisleaderHurt();}
+    default TraitorTrigger traitorTrigger(DamageSource damageSource) {return TraitorTrigger.ON_DEATH;}
     /* -------------------------------------------------------------- */
     /* -------------------------------------------------------------- */
     /* -------------------------------------------------------------- */
@@ -68,6 +82,7 @@ public interface MisleadableEntity extends BaseMobEntityInterface
     /* --------------------------------------- */
     /* -------- Other utility methods -------- */
     /* --------------------------------------- */
+
     @Nullable default LivingEntity misleadableFindTarget(TargetingConditions targetConditions) //call server side
     {
         if (!(this.getLevel() instanceof ServerLevel serverLevel)) {return null;}
@@ -93,5 +108,8 @@ public interface MisleadableEntity extends BaseMobEntityInterface
     /* --------------------------------------- */
     /* --------------------------------------- */
 
+    enum TraitorTrigger{NEVER, ON_HURT, ON_DEATH}
+
     @FunctionalInterface interface SuperHurtServerReference{boolean apply(ServerLevel serverLevel, DamageSource damageSource, float amount);}
+    @FunctionalInterface interface SuperCanAttackReference{boolean apply(LivingEntity target);}
 }

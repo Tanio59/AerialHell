@@ -157,17 +157,29 @@ public class GuideBookScreen extends Screen
                     .addParagraph(2, false, "content_1")
     );
 
-    private record Tab(String name, String translationKey, int color, int pageIndex) {}
+    private static class Tab
+    {
+        private final String key;
+        private final int color;
+        private final int pageIndex;
+
+        private Tab(String name, int color, int pageIndex)
+        {
+            this.key = "aerialhell.guide_book.tab." + name;
+            this.color = color;
+            this.pageIndex = pageIndex;
+        }
+    }
 
     private static final List<Tab> TABS_LEFT = List.of(
-            new Tab("Mobs",    "aerialhell.guide_book.tab.mobs",      0xFF4CAF50, 1),
-            new Tab("Bosses",  "aerialhell.guide_book.tab.bosses",    0xFFE53935, 4),
-            new Tab("Items",   "aerialhell.guide_book.tab.items",     0xFFFFB300, 6));
+            new Tab("mobs",  0xFF4CAF50, 1),
+            new Tab("bosses",  0xFFE53935, 4),
+            new Tab("items", 0xFFFFB300, 6));
 
     private static final List<Tab> TABS_RIGHT = List.of(
-            new Tab("Armors",    "aerialhell.guide_book.tab.armors",    0xFF1E88E5, 11),
-            new Tab("Tools",     "aerialhell.guide_book.tab.tools",     0xFFFF6D00, 15),
-            new Tab("Utilities", "aerialhell.guide_book.tab.utilities", 0xFF8E24AA, 20));
+            new Tab("armors",  0xFF1E88E5, 11),
+            new Tab("tools",    0xFFFF6D00, 15),
+            new Tab("utilities", 0xFF8E24AA, 20));
 
     //book position
     private int bookLeft, bookRight, bookTop, bookBottom, leftPageLeft;
@@ -295,29 +307,11 @@ public class GuideBookScreen extends Screen
 
     @Override public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick)
     {
-        for (int i = 0; i < TABS_LEFT.size();  i++) this.renderTab(graphics, i, true,  mouseX, mouseY);
-        for (int i = 0; i < TABS_RIGHT.size(); i++) this.renderTab(graphics, i, false, mouseX, mouseY);
+        for (int i = 0; i < TABS_LEFT.size(); i++) {this.renderTab(graphics, i, true, mouseX, mouseY);}
+        for (int i = 0; i < TABS_RIGHT.size(); i++) {this.renderTab(graphics, i, false, mouseX, mouseY);}
 
         this.renderPageContent(graphics);
         this.renderNavigationButtons(graphics, mouseX, mouseY);
-
-        // Tooltip tabs au curseur
-        for (int i = 0; i < TABS_LEFT.size(); i++)
-            if (this.isHoveringTab(mouseX, mouseY, i, true))
-            {
-                graphics.setTooltipForNextFrame(this.font,
-                        Component.translatable(TABS_LEFT.get(i).translationKey()),
-                        mouseX, mouseY);
-                break;
-            }
-        for (int i = 0; i < TABS_RIGHT.size(); i++)
-            if (this.isHoveringTab(mouseX, mouseY, i, false))
-            {
-                graphics.setTooltipForNextFrame(this.font,
-                        Component.translatable(TABS_RIGHT.get(i).translationKey()),
-                        mouseX, mouseY);
-                break;
-            }
 
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
     }
@@ -333,13 +327,19 @@ public class GuideBookScreen extends Screen
         int tabWidth = TAB_WIDTH + (hovered ? 4 : 0);
         int xDraw = isLeft ? x - (hovered ? 4 : 0) : x;
 
-        graphics.fill(xDraw, y, xDraw + tabWidth, y + TAB_HEIGHT, tab.color());
+        graphics.fill(xDraw, y, xDraw + tabWidth, y + TAB_HEIGHT, tab.color);
 
         //border
         graphics.fill(xDraw, y, xDraw + tabWidth, y + 1, 0xFF1A1A1A);
         graphics.fill(xDraw, y + TAB_HEIGHT - 1, xDraw + tabWidth, y + TAB_HEIGHT, 0xFF1A1A1A);
         graphics.fill(xDraw, y, xDraw + 1, y + TAB_HEIGHT, 0xFF1A1A1A);
         graphics.fill(xDraw + tabWidth - 1, y, xDraw + tabWidth, y + TAB_HEIGHT, 0xFF1A1A1A);
+
+        //hover text
+        if (hovered)
+        {
+            graphics.setTooltipForNextFrame(this.font, Component.translatable(tab.key), mouseX, mouseY);
+        }
     }
 
     private int[] getTabPos(int tabIndex, boolean isLeft)
@@ -377,7 +377,7 @@ public class GuideBookScreen extends Screen
         }
     }
 
-    private void navigateToTab(Tab tab) {this.currentPage = tab.pageIndex();}
+    private void navigateToTab(Tab tab) {this.currentPage = tab.pageIndex;}
 
     private void navigateToPage(Page page) {this.currentPage = page.pageIndex();}
 
