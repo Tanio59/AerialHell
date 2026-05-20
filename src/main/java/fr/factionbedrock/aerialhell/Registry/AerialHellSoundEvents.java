@@ -138,6 +138,10 @@ public class AerialHellSoundEvents
 	public static final DeferredHolder<SoundEvent, SoundEvent> ADVANCEMENT_STORY = register("advancement.story");
 	public static final DeferredHolder<SoundEvent, SoundEvent> ADVANCEMENT_SECRET = register("advancement.secret");
 	public static final DeferredHolder<SoundEvent, SoundEvent> ADVANCEMENT_LUNATIC = register("advancement.lunatic");
+
+	public static final DeferredHolder<SoundEvent, SoundEvent> GUIDE_BOOK_OPEN      = register("gui.guide_book.open");
+	public static final DeferredHolder<SoundEvent, SoundEvent> GUIDE_BOOK_CLOSE     = register("gui.guide_book.close");
+	public static final DeferredHolder<SoundEvent, SoundEvent> GUIDE_BOOK_PAGE_TURN = register("gui.guide_book.page_turn");
 	
 	private static DeferredHolder<SoundEvent, SoundEvent> register(String name)
 	{

@@ -9,8 +9,10 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import fr.factionbedrock.aerialhell.Registry.AerialHellSoundEvents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,6 +213,26 @@ public class GuideBookScreen extends Screen
 
     public GuideBookScreen() {super(Component.empty());}
 
+    // ── Sons ──────────────────────────────────────────────────────
+
+    private void playOpenSound()
+    {
+        Minecraft.getInstance().getSoundManager().play(
+                SimpleSoundInstance.forUI(AerialHellSoundEvents.GUIDE_BOOK_OPEN.get(), 1.0F));
+    }
+
+    private void playCloseSound()
+    {
+        Minecraft.getInstance().getSoundManager().play(
+                SimpleSoundInstance.forUI(AerialHellSoundEvents.GUIDE_BOOK_CLOSE.get(), 1.0F));
+    }
+
+    private void playPageTurnSound()
+    {
+        Minecraft.getInstance().getSoundManager().play(
+                SimpleSoundInstance.forUI(AerialHellSoundEvents.GUIDE_BOOK_PAGE_TURN.get(), 1.0F));
+    }
+
     @Override protected void init()
     {
         super.init();
@@ -241,6 +263,14 @@ public class GuideBookScreen extends Screen
             boolean isLeftPageLine = lineIndex < MAX_LINES_PER_VISUAL_PAGE;
             this.lines.add(new Line(lineIndex, isLeftPageLine ? this.leftPageLineX : this.rightPageLineX, isLeftPageLine ? this.leftPageCenterX : this.rightPageCenterX, isLeftPageLine ? this.leftPageLineX + LINE_WIDTH_NO_MARGIN : this.rightPageLineX + LINE_WIDTH_NO_MARGIN, this.firstLineY + (lineIndex % MAX_LINES_PER_VISUAL_PAGE) * LINE_HEIGHT));
         }
+
+        this.playOpenSound();
+    }
+
+    @Override public void onClose()
+    {
+        this.playCloseSound();
+        super.onClose();
     }
 
     protected void createTabs()
@@ -344,20 +374,32 @@ public class GuideBookScreen extends Screen
         }
     }
 
-    private void navigateToTab(Tab tab) {this.currentPage = tab.pageIndex();}
+    private void navigateToTab(Tab tab)
+    {
+        this.playPageTurnSound();
+        this.currentPage = tab.pageIndex();
+    }
 
     private void navigateToPage(Page page) {this.currentPage = page.pageIndex();}
 
     private void navigateToPreviousPage()
     {
         int nextIndex = getCurrentIndex() - 1;
-        if (nextIndex >= 0 && nextIndex < ALL_PAGES.size()) {this.navigateToPage(ALL_PAGES.get(nextIndex));}
+        if (nextIndex >= 0 && nextIndex < ALL_PAGES.size())
+        {
+            this.playPageTurnSound();
+            this.navigateToPage(ALL_PAGES.get(nextIndex));
+        }
     }
 
     private void navigateToNextPage()
     {
         int nextIndex = getCurrentIndex() + 1;
-        if (nextIndex >= 0 && nextIndex < ALL_PAGES.size()) {this.navigateToPage(ALL_PAGES.get(nextIndex));}
+        if (nextIndex >= 0 && nextIndex < ALL_PAGES.size())
+        {
+            this.playPageTurnSound();
+            this.navigateToPage(ALL_PAGES.get(nextIndex));
+        }
     }
 
     private int getCurrentIndex()

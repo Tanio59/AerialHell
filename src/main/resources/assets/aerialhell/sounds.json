@@ -575,5 +575,14 @@
        "aerialhell:portal/portal4",
        "aerialhell:portal/portal5"
     ]
+  },
+  "gui.guide_book.open": {
+    "sounds": ["aerialhell:gui/guide_book/book_open"]
+  },
+  "gui.guide_book.close": {
+    "sounds": ["aerialhell:gui/guide_book/book_close"]
+  },
+  "gui.guide_book.page_turn": {
+    "sounds": ["aerialhell:gui/guide_book/book_pageturn"]
   }
 }
