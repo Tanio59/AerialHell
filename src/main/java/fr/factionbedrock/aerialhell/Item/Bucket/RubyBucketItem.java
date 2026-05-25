@@ -48,19 +48,18 @@ public class RubyBucketItem extends Item
                 BlockState blockstate1 = level.getBlockState(blockpos);
                 if (blockstate1.getBlock() instanceof BucketPickup)
                 {
-                    //BucketPickup bucketpickup = (BucketPickup)blockstate1.getBlock();
                     Fluid fluid = level.getFluidState(blockpos).getType();
                     if (fluid == Fluids.WATER)
                     {
                         playPickupSound(fluid, playerIn);
-                        level.setBlockAndUpdate(blockpos, Blocks.AIR.defaultBlockState());
+                        ((BucketPickup) blockstate1.getBlock()).pickupBlock(playerIn, level, blockpos, blockstate1);
                         ItemStack afterPickupHandItemStack = new ItemStack(AerialHellItems.RUBY_WATER_BUCKET.get());
                         return playerIn.isCreative() ? InteractionResult.SUCCESS : fillBucketFromStack(itemstack, playerIn, afterPickupHandItemStack);
                     }
                     else if (fluid == AerialHellFluids.LIQUID_OF_THE_GODS_SOURCE.get())
                     {
                         playPickupSound(fluid, playerIn);
-                        level.setBlockAndUpdate(blockpos, Blocks.AIR.defaultBlockState());
+                        ((BucketPickup) blockstate1.getBlock()).pickupBlock(playerIn, level, blockpos, blockstate1);
                         ItemStack afterPickupHandItemStack = new ItemStack(AerialHellItems.RUBY_LIQUID_OF_GODS_BUCKET.get());
                         return playerIn.isCreative() ? InteractionResult.SUCCESS : fillBucketFromStack(itemstack, playerIn, afterPickupHandItemStack);
                     }

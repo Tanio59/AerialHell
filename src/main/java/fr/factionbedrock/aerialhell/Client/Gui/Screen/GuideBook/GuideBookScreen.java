@@ -180,8 +180,8 @@ public class GuideBookScreen extends Screen
                     bookTop,
                     this.isLeft ? (isHovered) -> - TAB_WIDTH - (isHovered ? HOVERED_TAB_EXTRA_WIDTH : 0) : (isHovered) -> BOOK_TEXTURE_WIDTH,
                     (isHovered) -> currentTabYOffset,
-                    this.isLeft ? (isHovered) -> 0.0F : (isHovered) -> isHovered ? 0.0F : 4.0F, //blitU : left tab is offset by default (due to relativeXPos moving). right tab : offset when not hovered, to give the impression that we are "pulling the tab" when hovered, like left one
-                    (isHovered) -> 0.0F, //blitY : always 0.0F, no matter if isHovered
+                    this.isLeft ? (isHovered) -> 0.0F : (isHovered) -> isHovered ? 0.0F : 4.0F,
+                    (isHovered) -> 0.0F,
                     pageIndex
             ));
             this.nextTabYOffsetFromBookTop += TAB_HEIGHT + TAB_GAP;
@@ -281,7 +281,7 @@ public class GuideBookScreen extends Screen
                 .add("materials", 6)
                 .add("effects", 6)
                 .add("enchanting", 6)
-                .add("exploration", 6);
+                .add("environment", 6);
 
         this.rightTabs = new TabList(false, () -> this.bookLeft, () -> this.bookTop)
                 .add("bestiary", 11)

@@ -105,7 +105,7 @@ public class RubyWaterBucketItem extends Item
         {
             if (!worldIn.isClientSide() && flag && !blockstate.liquid())
             {
-                worldIn.destroyBlock(posIn, true);
+                worldIn.destroyBlock(posIn, false);
             }
 
             if (!worldIn.setBlock(posIn, Fluids.WATER.defaultFluidState().createLegacyBlock(), 11) && !blockstate.getFluidState().isSource())
