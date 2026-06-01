@@ -1254,5 +1254,31 @@
   "aerialhell.guide_book.tab.structures" : "Structures",
   "aerialhell.guide_book.tab.dungeons" : "Donjons",
   "aerialhell.guide_book.tab.shadow_and_light" : "Ombres et Lumière",
-  "aerialhell.guide_book.tab.items" : "Items"
+  "aerialhell.guide_book.tab.items" : "Items",
+
+  "aerialhell.guide_book.summary.title" : "- Bienvenue -",
+  "aerialhell.guide_book.summary.welcome_text" : "Ce livre est un guide pour ton aventure dans Aerial Hell.",
+  "aerialhell.guide_book.summary.table_of_content_title" : "Sommaire:",
+  "aerialhell.guide_book.summary.table_of_content" : "Aventure\nCrafting\nMateriels\nEffets\nEnchantement\nEnvironnement\nBestiaire\nBosses\nStructures\nDonjon\nOmbre et Lumière\nItems",
+  "aerialhell.guide_book.summary.table_of_content_pages" : "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12",
+
+  "aerialhell.guide_book.journey_1.title" : "- Aventure -",
+  "aerialhell.guide_book.journey_1.journey_content_desc" : "Cette section joue le rôle d'une todo-list pour progresser dans Aerial Hell.",
+  "aerialhell.guide_book.journey_1.step_1_enter_dimension" : "-1: Entrée dans la dimension",
+  "aerialhell.guide_book.journey_1.light_the_portal" : "Vous pouvez trouver un portail abandonné dans le ciel (sur un nuage) dans l'overworld.\nRéparez-le en déplaçant les blocs du cadre aux coins vers les trous, puis allumez-le avec le Briquet Stellaire.",
+  "aerialhell.guide_book.journey_2.step_2_collect_resources" : "-2: Trouver les ressources de bases\nVous pouvez trouver du bois depuis les arbres, miner la Pierres Stellaires et fabriquer des outils avec.",
+  "aerialhell.guide_book.journey_2.step_3_collect_food" : "-3: Trouver de la nourriture",
+  "aerialhell.guide_book.journey_2.step_4_collect_fluorite" : "-4: Trouver de la Fluorine\nLa Fluorine sert de carburant et à fabriquer des torches.",
+  "aerialhell.guide_book.journey_2.step_5_craft_stellar_furnace" : "-5: Fabriquer un Fourneau Stellaire",
+  "aerialhell.guide_book.journey_2.cook_food" : "Vous pouvez cuisiner de la nourriture:",
+  "aerialhell.guide_book.journey_2.step_6_mine_more" : "-6: Miner plus de matériaux",
+  "aerialhell.guide_book.journey_3.step_7_craft_oscillator" : "-7: Fabriquer un Oscillateur",
+  "aerialhell.guide_book.journey_3.craft_oscillator_prerequisites" : "Pour cela, vous aurez besoin de Roche Stellaire.",
+  "aerialhell.guide_book.journey_3.craft_oscillator" : "Fabriquer l'Oscillateur :",
+  "aerialhell.guide_book.journey_3.step_8_craft_ruby_tier_equipment" : "-8: Fabriquer de nouveaux Équipements\n",
+  "aerialhell.guide_book.journey_3.make_materials_oscillate" : "Osciller vos minerais :",
+  "aerialhell.guide_book.journey_3.craft_ruby_equipment" : "Fabriquer des équipements en Rubis et en Crystal d'Azurite. Le Rubis est l'équivalant du Fer.",
+  "aerialhell.guide_book.journey_4.step_9_make_a_farm" : "-9: Construire une Ferme\nVous aurez besoin d'une meilleurs nourriture à l'avenir.",
+  "aerialhell.guide_book.journey_4.breed_animals" : "Elevez des animaux pour obtenir plus de viande. Consultez le Bestiaire pour savoir comment les nourrir.",
+  "aerialhell.guide_book.journey_4.step_10_rush_mud_dungeon" : "-10: Faire le Donjon de Boue"
 }

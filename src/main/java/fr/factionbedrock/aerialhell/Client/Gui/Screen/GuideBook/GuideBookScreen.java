@@ -133,9 +133,12 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(13, Alignment.CENTER, 1.0F, AerialHellItems.AERIAL_BERRY, true)
                     .addItemTexture(14, Alignment.RIGHT, 1.0F, AerialHellItems.TURTLE_MEAT, true)
                     .addParagraph(18, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "step_10_rush_mud_dungeon"),
+
             new Page("bosses_2", BOOK_TEXTURE, 5)
                     .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                     .addParagraph(4, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
+
+
             new Page("items_1", BOOK_TEXTURE, 6)
                     .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                     .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1")
