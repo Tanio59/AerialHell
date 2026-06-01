@@ -191,19 +191,35 @@ public class GuideBookScreen extends Screen
             new Page("tools_5", BOOK_TEXTURE, 19)
                     .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                     .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
-            new Page("utilities_1", BOOK_TEXTURE, 20)
-                    .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
-                    .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
-            new Page("utilities_2", BOOK_TEXTURE, 21)
+            new Page("effects_1", BOOK_TEXTURE, 20)
+                    .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
+                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "effects_content_desc")
+                    .addParagraph(6,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "head_in_the_clouds")
+                    .addTextureDisplay(7,Alignment.CENTER,1.0F,"mob_effect/head_in_the_clouds",25,25,"effect.aerialhell.head_in_the_clouds")
+                    .addParagraph(10,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"head_in_the_clouds_desc")
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"vulnerability")
+                    .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/vulnerability",25,25,"effect.aerialhell.vulnerability")
+                    .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"vulnerability_desc"),
+            new Page("effects_2", BOOK_TEXTURE, 21)
+                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "shadow_immunity")
+                    .addTextureDisplay(2,Alignment.CENTER,1.0F,"mob_effect/shadow_immunity",25,25,"effect.aerialhell.shadow_immunity")
+                    .addParagraph(5,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"shadow_immunity_desc")
+                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "god")
+                    .addTextureDisplay(12,Alignment.CENTER,1.0F,"mob_effect/god",25,25,"effect.aerialhell.god")
+                    .addParagraph(15,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"god_desc")
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"traitor")
+                    .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/traitor",25,25,"effect.aerialhell.traitor")
+                    .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"traitor_desc"),
+            new Page("utilities_2", BOOK_TEXTURE, 22)
                     .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                     .addParagraph(5, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
-            new Page("utilities_3", BOOK_TEXTURE, 22)
+            new Page("utilities_3", BOOK_TEXTURE, 23)
                     .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                     .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
-            new Page("utilities_4", BOOK_TEXTURE, 23)
+            new Page("utilities_4", BOOK_TEXTURE, 24)
                     .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                     .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
-            new Page("utilities_5", BOOK_TEXTURE, 24)
+            new Page("utilities_5", BOOK_TEXTURE, 25)
                     .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                     .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1")
     );
