@@ -481,7 +481,7 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(3, Alignment.LEFT, 20, true, 1.0F, AerialHellItems.SMOKY_QUARTZ, true)
                     .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.35F), (int)(LINE_WIDTH_NO_MARGIN * 0.65F), Alignment.LEFT, "smoky_quartz")
                     .addParagraph(5, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "smoky_quartz_desc")
-                    .addCraftingTableRecipeDisplay(9, Alignment.LEFT, 0.95F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(9, Alignment.LEFT, 1.0F, new CraftingTableRecipeDisplay.Ingredients(
                             () -> null, () -> Items.REDSTONE_TORCH, () -> null,
                             () -> Items.REDSTONE_TORCH, AerialHellItems.SMOKY_QUARTZ, () -> Items.REDSTONE_TORCH,
                             AerialHellItems.STELLAR_STONE, AerialHellItems.STELLAR_STONE, AerialHellItems.STELLAR_STONE
@@ -492,12 +492,12 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(13, Alignment.RIGHT, 1.0F, AerialHellItems.SMOKY_QUARTZ_PILLAR, true)
                     .addItemTexture(15, Alignment.LEFT, 4 * LINE_WIDTH_NO_MARGIN / 5 - 8, 1.0F, AerialHellItems.SMOKY_QUARTZ_BRICKS, true)
                     .addItemTexture(15, Alignment.RIGHT, 1.0F, AerialHellItems.SMOKY_QUARTZ_STAIRS, true)
-                    .addCraftingTableRecipeDisplay(18, Alignment.CENTER, 0.92F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(18, Alignment.CENTER, 1.0F, new CraftingTableRecipeDisplay.Ingredients(
                             AerialHellItems.SLIPPERY_SAND_GLASS, AerialHellItems.SLIPPERY_SAND_GLASS, AerialHellItems.SLIPPERY_SAND_GLASS,
                             AerialHellItems.SMOKY_QUARTZ, AerialHellItems.SMOKY_QUARTZ, AerialHellItems.SMOKY_QUARTZ,
                             AerialHellItems.AERIAL_TREE_SLAB, AerialHellItems.AERIAL_TREE_SLAB, AerialHellItems.AERIAL_TREE_SLAB
                     ), Items.DAYLIGHT_DETECTOR::getDefaultInstance, true)
-                    .addCraftingTableRecipeDisplay(24, Alignment.CENTER, 0.92F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(24, Alignment.CENTER, 1.0F, new CraftingTableRecipeDisplay.Ingredients(
                             AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE,
                             () -> Items.REDSTONE, () -> Items.REDSTONE, AerialHellItems.SMOKY_QUARTZ,
                             AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE
