@@ -481,7 +481,7 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(3, Alignment.LEFT, 20, true, 1.0F, AerialHellItems.SMOKY_QUARTZ, true)
                     .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.35F), (int)(LINE_WIDTH_NO_MARGIN * 0.65F), Alignment.LEFT, "smoky_quartz")
                     .addParagraph(5, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "smoky_quartz_desc")
-                    .addCraftingTableRecipeDisplay(9, Alignment.LEFT, 1.0F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(9, Alignment.LEFT, 0.7F, new CraftingTableRecipeDisplay.Ingredients(
                             () -> null, () -> Items.REDSTONE_TORCH, () -> null,
                             () -> Items.REDSTONE_TORCH, AerialHellItems.SMOKY_QUARTZ, () -> Items.REDSTONE_TORCH,
                             AerialHellItems.STELLAR_STONE, AerialHellItems.STELLAR_STONE, AerialHellItems.STELLAR_STONE
@@ -492,12 +492,12 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(13, Alignment.RIGHT, 1.0F, AerialHellItems.SMOKY_QUARTZ_PILLAR, true)
                     .addItemTexture(15, Alignment.LEFT, 4 * LINE_WIDTH_NO_MARGIN / 5 - 8, 1.0F, AerialHellItems.SMOKY_QUARTZ_BRICKS, true)
                     .addItemTexture(15, Alignment.RIGHT, 1.0F, AerialHellItems.SMOKY_QUARTZ_STAIRS, true)
-                    .addCraftingTableRecipeDisplay(18, Alignment.CENTER, 1.0F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(18, Alignment.CENTER, 0.6F, new CraftingTableRecipeDisplay.Ingredients(
                             AerialHellItems.SLIPPERY_SAND_GLASS, AerialHellItems.SLIPPERY_SAND_GLASS, AerialHellItems.SLIPPERY_SAND_GLASS,
                             AerialHellItems.SMOKY_QUARTZ, AerialHellItems.SMOKY_QUARTZ, AerialHellItems.SMOKY_QUARTZ,
                             AerialHellItems.AERIAL_TREE_SLAB, AerialHellItems.AERIAL_TREE_SLAB, AerialHellItems.AERIAL_TREE_SLAB
                     ), Items.DAYLIGHT_DETECTOR::getDefaultInstance, true)
-                    .addCraftingTableRecipeDisplay(24, Alignment.CENTER, 1.0F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(24, Alignment.CENTER, 0.8F, new CraftingTableRecipeDisplay.Ingredients(
                             AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE,
                             () -> Items.REDSTONE, () -> Items.REDSTONE, AerialHellItems.SMOKY_QUARTZ,
                             AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE
@@ -507,30 +507,31 @@ public class GuideBookScreen extends Screen
                     .addParagraph(30, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.35F), (int)(LINE_WIDTH_NO_MARGIN * 0.65F), Alignment.LEFT, "crystal")
                     .addParagraph(31, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "crystal_desc"),
             new Page("effects_1", BOOK_TEXTURE, 21)
-                    .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
+                    .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "effects_section_title")
                     .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "effects_content_desc")
                     .addParagraph(6,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "head_in_the_clouds")
                     .addTextureDisplay(7,Alignment.CENTER,1.0F,"mob_effect/head_in_the_clouds",25,25,"effect.aerialhell.head_in_the_clouds")
                     .addParagraph(10,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"head_in_the_clouds_desc")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"vulnerability")
-                    .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/vulnerability",25,25,"effect.aerialhell.vulnerability")
-                    .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"vulnerability_desc"),
-            new Page("effects_2", BOOK_TEXTURE, 22)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "shadow_immunity")
-                    .addTextureDisplay(2,Alignment.CENTER,1.0F,"mob_effect/shadow_immunity",25,25,"effect.aerialhell.shadow_immunity")
-                    .addParagraph(5,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"shadow_immunity_desc")
-                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "god")
-                    .addTextureDisplay(12,Alignment.CENTER,1.0F,"mob_effect/god",25,25,"effect.aerialhell.god")
-                    .addParagraph(15,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"god_desc")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"traitor")
-                    .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/traitor",25,25,"effect.aerialhell.traitor")
-                    .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"traitor_desc"),
-            new Page("utilities_4", BOOK_TEXTURE, 23)
-                    .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
-                    .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
-            new Page("utilities_5", BOOK_TEXTURE, 24)
-                    .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
-                    .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1")
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"head_in_the_clouds_consume_desc")
+                 //   .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"vulnerability")
+                  //  .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/vulnerability",25,25,"effect.aerialhell.vulnerability")
+                  //  .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"vulnerability_desc"),
+          //  new Page("effects_2", BOOK_TEXTURE, 22)
+                  //  .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "shadow_immunity")
+                  //  .addTextureDisplay(2,Alignment.CENTER,1.0F,"mob_effect/shadow_immunity",25,25,"effect.aerialhell.shadow_immunity")
+                   // .addParagraph(5,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"shadow_immunity_desc")
+                   // .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "god")
+                  //  .addTextureDisplay(12,Alignment.CENTER,1.0F,"mob_effect/god",25,25,"effect.aerialhell.god")
+                  //  .addParagraph(15,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"god_desc")
+                  //  .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"traitor")
+                 //   .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/traitor",25,25,"effect.aerialhell.traitor")
+                  //  .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"traitor_desc"),
+         //   new Page("utilities_4", BOOK_TEXTURE, 23)
+                  //  .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
+                  //  .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
+         //   new Page("utilities_5", BOOK_TEXTURE, 24)
+                  //  .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
+                   // .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1")
     );
 
     //The guide book is designed to contain 6 tabs on each side.

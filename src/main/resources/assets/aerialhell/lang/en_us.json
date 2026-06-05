@@ -1355,7 +1355,7 @@
   "aerialhell.guide_book.materials_7.crystal" : "Crystal",
   "aerialhell.guide_book.materials_7.crystal_desc" : "Found as Crystal Blocks in Crystal Biomes.\nCan be used as fuel in Oscillator.",
 
-  "aerialhell.guide_book.effects_1.title" : "- Effects -",
+  "aerialhell.guide_book.effects_1.effects_section_title" : "- Effects -",
   "aerialhell.guide_book.effects_1.effects_content_desc" : "This page is a list of the new potion effects available in the mod.",
   "aerialhell.guide_book.effects_1.head_in_the_clouds" : "Head in the Clouds",
   "aerialhell.guide_book.effects_1.head_in_the_clouds_desc" : "It allows you to hover in the air, your speed is increased while in the air.\nAdditionally, this effect allows you to walk on both solid ether clouds and ghost boat blocks.",

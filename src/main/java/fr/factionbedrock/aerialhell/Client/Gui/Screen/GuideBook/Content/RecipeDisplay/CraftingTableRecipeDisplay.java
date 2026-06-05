@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, float scale, Ingredients ingredients, Supplier<ItemStack> result, boolean displayTooltip) implements PageElement
+public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, float scale, CraftingTableRecipeDisplay.Ingredients ingredients, Supplier<ItemStack> result, boolean displayTooltip) implements PageElement
 {
     private static final TextureInfo CRAFTING_TABLE_GRID_TEXTURE = new TextureInfo(Identifier.fromNamespaceAndPath(AerialHell.MODID, "textures/gui/guide_book/recipe/crafting_table_grid_display.png"), 100, 54);
 
@@ -28,8 +28,6 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
         Line line = lines.get(this.lineIndex());
 
         int recipeWidth = (int)(CRAFTING_TABLE_GRID_TEXTURE.width() * this.scale());
-        int slotSize = (int)(16 * this.scale());
-        int slotSpacing = (int)(17 * this.scale()); //16 slot + 1 separator
 
         int startX = switch (this.alignment())
         {
@@ -40,40 +38,33 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
 
         int startY = line.startY();
 
-        //render crafting grid background
+        // tout dans le même espace scalé
         graphics.pose().pushMatrix();
-
         graphics.pose().translate(startX, startY);
         graphics.pose().scale(this.scale(), this.scale());
 
+        // render crafting grid background (coordonnées non-scalées)
         graphics.blit(RenderPipelines.GUI_TEXTURED, CRAFTING_TABLE_GRID_TEXTURE.texture(), 0, 0, CRAFTING_TABLE_GRID_TEXTURE.u(), CRAFTING_TABLE_GRID_TEXTURE.v(), CRAFTING_TABLE_GRID_TEXTURE.width(), CRAFTING_TABLE_GRID_TEXTURE.height(), CRAFTING_TABLE_GRID_TEXTURE.textureWidth(), CRAFTING_TABLE_GRID_TEXTURE.textureHeight());
 
-        graphics.pose().popMatrix();
-
-        //render ingredients
+        // render ingredients (coordonnées non-scalées : 17 = 16 slot + 1 séparateur)
         for (int i = 0; i < ingredients.get().size(); i++)
         {
             Item item = ingredients.get().get(i).get();
-
             if (item == null) {continue;}
 
             int row = i / 3;
             int col = i % 3;
 
-            //1 px outer margin + 1 px separator before first slot
-            int itemX = startX + (int)(2 * this.scale()) + col * slotSpacing;
-            int itemY = startY + (int)(2 * this.scale()) + row * slotSpacing;
+            int itemLocalX = 2 + col * 17;
+            int itemLocalY = 2 + row * 17;
 
-            boolean hovered = mouseX >= itemX && mouseX <= itemX + slotSize && mouseY >= itemY && mouseY <= itemY + slotSize;
+            // hover en coordonnées écran
+            int itemScreenX = startX + (int)(itemLocalX * this.scale());
+            int itemScreenY = startY + (int)(itemLocalY * this.scale());
+            int slotSize = (int)(16 * this.scale());
+            boolean hovered = mouseX >= itemScreenX && mouseX <= itemScreenX + slotSize && mouseY >= itemScreenY && mouseY <= itemScreenY + slotSize;
 
-            graphics.pose().pushMatrix();
-
-            graphics.pose().translate(itemX, itemY);
-            graphics.pose().scale(this.scale(), this.scale());
-
-            graphics.fakeItem(item.getDefaultInstance(), 0, 0);
-
-            graphics.pose().popMatrix();
+            graphics.item(item.getDefaultInstance(), itemLocalX, itemLocalY);
 
             if (hovered && this.displayTooltip())
             {
@@ -81,23 +72,20 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
             }
         }
 
-        //render result item
-        int resultX = startX + (int)(82 * this.scale());
-        int resultY = startY + (int)(19 * this.scale());
+        // render result item (coordonnées non-scalées)
+        int resultLocalX = 82;
+        int resultLocalY = 19;
 
-        boolean hovered = mouseX >= resultX && mouseX <= resultX + slotSize && mouseY >= resultY && mouseY <= resultY + slotSize;
+        int resultScreenX = startX + (int)(resultLocalX * this.scale());
+        int resultScreenY = startY + (int)(resultLocalY * this.scale());
+        int slotSize = (int)(16 * this.scale());
+        boolean hovered = mouseX >= resultScreenX && mouseX <= resultScreenX + slotSize && mouseY >= resultScreenY && mouseY <= resultScreenY + slotSize;
 
-        graphics.pose().pushMatrix();
-
-        graphics.pose().translate(resultX, resultY);
-        graphics.pose().scale(this.scale(), this.scale());
-
-        graphics.fakeItem(resultItemStack, 0, 0);
+        graphics.item(resultItemStack, resultLocalX, resultLocalY);
         if (resultItemStack.getCount() > 1)
         {
-            //copy of net.minecraft.client.gui.GuiGraphicsExtractor method itemCount(..)
             String amount = String.valueOf(resultItemStack.getCount());
-            graphics.text(font, amount, 17 - font.width(amount), 9, 0xFF7A5C3A, false);
+            graphics.text(font, amount, resultLocalX + 17 - font.width(amount), resultLocalY + 9, 0xFF7A5C3A, false);
         }
 
         graphics.pose().popMatrix();
