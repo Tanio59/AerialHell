@@ -147,7 +147,7 @@ public class GuideBookScreen extends Screen
                     .addParagraph(32, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "go_to_dungeon_section"),
             new Page("journey_5", BOOK_TEXTURE, 5)
                     .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "step_11_get_enchanting_table")
-                    .addCraftingRecipeDisplay(4, Alignment.CENTER, 1.0F, new CraftingRecipeDisplay.Ingredients(
+                    .addCraftingRecipeDisplay(4, Alignment.CENTER, 0.6F, new CraftingRecipeDisplay.Ingredients(
                             AerialHellItems.OBSIDIAN_SHARD, AerialHellItems.OBSIDIAN_SHARD,
                             AerialHellItems.OBSIDIAN_SHARD, AerialHellItems.OBSIDIAN_SHARD
                     ), Items.OBSIDIAN::getDefaultInstance, true)
