@@ -1367,5 +1367,27 @@
   "aerialhell.guide_book.effects_3.god" : "God",
   "aerialhell.guide_book.effects_3.god_desc" : "Waiting new desc",
   "aerialhell.guide_book.effects_3.traitor" : "Traitor",
-  "aerialhell.guide_book.effects_3.traitor_desc" : "You get this effect by hitting a misleaded entity. Misleading entities is a Aerial Hell mechanic :\n- you can \"mislead\" lunar entities to make them think you are \"friendly\" by wearing a full lunar armor.\n- you can mislead shadow entities by wearing a full shadow armor\nA misleaded entity won't attack you.\nThe Traitor effect makes entity misleading impossible. Any misleadable entity will attack you."
+  "aerialhell.guide_book.effects_3.traitor_desc" : "You get this effect by hitting a misleaded entity. Misleading entities is a Aerial Hell mechanic :\n- you can \"mislead\" lunar entities to make them think you are \"friendly\" by wearing a full lunar armor.\n- you can mislead shadow entities by wearing a full shadow armor\nA misleaded entity won't attack you.\nThe Traitor effect makes entity misleading impossible. Any misleadable entity will attack you.",
+
+  "aerialhell.guide_book.environment_1.environment_section_title" : "- Environment -",
+  "aerialhell.guide_book.environment_1.environment_section_quote" : "Phrase d'accroche",
+  "aerialhell.guide_book.environment_1.environment_classic" : "- Classic Biomes",
+  "aerialhell.guide_book.environment_1.environment_plains" : "Aerial Hell Plains",
+  "aerialhell.guide_book.environment_1.environment_lapis_robania_savana" : "Lapis Robania Savana",
+  "aerialhell.guide_book.environment_1.environment_slippery_sand_ocean" : "Slippery Sand Ocean",
+  "aerialhell.guide_book.environment_2.environment_forests" : "- Forests Biomes",
+  "aerialhell.guide_book.environment_2.environment_tree_forest" : "Tree Forests",
+  "aerialhell.guide_book.environment_2.environment_copper_pine_forest" : "Copper Pine Forest",
+  "aerialhell.guide_book.environment_2.environment_copper_pine_highland_forest" : "Copper Pine Highland Forest",
+  "aerialhell.guide_book.environment_2.environment_stellar_jungle" : "Stellar Jungle",
+  "aerialhell.guide_book.environment_3.environment_shroomy" : "- Shroomy Biomes",
+  "aerialhell.guide_book.environment_3.environment_cortinarius_violaceus_forest" : "Cortinarius Violaceus Forest",
+  "aerialhell.guide_book.environment_3.environment_verdigris_agaric_forest" : "Verdigris Agaric Forest",
+  "aerialhell.guide_book.environment_3.environment_giant_red_mushroom_forest" : "Giant Red Mushroom Forest",
+  "aerialhell.guide_book.environment_4.environment_crystal" : "- Crystal Biomes",
+  "aerialhell.guide_book.environment_4.environment_crystal_plains" : "Crystal Plains",
+  "aerialhell.guide_book.environment_4.environment_crystal_forest" : "Crystal Forest",
+  "aerialhell.guide_book.environment_4.environment_shadow" : "- Shadow Biomes",
+  "aerialhell.guide_book.environment_4.environment_shadow_plains" : "Shadow Plains",
+  "aerialhell.guide_book.environment_4.environment_shadow_forest" : "Shadow Forest"
 }
