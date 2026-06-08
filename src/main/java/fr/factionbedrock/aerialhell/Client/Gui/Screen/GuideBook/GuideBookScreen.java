@@ -563,7 +563,23 @@ public class GuideBookScreen extends Screen
                     .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_crystal_forest")
                     .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shadow")
                     .addParagraph(19,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shadow_plains")
-                    .addParagraph(27,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shadow_forest")
+                    .addParagraph(27,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shadow_forest"),
+            new Page("bestiary_1", BOOK_TEXTURE,30)
+                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_section_title")
+                    .addParagraph(2,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_section_quote")
+                    .addParagraph(5,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_friendly")
+                    .addParagraph(6,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_friendly_list")
+                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_neutral")
+                    .addParagraph(12,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_neutral_list")
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_aggressive")
+                    .addParagraph(19,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_aggressive_list")
+                    .addParagraph(19, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.5F), (int)(LINE_WIDTH_NO_MARGIN * 0.5F), Alignment.LEFT, "bestiary_aggressive_list2"),
+            new Page("bestiary_1", BOOK_TEXTURE,31)
+                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_friendly")
+                    .addParagraph(3,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_candy_sheep")
+                    .addItemTexture(3, Alignment.RIGHT,-16, true, 1.0F,() -> Items.MUTTON, true)
+                    .addItemTexture(5, Alignment.RIGHT,-16, true, 1.0F,() -> Items.YELLOW_WOOL, true)
+
          //   new Page("utilities_4", BOOK_TEXTURE, 23)
                   //  .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
                   //  .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
@@ -712,7 +728,7 @@ public class GuideBookScreen extends Screen
                 .add("environment", 26);
 
         this.rightTabs = new TabList(false, () -> this.bookLeft, () -> this.bookTop)
-                .add("bestiary", 11)
+                .add("bestiary", 30)
                 .add("bosses", 15)
                 .add("structures", 20)
                 .add("dungeons", 20)
