@@ -5,6 +5,7 @@ import fr.factionbedrock.aerialhell.Client.Gui.Screen.GuideBook.Content.*;
 import fr.factionbedrock.aerialhell.Client.Gui.Screen.GuideBook.Content.RecipeDisplay.CraftingRecipeDisplay;
 import fr.factionbedrock.aerialhell.Client.Gui.Screen.GuideBook.Content.RecipeDisplay.CraftingTableRecipeDisplay;
 import fr.factionbedrock.aerialhell.Client.Util.TextureInfo;
+import fr.factionbedrock.aerialhell.Registry.AerialHellEnchantments;
 import fr.factionbedrock.aerialhell.Registry.AerialHellItems;
 import fr.factionbedrock.aerialhell.Util.ItemHelper;
 import net.minecraft.client.Minecraft;
@@ -141,13 +142,13 @@ public class GuideBookScreen extends Screen
                     .addTextureDisplay(19, Alignment.LEFT, 0.14F, "gui/guide_book/content/mud_dungeon", 1161, 599)
                     .addItemTexture(27, Alignment.RIGHT, 0.85F, AerialHellItems.OBSIDIAN_SHARD, true)
                     .addParagraph(28, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "get_obsidian_material")
-                    .addItemTexture(31, Alignment.LEFT, 0.8F, AerialHellItems.OBSIDIAN_HELMET, true)
-                    .addItemTexture(31, Alignment.CENTER, 0.75F, AerialHellItems.NIGHT_VISION_TOTEM, true)
+                    .addItemTexture(31, Alignment.LEFT, true,0.8F, AerialHellItems.OBSIDIAN_HELMET, true)
+                    .addItemTexture(31, Alignment.CENTER, true, 0.75F, AerialHellItems.NIGHT_VISION_TOTEM, true)
                     .addItemTexture(30, Alignment.RIGHT, 0.8F, AerialHellItems.OBSIDIAN_SWORD, true)
                     .addParagraph(32, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "go_to_dungeon_section"),
             new Page("journey_5", BOOK_TEXTURE, 5)
                     .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "step_11_get_enchanting_table")
-                    .addCraftingRecipeDisplay(4, Alignment.CENTER, 0.6F, new CraftingRecipeDisplay.Ingredients(
+                    .addCraftingRecipeDisplay(4, Alignment.CENTER, 1.0F, new CraftingRecipeDisplay.Ingredients(
                             AerialHellItems.OBSIDIAN_SHARD, AerialHellItems.OBSIDIAN_SHARD,
                             AerialHellItems.OBSIDIAN_SHARD, AerialHellItems.OBSIDIAN_SHARD
                     ), Items.OBSIDIAN::getDefaultInstance, true)
@@ -308,14 +309,15 @@ public class GuideBookScreen extends Screen
                     .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "materials_section_quote")
                     .addParagraph(7, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "materials_content_desc")
                     .addItemTexture(11, Alignment.LEFT, 1.0F, AerialHellItems.FLUORITE, true)
-                    .addItemTexture(11, Alignment.CENTER, 1.0F, AerialHellItems.MAGMATIC_GEL, true)
-                    .addItemTexture(11, Alignment.RIGHT, 1.0F, AerialHellItems.AZURITE_CRYSTAL, true)
-                    .addItemTexture(12, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, 1.0F, AerialHellItems.RUBY, true)
-                    .addItemTexture(12, Alignment.CENTER, LINE_WIDTH_NO_MARGIN / 4 - 8, 1.0F, AerialHellItems.VOLUCITE_VIBRANT, true)
-                    .addItemTexture(13, Alignment.LEFT, 1.0F, AerialHellItems.OBSIDIAN_SHARD, true)
-                    .addItemTexture(13, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.LUNATIC_CRYSTAL, true)
-                    .addItemTexture(13, Alignment.LEFT, 2 * LINE_WIDTH_NO_MARGIN / 3 - 16, 1.0F, AerialHellItems.CURSED_CRYSTAL, true)
-                    .addItemTexture(13, Alignment.RIGHT, 1.0F, AerialHellItems.ARSONIST_INGOT, true)
+                    .addItemTexture(11, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.MAGMATIC_GEL, true)
+                    .addItemTexture(11, Alignment.LEFT, 2 * LINE_WIDTH_NO_MARGIN / 3 - 16, 1.0F, AerialHellItems.AZURITE_CRYSTAL, true)
+                    .addItemTexture(11, Alignment.RIGHT, 1.0F, AerialHellItems.OBSIDIAN_SHARD, true)
+                    .addItemTexture(13, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, 1.0F, AerialHellItems.RUBY, true)
+                    .addItemTexture(13, Alignment.CENTER, LINE_WIDTH_NO_MARGIN / 4 - 8, 1.0F, AerialHellItems.VOLUCITE_VIBRANT, true)
+                    .addItemTexture(15, Alignment.LEFT, 1.0F, AerialHellItems.SHADOW_SHARD, true)
+                    .addItemTexture(15, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.LUNATIC_CRYSTAL, true)
+                    .addItemTexture(15, Alignment.LEFT, 2 * LINE_WIDTH_NO_MARGIN / 3 - 16, 1.0F, AerialHellItems.CURSED_CRYSTAL, true)
+                    .addItemTexture(15, Alignment.RIGHT, 1.0F, AerialHellItems.ARSONIST_INGOT, true)
                     .addParagraph(18, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.12F), (int)(LINE_WIDTH_NO_MARGIN * 0.88F), Alignment.LEFT, "materials_tier_list")
                     .addItemTexture(20, Alignment.LEFT, false, 0.6F, AerialHellItems.AERIAL_TREE_PLANKS, true)
                     .addItemTexture(22, Alignment.LEFT, true, 0.6F, AerialHellItems.FLUORITE, true)
@@ -334,16 +336,17 @@ public class GuideBookScreen extends Screen
                     .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "fluorite_description")
                     .addItemTexture(3, Alignment.LEFT, true, 1.0F, AerialHellItems.FLUORITE_ORE, false)
                     .addItemTexture(5, Alignment.LEFT, true, 1.0F, AerialHellItems.OSCILLATOR, false)
-                    .addItemTexture(7, Alignment.LEFT, true, 1.0F, AerialHellItems.AERIAL_TREE_CRAFTING_TABLE, false)
-                    .addItemTexture(9, Alignment.LEFT, 1.0F, AerialHellItems.FLUORITE_TORCH, true)
-                    .addItemTexture(9, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.STELLAR_LIGHTER, true)
-                    .addItemTexture(9, Alignment.LEFT, 2 * LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.RUBY_FLUORITE_LANTERN, true)
-                    .addItemTexture(9, Alignment.RIGHT, 1.0F, AerialHellItems.FLUORITE_BLOCK, true)
-                    .addItemTexture(11, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, 1.0F, AerialHellItems.OSCILLATOR, true)
-                    .addItemTexture(11, Alignment.RIGHT, -LINE_WIDTH_NO_MARGIN / 4 + 8, 1.0F, AerialHellItems.WEAK_LIGHT_REACTOR, true)
+                    .addItemTexture(7, Alignment.LEFT, false, 1.0F, AerialHellItems.WEAK_LIGHT_REACTOR, false)
+                    .addItemTexture(10, Alignment.LEFT, true, 1.0F, AerialHellItems.AERIAL_TREE_CRAFTING_TABLE, false)
+                    .addItemTexture(12, Alignment.LEFT, 1.0F, AerialHellItems.FLUORITE_TORCH, true)
+                    .addItemTexture(12, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.STELLAR_LIGHTER, true)
+                    .addItemTexture(12, Alignment.LEFT, 2 * LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.RUBY_FLUORITE_LANTERN, true)
+                    .addItemTexture(12, Alignment.RIGHT, 1.0F, AerialHellItems.FLUORITE_BLOCK, true)
+                    .addItemTexture(14, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, 1.0F, AerialHellItems.OSCILLATOR, true)
+                    .addItemTexture(14, Alignment.RIGHT, -LINE_WIDTH_NO_MARGIN / 4 + 8, 1.0F, AerialHellItems.WEAK_LIGHT_REACTOR, true)
                     .addParagraph(18, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "ruby_material")
                     .addItemTexture(18, Alignment.RIGHT, true, 1.0F, AerialHellItems.RUBY, true)
-                    .addItemTexture(18, Alignment.LEFT, LINE_WIDTH_NO_MARGIN - 38, true, 1.0F, AerialHellItems.RAW_RUBY, true)
+                    .addItemTexture(18, Alignment.LEFT, LINE_WIDTH_NO_MARGIN - 38, true, 1.0F, () -> AerialHellItems.RAW_RUBY.get().getDefaultInstance(), true)
                     .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "ruby_description")
                     .addItemTexture(20, Alignment.LEFT, true, 1.0F, AerialHellItems.RUBY_ORE, false)
                     .addItemTexture(22, Alignment.LEFT, true, 1.0F, AerialHellItems.AERIAL_TREE_CHEST, false)
@@ -376,7 +379,7 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(15, Alignment.RIGHT, 1.0F, AerialHellItems.MAGMATIC_GEL_SLAB, true)
                     .addParagraph(18, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "azurite_crystal_material")
                     .addItemTexture(18, Alignment.RIGHT, true, 1.0F, AerialHellItems.AZURITE_CRYSTAL, true)
-                    .addItemTexture(18, Alignment.LEFT, LINE_WIDTH_NO_MARGIN - 38, true, 1.0F, AerialHellItems.RAW_AZURITE, true)
+                    .addItemTexture(18, Alignment.LEFT, LINE_WIDTH_NO_MARGIN - 38, true, 1.0F, () -> AerialHellItems.RAW_AZURITE.get().getDefaultInstance(), true)
                     .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "azurite_crystal_description")
                     .addItemTexture(20, Alignment.LEFT, true, 1.0F, AerialHellItems.AZURITE_ORE, false)
                     .addItemTexture(22, Alignment.LEFT, true, 1.0F, AerialHellItems.AZURITE_PICKAXE, false)
@@ -437,7 +440,7 @@ public class GuideBookScreen extends Screen
                     .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "cursed_crystal_description")
                     .addItemTexture(20, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_CATACOMBS_BRICKS, false)
                     .addItemTexture(22, Alignment.LEFT, 1.0F, AerialHellItems.SHADOW_CHESTPLATE, false)
-                    .addItemTexture(25, Alignment.LEFT, 1.0F, () -> Items.ANVIL, true)
+                    .addItemTexture(25, Alignment.LEFT, 1.0F, () -> Items.ANVIL, false)
                     .addItemTexture(28, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_PINE_CRAFTING_TABLE, false)
                     .addItemTexture(30, Alignment.LEFT, 1.0F, AerialHellItems.SHADOW_HELMET, true)
                     .addItemTexture(30, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.SHADOW_CHESTPLATE, true)
@@ -447,7 +450,7 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(32, Alignment.RIGHT, -LINE_WIDTH_NO_MARGIN / 4 + 8, 1.0F, AerialHellItems.WEAK_SHADOW_REACTOR, true),
             new Page("materials_6", BOOK_TEXTURE, 19)
                     .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "volucite_vibrant_material")
-                    .addItemTexture(1, Alignment.LEFT, LINE_WIDTH_NO_MARGIN - 38, true, 1.0F, AerialHellItems.RAW_VOLUCITE, true)
+                    .addItemTexture(1, Alignment.LEFT, LINE_WIDTH_NO_MARGIN - 38, true, 1.0F, () -> AerialHellItems.RAW_VOLUCITE.get().getDefaultInstance(), true)
                     .addItemTexture(1, Alignment.RIGHT, true, 1.0F, AerialHellItems.VOLUCITE_VIBRANT, true)
                     .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "volucite_vibrant_description")
                     .addItemTexture(3, Alignment.LEFT, 1.0F, AerialHellItems.VOLUCITE_ORE, false)
@@ -459,29 +462,29 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(14, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.VOLUCITE_PICKAXE, true)
                     .addItemTexture(14, Alignment.LEFT, 2 * LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.VOLUCITE_AERIAL_BERRY, true)
                     .addItemTexture(14, Alignment.RIGHT, 1.0F, AerialHellItems.VOLUCITE_FLUORITE_LANTERN, true)
-                    .addItemTexture(16, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, true, 1.0F, AerialHellItems.VOLUCITE_BLOWPIPE, true)
-                    .addItemTexture(16, Alignment.RIGHT, -LINE_WIDTH_NO_MARGIN / 4 + 8, true, 1.0F, AerialHellItems.VOLUCITE_BLOWPIPE_ARROW, true)
+                    .addItemTexture(16, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, true, 1.0F, () -> AerialHellItems.VOLUCITE_BLOWPIPE.get().getDefaultInstance(), true)
+                    .addItemTexture(16, Alignment.RIGHT, -LINE_WIDTH_NO_MARGIN / 4 + 8, true, 1.0F, () -> AerialHellItems.VOLUCITE_BLOWPIPE_ARROW.get().getDefaultInstance(), true)
                     .addParagraph(18, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "arsonist_material")
                     .addItemTexture(18, Alignment.RIGHT, true, 1.0F, AerialHellItems.ARSONIST_INGOT, true)
                     .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "arsonist_description")
                     .addItemTexture(20, Alignment.LEFT, true, 1.0F, AerialHellItems.GOLDEN_NETHER_BRICKS, false)
-                    .addItemTexture(22, Alignment.LEFT, true, 1.0F, AerialHellItems.ARSONIST_CHESTPLATE, true)
-                    .addItemTexture(24, Alignment.LEFT, true, 1.0F, AerialHellItems.ARSONIST_SWORD, true)
-                    .addItemTexture(26, Alignment.LEFT, 1.0F, () -> Items.ANVIL, true)
+                    .addItemTexture(22, Alignment.LEFT, true, 1.0F, AerialHellItems.ARSONIST_CHESTPLATE, false)
+                    .addItemTexture(24, Alignment.LEFT, true, 1.0F, AerialHellItems.ARSONIST_SWORD, false)
+                    .addItemTexture(26, Alignment.LEFT, 1.0F, () -> Items.ANVIL, false)
                     .addItemTexture(29, Alignment.LEFT, true, 1.0F, AerialHellItems.COPPER_PINE_CRAFTING_TABLE, false)
                     .addItemTexture(31, Alignment.LEFT, 1.0F, AerialHellItems.ARSONIST_HELMET, true)
                     .addItemTexture(31, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.ARSONIST_CHESTPLATE, true)
                     .addItemTexture(31, Alignment.LEFT, 2 * LINE_WIDTH_NO_MARGIN / 3 - 8, 1.0F, AerialHellItems.ARSONIST_SWORD, true)
                     .addItemTexture(31, Alignment.RIGHT, 1.0F, AerialHellItems.ARSONIST_LEGGINGS, true)
-                    .addItemTexture(33, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, true, 1.0F, AerialHellItems.ARSONIST_PICKAXE, true)
-                    .addItemTexture(33, Alignment.RIGHT, -LINE_WIDTH_NO_MARGIN / 4 + 8, true, 1.0F, AerialHellItems.ARSONIST_BLOCK, true),
+                    .addItemTexture(33, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, true, 1.0F, () -> AerialHellItems.ARSONIST_PICKAXE.get().getDefaultInstance(), true)
+                    .addItemTexture(33, Alignment.RIGHT, -LINE_WIDTH_NO_MARGIN / 4 + 8, true, 1.0F, () -> AerialHellItems.ARSONIST_BLOCK.get().getDefaultInstance(), true),
             new Page("materials_7", BOOK_TEXTURE, 20)
                     .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "other_materials")
                     .addItemTexture(3, Alignment.LEFT, true, 1.0F, AerialHellItems.SMOKY_QUARTZ_ORE, true)
-                    .addItemTexture(3, Alignment.LEFT, 20, true, 1.0F, AerialHellItems.SMOKY_QUARTZ, true)
+                    .addItemTexture(3, Alignment.LEFT, 20, true, 1.0F, () -> AerialHellItems.SMOKY_QUARTZ.get().getDefaultInstance(), true)
                     .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.35F), (int)(LINE_WIDTH_NO_MARGIN * 0.65F), Alignment.LEFT, "smoky_quartz")
                     .addParagraph(5, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "smoky_quartz_desc")
-                    .addCraftingTableRecipeDisplay(9, Alignment.LEFT, 0.7F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(9, Alignment.LEFT, 0.95F, new CraftingTableRecipeDisplay.Ingredients(
                             () -> null, () -> Items.REDSTONE_TORCH, () -> null,
                             () -> Items.REDSTONE_TORCH, AerialHellItems.SMOKY_QUARTZ, () -> Items.REDSTONE_TORCH,
                             AerialHellItems.STELLAR_STONE, AerialHellItems.STELLAR_STONE, AerialHellItems.STELLAR_STONE
@@ -492,100 +495,110 @@ public class GuideBookScreen extends Screen
                     .addItemTexture(13, Alignment.RIGHT, 1.0F, AerialHellItems.SMOKY_QUARTZ_PILLAR, true)
                     .addItemTexture(15, Alignment.LEFT, 4 * LINE_WIDTH_NO_MARGIN / 5 - 8, 1.0F, AerialHellItems.SMOKY_QUARTZ_BRICKS, true)
                     .addItemTexture(15, Alignment.RIGHT, 1.0F, AerialHellItems.SMOKY_QUARTZ_STAIRS, true)
-                    .addCraftingTableRecipeDisplay(18, Alignment.CENTER, 0.6F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(18, Alignment.LEFT, 0.8F, new CraftingTableRecipeDisplay.Ingredients(
                             AerialHellItems.SLIPPERY_SAND_GLASS, AerialHellItems.SLIPPERY_SAND_GLASS, AerialHellItems.SLIPPERY_SAND_GLASS,
                             AerialHellItems.SMOKY_QUARTZ, AerialHellItems.SMOKY_QUARTZ, AerialHellItems.SMOKY_QUARTZ,
                             AerialHellItems.AERIAL_TREE_SLAB, AerialHellItems.AERIAL_TREE_SLAB, AerialHellItems.AERIAL_TREE_SLAB
                     ), Items.DAYLIGHT_DETECTOR::getDefaultInstance, true)
-                    .addCraftingTableRecipeDisplay(24, Alignment.CENTER, 0.8F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addCraftingTableRecipeDisplay(18, Alignment.RIGHT, 0.8F, new CraftingTableRecipeDisplay.Ingredients(
                             AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE,
                             () -> Items.REDSTONE, () -> Items.REDSTONE, AerialHellItems.SMOKY_QUARTZ,
                             AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE, AerialHellItems.STELLAR_COBBLESTONE
                     ), Items.OBSERVER::getDefaultInstance, true)
-                    .addItemTexture(30, Alignment.LEFT, true, 1.0F, AerialHellItems.CRYSTAL_BLOCK, true)
-                    .addItemTexture(30, Alignment.LEFT, 20, true, 1.0F, AerialHellItems.CRYSTAL, true)
-                    .addParagraph(30, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.35F), (int)(LINE_WIDTH_NO_MARGIN * 0.65F), Alignment.LEFT, "crystal")
-                    .addParagraph(31, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "crystal_desc"),
+                    .addItemTexture(24, Alignment.LEFT, true, 1.0F, AerialHellItems.CRYSTAL_BLOCK, true)
+                    .addItemTexture(24, Alignment.LEFT, 20, true, 1.0F, () -> AerialHellItems.CRYSTAL.get().getDefaultInstance(), true)
+                    .addParagraph(24, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.35F), (int)(LINE_WIDTH_NO_MARGIN * 0.65F), Alignment.LEFT, "crystal")
+                    .addParagraph(25, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "crystal_desc")
+                    .addItemTexture(29, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_SHARD, true)
+                    .addParagraph(29, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.25F), (int)(LINE_WIDTH_NO_MARGIN * 0.75F), Alignment.LEFT, "shadow_shard")
+                    .addParagraph(30, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "shadow_shard_desc"),
             new Page("effects_1", BOOK_TEXTURE, 21)
                     .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "effects_section_title")
-                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "effects_content_desc")
-                    .addParagraph(6,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "head_in_the_clouds")
-                    .addTextureDisplay(7,Alignment.CENTER,1.0F,"mob_effect/head_in_the_clouds",25,25,"effect.aerialhell.head_in_the_clouds")
-                    .addParagraph(10,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"head_in_the_clouds_desc")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"head_in_the_clouds_desc2")
-                    .addItemTexture(20, Alignment.LEFT,16, 1.0F, AerialHellItems.SOLID_ETHER_SOUP, true)
-                    .addItemTexture(20, Alignment.LEFT,48, 1.0F, AerialHellItems.FROZEN_SOLID_ETHER_SOUP, true)
-                    .addItemTexture(20, Alignment.LEFT,80, 1.0F, AerialHellItems.VIBRANT_SOLID_ETHER_SOUP, true)
-                    .addCraftingTableRecipeDisplay(24, Alignment.CENTER, 1.0F, new CraftingTableRecipeDisplay.Ingredients(
+                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "effects_section_quote")
+                    .addParagraph(8, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "effects_content_desc")
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "beneficial")
+                    .addTextureDisplay(19, Alignment.LEFT, 1.0F, "mob_effect/head_in_the_clouds", 25, 25, "effect.aerialhell.head_in_the_clouds")
+                    .addTextureDisplay(19, Alignment.RIGHT, 1.0F, "mob_effect/shadow_immunity", 25, 25, "effect.aerialhell.shadow_immunity")
+                    .addTextureDisplay(22, Alignment.LEFT, 1.0F, "mob_effect/shadow_bind", 25, 25, "effect.aerialhell.shadow_bind")
+                    .addTextureDisplay(22, Alignment.RIGHT, 1.0F, "mob_effect/god", 25, 25, "effect.aerialhell.god")
+                    .addParagraph(26,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "negative")
+                    .addTextureDisplay(27, Alignment.LEFT, 1.0F, "mob_effect/vulnerability", 25, 25, "effect.aerialhell.vulnerability")
+                    .addTextureDisplay(27, Alignment.RIGHT, 1.0F, "mob_effect/traitor", 25, 25, "effect.aerialhell.traitor"),
+            new Page("effects_2", BOOK_TEXTURE, 22)
+                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "head_in_the_clouds")
+                    .addTextureDisplay(0, Alignment.RIGHT, 1.0F, "mob_effect/head_in_the_clouds", 25, 25, "effect.aerialhell.head_in_the_clouds")
+                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "head_in_the_clouds_desc")
+                    .addItemTexture(3, Alignment.LEFT, false, 1.0F, () -> Items.FEATHER, false)
+                    .addItemTexture(7, Alignment.LEFT, true, 1.0F, AerialHellItems.WHITE_SOLID_ETHER, true)
+                    .addItemTexture(10, Alignment.LEFT, false, 1.0F, AerialHellItems.GHOST_BOAT_PLANKS, true)
+                    .addParagraph(13, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), 75, Alignment.LEFT, "head_in_the_clouds_soup")
+                    .addItemTexture(13, Alignment.LEFT, true, 1.0F, AerialHellItems.SOLID_ETHER_SOUP, true)
+                    .addItemTexture(14, Alignment.LEFT, true, 1.0F, AerialHellItems.FROZEN_SOLID_ETHER_SOUP, true)
+                    .addItemTexture(15, Alignment.LEFT, true, 1.0F, AerialHellItems.VIBRANT_SOLID_ETHER_SOUP, true)
+                    .addCraftingTableRecipeDisplay(13, Alignment.RIGHT, 0.65F, new CraftingTableRecipeDisplay.Ingredients(
                             AerialHellItems.WHITE_SOLID_ETHER_FRAGMENT, AerialHellItems.BLUE_SOLID_ETHER_FRAGMENT, AerialHellItems.GOLDEN_SOLID_ETHER_FRAGMENT,
                             AerialHellItems.GREEN_SOLID_ETHER_FRAGMENT, AerialHellItems.SKY_BOWL, () -> null,
                             () -> null, () -> null, () -> null
-                    ), () -> AerialHellItems.SOLID_ETHER_SOUP.get().getDefaultInstance(), true),
-            new Page("effects_2", BOOK_TEXTURE,22)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"vulnerability")
-                    .addTextureDisplay(2,Alignment.CENTER,1.0F,"mob_effect/vulnerability",25,25,"effect.aerialhell.vulnerability")
-                    .addParagraph(5,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"vulnerability_desc")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "shadow_immunity")
-                    .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/shadow_immunity",25,25,"effect.aerialhell.shadow_immunity")
-                    .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"shadow_immunity_desc")
-                    .addCraftingRecipeDisplay(30, Alignment.CENTER, 1.0F, new CraftingRecipeDisplay.Ingredients(
+                    ), () -> AerialHellItems.SOLID_ETHER_SOUP.get().getDefaultInstance(), true)
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "shadow_immunity")
+                    .addTextureDisplay(17, Alignment.RIGHT, 1.0F, "mob_effect/shadow_immunity", 25, 25, "effect.aerialhell.shadow_immunity")
+                    .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "shadow_immunity_desc")
+                    .addItemTexture(20, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_FRUIT_STEW, false)
+                    .addCraftingRecipeDisplay(22, Alignment.CENTER, 0.8F, new CraftingRecipeDisplay.Ingredients(
                             AerialHellItems.DARK_SHADOW_FRUIT, AerialHellItems.PURPLE_SHADOW_FRUIT,
                             AerialHellItems.SHADOW_SPIDER_EYE, AerialHellItems.SKY_BOWL
-                    ), () -> AerialHellItems.SHADOW_FRUIT_STEW.get().getDefaultInstance(), true),
+                    ), () -> AerialHellItems.SHADOW_FRUIT_STEW.get().getDefaultInstance(), true)
+                    .addItemTexture(26, Alignment.LEFT, false, 1.0F, AerialHellItems.SHADOW_BRAMBLES, true)
+                    .addItemTexture(31, Alignment.LEFT, 0, true, 1.0F, () -> ItemHelper.createPotionItemStack(Potions.TURTLE_MASTER), false),
             new Page("effects_3", BOOK_TEXTURE,23)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "god")
-                    .addTextureDisplay(2,Alignment.CENTER,1.0F,"mob_effect/god",25,25,"effect.aerialhell.god")
-                    .addParagraph(5,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"god_desc")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER,"traitor")
-                    .addTextureDisplay(19,Alignment.CENTER,1.0F,"mob_effect/traitor",25,25,"effect.aerialhell.traitor")
-                    .addParagraph(22,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT,"traitor_desc"),
-            new Page("environment_1", BOOK_TEXTURE,26)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "environment_section_title")
-                    .addParagraph(2,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "environment_section_quote")
-                    .addParagraph(6,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_classic")
-                    .addParagraph(8,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_plains")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_lapis_robania_savana")
-                    .addParagraph(26,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_slippery_sand_ocean"),
-            new Page("environment_2", BOOK_TEXTURE,27)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_forests")
-                    .addParagraph(3,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_tree_forest")
-                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_copper_pine_forest")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_copper_pine_highland_forest")
-                    .addParagraph(26,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_stellar_jungle"),
-            new Page("environment_3", BOOK_TEXTURE,28)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shroomy")
-                    .addParagraph(3,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_cortinarius_violaceus_forest")
-                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_verdigris_agaric_forest")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_giant_red_mushroom_forest"),
-            new Page("environment_4", BOOK_TEXTURE,29)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_crystal")
-                    .addParagraph(3,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_crystal_plains")
-                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_crystal_forest")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shadow")
-                    .addParagraph(19,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shadow_plains")
-                    .addParagraph(27,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "environment_shadow_forest"),
-            new Page("bestiary_1", BOOK_TEXTURE,30)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_section_title")
-                    .addParagraph(2,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_section_quote")
-                    .addParagraph(5,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_friendly")
-                    .addParagraph(6,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_friendly_list")
-                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_neutral")
-                    .addParagraph(12,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_neutral_list")
-                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_aggressive")
-                    .addParagraph(19,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_aggressive_list")
-                    .addParagraph(19, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.5F), (int)(LINE_WIDTH_NO_MARGIN * 0.5F), Alignment.LEFT, "bestiary_aggressive_list2"),
-            new Page("bestiary_1", BOOK_TEXTURE,31)
-                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, "bestiary_friendly")
-                    .addParagraph(3,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "bestiary_candy_sheep")
-                    .addItemTexture(3, Alignment.RIGHT,-16, true, 1.0F,() -> Items.MUTTON, true)
-                    .addItemTexture(5, Alignment.RIGHT,-16, true, 1.0F,() -> Items.YELLOW_WOOL, true)
-
-         //   new Page("utilities_4", BOOK_TEXTURE, 23)
-                  //  .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
-                  //  .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1"),
-         //   new Page("utilities_5", BOOK_TEXTURE, 24)
-                  //  .addParagraph(0, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "title")
-                   // .addParagraph(2, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "content_1")
+                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "vulnerability")
+                    .addTextureDisplay(0 , Alignment.RIGHT, 1.0F, "mob_effect/vulnerability", 25, 25, "effect.aerialhell.vulnerability")
+                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "vulnerability_desc")
+                    .addItemTexture(4, Alignment.LEFT, 0, true, 1.0F, () -> ItemHelper.createPotionItemStack(Potions.HARMING), false)
+                    .addItemTexture(7, Alignment.LEFT, 0, false, 1.0F, () -> ItemHelper.createPotionItemStack(Potions.STRONG_HARMING), false)
+                    .addItemTexture(10, Alignment.LEFT, 0, false, 1.0F, () -> ItemHelper.createPotionItemStack(Potions.LONG_WEAKNESS), false)
+                    .addItemTexture(13, Alignment.LEFT, false, 1.0F, AerialHellItems.SHADOW_SHARD, false)
+                    .addItemTexture(16, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_FRUIT_STEW, false)
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "shadow_bind")
+                    .addTextureDisplay(17, Alignment.RIGHT, 1.0F, "mob_effect/shadow_bind", 25, 25, "effect.aerialhell.shadow_bind")
+                    .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "shadow_bind_desc")
+                    .addItemTexture(20, Alignment.LEFT, false, 1.0F, AerialHellItems.SHADOW_CHESTPLATE, false)
+                    .addItemTexture(23, Alignment.LEFT, false, 1.0F, AerialHellItems.SHADOW_GRASS_BLOCK, false)
+                    .addItemTexture(26, Alignment.LEFT, false, 1.0F, AerialHellItems.SHADOW_BRAMBLES, true)
+                    .addItemTexture(31, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_AUTOMATON_SPAWN_EGG, false),
+            new Page("effects_4", BOOK_TEXTURE,24)
+                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "god")
+                    .addTextureDisplay(0 , Alignment.RIGHT, 1.0F, "mob_effect/god", 25, 25, "effect.aerialhell.god")
+                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "god_desc")
+                    .addItemTexture(4, Alignment.LEFT, 0, true, 1.0F, () -> ItemHelper.createPotionItemStack(Potions.REGENERATION), false)
+                    .addItemTexture(7, Alignment.LEFT, true, 1.0F, AerialHellItems.BLACK_ROSE, false)
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "traitor")
+                    .addTextureDisplay(17, Alignment.RIGHT, 1.0F, "mob_effect/traitor", 25, 25, "effect.aerialhell.traitor")
+                    .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "traitor_desc")
+                    .addItemTexture(21, Alignment.LEFT, true, 1.0F, AerialHellItems.DISLOYAL_SWORD, false)
+                    .addItemTexture(24, Alignment.LEFT, 0, false, 1.0F, () -> ItemHelper.createPotionItemStack(Potions.INFESTED), false),
+            new Page("enchantments_1", BOOK_TEXTURE, 25)
+                    .addParagraph(1, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "enchantments_section_title")
+                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.CENTER, 0xFF5C3A1E, "enchantments_section_quote")
+                    .addParagraph(7, MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "enchantments_content_desc")
+                    .addItemTexture(13, Alignment.LEFT, LINE_WIDTH_NO_MARGIN / 4 - 8, true, 1.0F, () -> ItemHelper.createEnchantedBookItemStack(AerialHellEnchantments.SOLID_ETHER_WALKER, 1, Minecraft.getInstance().level.registryAccess()), true)
+                    .addItemTexture(13, Alignment.LEFT, 3 * LINE_WIDTH_NO_MARGIN / 4 - 8, true, 1.0F, () -> ItemHelper.createEnchantedBookItemStack(AerialHellEnchantments.VULNERABILITY_ASPECT, 1, Minecraft.getInstance().level.registryAccess()), true)
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "solid_ether_walker")
+                    .addItemTexture(18, Alignment.RIGHT, 0, true, 1.0F, () -> ItemHelper.createEnchantedBookItemStack(AerialHellEnchantments.SOLID_ETHER_WALKER, 1, Minecraft.getInstance().level.registryAccess()), true)
+                    .addParagraph(20, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "solid_ether_walker_desc")
+                    .addItemTexture(20, Alignment.LEFT, true, 1.0F, AerialHellItems.AERIAL_TREE_CHEST, false)
+                    .addItemTexture(22, Alignment.LEFT, true, 1.0F, AerialHellItems.LUNATIC_STONE, false)
+                    .addItemTexture(25, Alignment.LEFT, true, 1.0F, AerialHellItems.WHITE_SOLID_ETHER, true)
+                    .addItemTexture(28, Alignment.LEFT, false, 1.0F, AerialHellItems.GHOST_BOAT_PLANKS, true),
+            new Page("enchantments_2", BOOK_TEXTURE, 26)
+                    .addParagraph(1,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "vulnerability_aspect")
+                    .addItemTexture(1, Alignment.RIGHT, 0, true, 1.0F, () -> ItemHelper.createEnchantedBookItemStack(AerialHellEnchantments.VULNERABILITY_ASPECT, 1, Minecraft.getInstance().level.registryAccess()), true)
+                    .addParagraph(3, MAX_LINES_PER_TECHNICAL_PAGE - 1, (int)(LINE_WIDTH_NO_MARGIN * 0.2F), (int)(LINE_WIDTH_NO_MARGIN * 0.8F), Alignment.LEFT, "vulnerability_aspect_desc")
+                    .addItemTexture(3, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_PINE_CHEST, false)
+                    .addItemTexture(5, Alignment.LEFT, true, 1.0F, AerialHellItems.SHADOW_CATACOMBS_BRICKS, false)
+                    .addItemTexture(8, Alignment.LEFT, true, 1.0F, AerialHellItems.CURSED_SWORD, false)
+                    .addParagraph(11,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "vulnerability_aspect_additional_info")
+                    .addParagraph(18,MAX_LINES_PER_TECHNICAL_PAGE - 1, LINE_WIDTH_NO_MARGIN, Alignment.LEFT, "light_entities_additional_info")
     );
 
     //The guide book is designed to contain 6 tabs on each side.
@@ -725,10 +738,10 @@ public class GuideBookScreen extends Screen
                 .add("materials", 14)
                 .add("effects", 21)
                 .add("enchanting", 24)
-                .add("environment", 26);
+                .add("environment", 6);
 
         this.rightTabs = new TabList(false, () -> this.bookLeft, () -> this.bookTop)
-                .add("bestiary", 30)
+                .add("bestiary", 11)
                 .add("bosses", 15)
                 .add("structures", 20)
                 .add("dungeons", 20)

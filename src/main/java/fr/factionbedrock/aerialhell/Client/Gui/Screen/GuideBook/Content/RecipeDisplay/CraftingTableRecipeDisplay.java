@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, float scale, CraftingTableRecipeDisplay.Ingredients ingredients, Supplier<ItemStack> result, boolean displayTooltip) implements PageElement
+public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, float scale, Ingredients ingredients, Supplier<ItemStack> result, boolean displayTooltip) implements PageElement
 {
     private static final TextureInfo CRAFTING_TABLE_GRID_TEXTURE = new TextureInfo(Identifier.fromNamespaceAndPath(AerialHell.MODID, "textures/gui/guide_book/recipe/crafting_table_grid_display.png"), 100, 54);
 
@@ -28,6 +28,7 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
         Line line = lines.get(this.lineIndex());
 
         int recipeWidth = (int)(CRAFTING_TABLE_GRID_TEXTURE.width() * this.scale());
+        int slotSize = (int)(16 * this.scale());
 
         int startX = switch (this.alignment())
         {
@@ -38,15 +39,14 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
 
         int startY = line.startY();
 
-        // tout dans le même espace scalé
         graphics.pose().pushMatrix();
         graphics.pose().translate(startX, startY);
         graphics.pose().scale(this.scale(), this.scale());
 
-        // render crafting grid background (coordonnées non-scalées)
+        //rendercrafting grid background
         graphics.blit(RenderPipelines.GUI_TEXTURED, CRAFTING_TABLE_GRID_TEXTURE.texture(), 0, 0, CRAFTING_TABLE_GRID_TEXTURE.u(), CRAFTING_TABLE_GRID_TEXTURE.v(), CRAFTING_TABLE_GRID_TEXTURE.width(), CRAFTING_TABLE_GRID_TEXTURE.height(), CRAFTING_TABLE_GRID_TEXTURE.textureWidth(), CRAFTING_TABLE_GRID_TEXTURE.textureHeight());
 
-        // render ingredients (coordonnées non-scalées : 17 = 16 slot + 1 séparateur)
+        //render ingredients
         for (int i = 0; i < ingredients.get().size(); i++)
         {
             Item item = ingredients.get().get(i).get();
@@ -55,16 +55,17 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
             int row = i / 3;
             int col = i % 3;
 
+            //1 px outer margin + 1 px separator before first slot
+            //17 is slot size + 1 pixel separator
             int itemLocalX = 2 + col * 17;
             int itemLocalY = 2 + row * 17;
 
-            // hover en coordonnées écran
+            graphics.item(item.getDefaultInstance(), itemLocalX, itemLocalY);
+
+            //hover
             int itemScreenX = startX + (int)(itemLocalX * this.scale());
             int itemScreenY = startY + (int)(itemLocalY * this.scale());
-            int slotSize = (int)(16 * this.scale());
             boolean hovered = mouseX >= itemScreenX && mouseX <= itemScreenX + slotSize && mouseY >= itemScreenY && mouseY <= itemScreenY + slotSize;
-
-            graphics.item(item.getDefaultInstance(), itemLocalX, itemLocalY);
 
             if (hovered && this.displayTooltip())
             {
@@ -72,14 +73,9 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
             }
         }
 
-        // render result item (coordonnées non-scalées)
+        //render result item
         int resultLocalX = 82;
         int resultLocalY = 19;
-
-        int resultScreenX = startX + (int)(resultLocalX * this.scale());
-        int resultScreenY = startY + (int)(resultLocalY * this.scale());
-        int slotSize = (int)(16 * this.scale());
-        boolean hovered = mouseX >= resultScreenX && mouseX <= resultScreenX + slotSize && mouseY >= resultScreenY && mouseY <= resultScreenY + slotSize;
 
         graphics.item(resultItemStack, resultLocalX, resultLocalY);
         if (resultItemStack.getCount() > 1)
@@ -88,9 +84,14 @@ public record CraftingTableRecipeDisplay(int lineIndex, Alignment alignment, flo
             graphics.text(font, amount, resultLocalX + 17 - font.width(amount), resultLocalY + 9, 0xFF7A5C3A, false);
         }
 
-        graphics.pose().popMatrix();
+        //hover
+        int resultScreenX = startX + (int)(resultLocalX * this.scale());
+        int resultScreenY = startY + (int)(resultLocalY * this.scale());
+        boolean hovered = mouseX >= resultScreenX && mouseX <= resultScreenX + slotSize && mouseY >= resultScreenY && mouseY <= resultScreenY + slotSize;
 
         if (hovered && this.displayTooltip()) {graphics.setTooltipForNextFrame(font, resultItemStack, mouseX, mouseY);}
+
+        graphics.pose().popMatrix();
     }
 
     public static class Ingredients
