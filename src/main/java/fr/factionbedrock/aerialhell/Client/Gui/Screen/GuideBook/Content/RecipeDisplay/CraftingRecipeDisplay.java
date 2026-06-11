@@ -38,15 +38,15 @@ public record CraftingRecipeDisplay(int lineIndex, Alignment alignment, float sc
 
         int startY = line.startY();
 
-        // tout dans le même espace scalé
         graphics.pose().pushMatrix();
         graphics.pose().translate(startX, startY);
         graphics.pose().scale(this.scale(), this.scale());
 
-        // render background (coordonnées non-scalées)
+        //background (2x2 grid)
         graphics.blit(RenderPipelines.GUI_TEXTURED, CRAFTING_GRID_TEXTURE.texture(), 0, 0, CRAFTING_GRID_TEXTURE.u(), CRAFTING_GRID_TEXTURE.v(), CRAFTING_GRID_TEXTURE.width(), CRAFTING_GRID_TEXTURE.height(), CRAFTING_GRID_TEXTURE.textureWidth(), CRAFTING_GRID_TEXTURE.textureHeight());
 
-        // render ingredients (coordonnées non-scalées : 17 = 16 slot + 1 séparateur)
+        //render ingredients
+        //17 = 16 (item size) + 1 separator
         for (int i = 0; i < ingredients.get().size(); i++)
         {
             Item item = ingredients.get().get(i).get();
@@ -58,28 +58,23 @@ public record CraftingRecipeDisplay(int lineIndex, Alignment alignment, float sc
             int itemLocalX = 2 + col * 17;
             int itemLocalY = 2 + row * 17;
 
-            // hover en coordonnées écran
+            graphics.item(item.getDefaultInstance(), itemLocalX, itemLocalY);
+
             int itemScreenX = startX + (int)(itemLocalX * this.scale());
             int itemScreenY = startY + (int)(itemLocalY * this.scale());
             int slotSize = (int)(16 * this.scale());
             boolean hovered = mouseX >= itemScreenX && mouseX <= itemScreenX + slotSize && mouseY >= itemScreenY && mouseY <= itemScreenY + slotSize;
 
-            graphics.item(item.getDefaultInstance(), itemLocalX, itemLocalY);
-
+            //hover
             if (hovered && this.displayTooltip())
             {
                 graphics.setTooltipForNextFrame(font, item.getDefaultInstance(), mouseX, mouseY);
             }
         }
 
-        // render result (coordonnées non-scalées)
+        // render result item
         int resultLocalX = 64;
         int resultLocalY = 10;
-
-        int resultScreenX = startX + (int)(resultLocalX * this.scale());
-        int resultScreenY = startY + (int)(resultLocalY * this.scale());
-        int slotSize = (int)(16 * this.scale());
-        boolean hovered = mouseX >= resultScreenX && mouseX <= resultScreenX + slotSize && mouseY >= resultScreenY && mouseY <= resultScreenY + slotSize;
 
         graphics.item(resultItemStack, resultLocalX, resultLocalY);
         if (resultItemStack.getCount() > 1)
@@ -88,9 +83,14 @@ public record CraftingRecipeDisplay(int lineIndex, Alignment alignment, float sc
             graphics.text(font, amount, resultLocalX + 17 - font.width(amount), resultLocalY + 9, 0xFF7A5C3A, false);
         }
 
-        graphics.pose().popMatrix();
-
+        //hover
+        int resultScreenX = startX + (int)(resultLocalX * this.scale());
+        int resultScreenY = startY + (int)(resultLocalY * this.scale());
+        int slotSize = (int)(16 * this.scale());
+        boolean hovered = mouseX >= resultScreenX && mouseX <= resultScreenX + slotSize && mouseY >= resultScreenY && mouseY <= resultScreenY + slotSize;
         if (hovered && this.displayTooltip()) {graphics.setTooltipForNextFrame(font, resultItemStack, mouseX, mouseY);}
+
+        graphics.pose().popMatrix();
     }
 
     public static class Ingredients
