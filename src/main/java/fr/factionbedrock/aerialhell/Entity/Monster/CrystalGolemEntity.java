@@ -6,7 +6,6 @@ import fr.factionbedrock.aerialhell.Entity.AI.FleeBlockGoal;
 import fr.factionbedrock.aerialhell.Entity.GoalConditionEntity;
 import fr.factionbedrock.aerialhell.Entity.AerialHellGolemEntity;
 import fr.factionbedrock.aerialhell.Registry.AerialHellBlocks;
-import fr.factionbedrock.aerialhell.Util.EntityHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -28,7 +27,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.List;
 
-public class CrystalGolemEntity extends AerialHellGolemEntity implements MisleadableEntity, GoalConditionEntity.PhaseAwareGoalConditionEntity
+public class CrystalGolemEntity extends AerialHellGolemEntity implements LunarMisleadableEntity, GoalConditionEntity.PhaseAwareGoalConditionEntity
 {
     public static final int ACTIVE_GOALS = 0, DISAPPEARING_GOALS = 1;
 	public static final EntityDataAccessor<Boolean> DISAPPEARING = SynchedEntityData.<Boolean>defineId(CrystalGolemEntity.class, EntityDataSerializers.BOOLEAN);
@@ -40,18 +39,19 @@ public class CrystalGolemEntity extends AerialHellGolemEntity implements Mislead
         this.xpReward = 6;
     }
 
-    /* ------- MisleadableEntity : Interface method implementation ------- */
-    @Override public boolean isMisleadedBy(LivingEntity livingEntity)
-    {
-        return EntityHelper.isLivingEntityMisleadingLunar(livingEntity);
-    }
-    /* ------------------------------------------------------------------- */
-
     /* ------- MisleadableEntity : Superclass methods Overridden to delegate to interface ------- */
     @Override public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount)
     {
         return this.misleadableHurtServer(serverLevel, source, amount, super::hurtServer);
     }
+
+    @Override public void die(DamageSource damageSource)
+    {
+        this.misleadableDie(damageSource);
+        super.die(damageSource);
+    }
+
+    @Override public boolean canAttack(LivingEntity target) {return this.misleadableCanAttack(target, super::canAttack);}
     /* ------------------------------------------------------------------------------------------ */
 
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder)

@@ -40,10 +40,19 @@ public class GhostSlimeNinjaPirateEntity extends SlimeNinjaPirateEntity implemen
     {
         return this.misleadableHurtServer(serverLevel, source, amount, super::hurtServer);
     }
+
+    @Override public void die(DamageSource damageSource)
+    {
+        this.misleadableDie(damageSource);
+        super.die(damageSource);
+    }
+
+    @Override public boolean canAttack(LivingEntity target) {return this.misleadableCanAttack(target, super::canAttack);}
     /* ------------------------------------------------------------------------------------------ */
 
     /* ------- MisleadableEntity : Interface methods Overridden for specific behavior ------- */
     @Override public boolean canMisleaderHurt() {return false;}
+    @Override public TraitorTrigger traitorTrigger(DamageSource damageSource) {return TraitorTrigger.NEVER;}
     /* -------------------------------------------------------------------------------------- */
 
     /* ------- GoalSimpleConditionEntity : Interface method implementation ------- */

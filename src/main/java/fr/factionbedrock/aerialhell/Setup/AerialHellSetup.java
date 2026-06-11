@@ -1,9 +1,9 @@
 package fr.factionbedrock.aerialhell.Setup;
 
 import fr.factionbedrock.aerialhell.Client.Event.Listeners.DataPacketPayloads;
+import fr.factionbedrock.aerialhell.Client.Event.Listeners.DatapackSyncHandler;
 import fr.factionbedrock.aerialhell.Client.Registry.AerialHellParticleTypes;
 import fr.factionbedrock.aerialhell.Config.AerialHellConfigLoader;
-import fr.factionbedrock.aerialhell.Event.Listeners.AdvancementEventListener;
 import fr.factionbedrock.aerialhell.Event.Listeners.BlockEventListener;
 import fr.factionbedrock.aerialhell.Event.Listeners.ToolsAndArmorEventListener;
 import fr.factionbedrock.aerialhell.Recipe.CustomBrewingRecipe;
@@ -36,6 +36,7 @@ public class AerialHellSetup
         	AerialHellItems.registerCompostableItems();
         	AerialHellBlocks.registerPots();
         	AerialHellBlocks.registerAxeStrippingBlocks();
+            AerialHellRecipes.PropertySet.registerRecipeProperty();
         });
     }
 	
@@ -76,7 +77,7 @@ public class AerialHellSetup
         bus.addListener(ToolsAndArmorEventListener::onPlayerHarvest);
         //bus.addListener(ToolsAndArmorEventListener::addReach); TODO
         bus.addListener(CustomBrewingRecipe::addBrewingRecipes);
-        bus.addListener(AdvancementEventListener::onAdvancementEarn);
+        bus.addListener(DatapackSyncHandler::onDatapackSync);
     }
 
     public static void listen(IEventBus bus)

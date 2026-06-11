@@ -19,9 +19,22 @@ public interface ExtraHoverTextItem
 {
     Item getSelf();
 
-    default void appendReactorMenuHoverText(Item.TooltipContext context, Consumer<Component> tooltipAdder)
+    default void appendOptionalDescriptionsHoverText(Item.TooltipContext context, Consumer<Component> tooltipAdder)
     {
-        Player player = context.player();
+        this.getOptionalItemDescription(1).ifPresent(description -> tooltipAdder.accept(description.withStyle(ChatFormatting.GRAY)));
+        this.getOptionalItemDescription(2).ifPresent(description -> tooltipAdder.accept(description.withStyle(ChatFormatting.GRAY)));
+        this.getOptionalItemDescription(3).ifPresent(description -> tooltipAdder.accept(description.withStyle(ChatFormatting.GRAY)));
+    }
+
+    default void appendOptionalDescriptionHoverText(Item.TooltipContext context, Consumer<Component> tooltipAdder, String key, ChatFormatting formatting)
+    {
+        this.getOptionalDescription(key).ifPresent(description -> tooltipAdder.accept(description.withStyle(formatting)));
+    }
+
+    default void appendAbilityDescriptionHoverText(Player player, Item.TooltipContext context, Consumer<Component> tooltipAdder) {}
+
+    default void appendReactorMenuHoverText(Player player, Item.TooltipContext context, Consumer<Component> tooltipAdder)
+    {
         if (player != null && player.containerMenu instanceof ReactorMenu reactorMenu)
         {
             if (reactorMenu.isLightReactor() && ItemHelper.getOscillatingMap().containsKey(this.getSelf()))
@@ -37,9 +50,8 @@ public interface ExtraHoverTextItem
         }
     }
 
-    default void appendOptionalItemHoverText(Item.TooltipContext context, Consumer<Component> tooltipAdder, String suffix, Predicate<AbstractContainerMenu> condition)
+    default void appendOptionalItemHoverText(Player player, Item.TooltipContext context, Consumer<Component> tooltipAdder, String suffix, Predicate<AbstractContainerMenu> condition)
     {
-        Player player = context.player();
         if (player != null && condition.test(player.containerMenu))
         {
             this.getOptionalItemDescription(suffix).ifPresent(description -> tooltipAdder.accept(description.withStyle(ChatFormatting.GOLD)));

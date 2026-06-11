@@ -35,8 +35,8 @@ public class VoluciteCastleStructure extends AbstractAerialHellStructure
 
     @Override protected boolean isStructureChunk(GenerationContext context)
     {
-        return getTerrainHeight(context) < MIN_GEN_HEIGHT + MAX_GEN_HEIGHT / 2;
+        return false;//getTerrainHeight(context) < MIN_GEN_HEIGHT + MAX_GEN_HEIGHT / 2; TODO temporary disabled volucite castle generation
     }
 
-    @Override public StructureType<?> type() {return AerialHellStructures.GOLDEN_NETHER_PRISON_STRUCTURE.get();}
+    @Override public StructureType<?> type() {return AerialHellStructures.VOLUCITE_CASTLE.get();}
 }

@@ -11,7 +11,13 @@ import java.util.List;
 public class AbilitySelector
 {
     private final List<ItemAbility> abilities;
-    private AbilitySelector() {this.abilities = new ArrayList<>();}
+    private final List<String> abilitiesDescIds;
+
+    private AbilitySelector()
+    {
+        this.abilities = new ArrayList<>();
+        this.abilitiesDescIds = new ArrayList<>();
+    }
 
     public static AbilitySelector of(ItemAbility firstAbility)
     {
@@ -20,14 +26,21 @@ public class AbilitySelector
         return selector;
     }
 
-    public AbilitySelector nextAbility(ItemAbility nextAbility) {this.abilities.add(nextAbility); return this;}
+    public AbilitySelector nextAbility(ItemAbility nextAbility)
+    {
+        this.abilities.add(nextAbility);
+        this.abilitiesDescIds.add(nextAbility.getDescId());
+        return this;
+    }
 
-    public boolean tryUseAbility(LivingEntity entity, ItemStack stack, @Nullable EquipmentSlot slot, AbilityUseSituation useSituation)
+    public boolean tryUseAbility(AbilityUseSituation useSituation)
     {
         for (ItemAbility ability : this.abilities)
         {
-            if (ability.tryApplyModules(entity, stack, slot, useSituation)) {return true;}
+            if (ability.tryApplyModules(useSituation)) {return true;}
         }
         return false;
     }
+
+    public List<String> getAbilitiesDescIds() {return this.abilitiesDescIds;}
 }

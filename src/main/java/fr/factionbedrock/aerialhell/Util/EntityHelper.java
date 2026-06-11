@@ -33,6 +33,7 @@ import net.minecraft.world.level.portal.TeleportTransition;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -135,6 +136,11 @@ public class EntityHelper
         return false;
     }
 
+    public static void applyTraitorEffectTo(LivingEntity livingEntity)
+    {
+        livingEntity.addEffect(new MobEffectInstance(AerialHellMobEffects.TRAITOR.getDelegate(), 12000, 0));
+    }
+
     public static void multiplyDeltaMovement(Entity entity, double xzFactor, double yFactor)
     {
         entity.setDeltaMovement(entity.getDeltaMovement().multiply(xzFactor, yFactor, xzFactor));
@@ -209,38 +215,82 @@ public class EntityHelper
         return isLivingEntityShadowBind(entity) && !isLivingEntityATraitor(entity);
     }
 
-    public static List<ItemStack> getEquippedHumanoidArmorItemList(LivingEntity livingEntity)
+    public static boolean hasItemStackInHotbar(Player player, ItemStack stackToSearch)
+    {
+        for (ItemStack stack : getHotbarItemStackList(player))
+        {
+            if (ItemStack.matches(stack, stackToSearch)) {return true;}
+        }
+        return false;
+    }
+
+    public static List<ItemStack> getHotbarItemStackList(Player player)
     {
         List<ItemStack> list = new ArrayList<>();
-        for(EquipmentSlot equipmentslot : EquipmentSlotGroup.ARMOR)
+        for (int i = 0; i < 9; i++)
         {
-            if (equipmentslot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR)
+            ItemStack stack = player.getInventory().getItem(i);
+            if (!stack.isEmpty())
             {
-                ItemStack itemstack = livingEntity.getItemBySlot(equipmentslot);
-                if (!itemstack.isEmpty()) {list.add(itemstack);}
+                list.add(stack);
             }
         }
         return list;
     }
 
-    public static List<ItemStack> getInHandsItemList(LivingEntity livingEntity)
+    public static List<EquippedItemStack> getEquippedItemStackList(LivingEntity livingEntity)
     {
-        List<ItemStack> list = new ArrayList<>();
-        for(EquipmentSlot equipmentslot : EquipmentSlotGroup.HAND)
-        {
-            ItemStack itemstack = livingEntity.getItemBySlot(equipmentslot);
-            if (!itemstack.isEmpty()) {list.add(itemstack);}
-        }
+        List<EquippedItemStack> list = new ArrayList<>();
+        addInHandsItemToList(list, livingEntity, EquippedItemStack::new);
+        addEquippedHumanoidArmorItemToList(list, livingEntity, EquippedItemStack::new);
         return list;
     }
 
+    public static List<ItemStack> getEquippedHumanoidArmorItemList(LivingEntity livingEntity)
+    {
+        List<ItemStack> list = new ArrayList<>();
+        addEquippedHumanoidArmorItemToList(list, livingEntity, (slot, stack) -> stack);
+        return list;
+    }
+
+    public static <T> void addEquippedHumanoidArmorItemToList(List<T> listToFill, LivingEntity livingEntity, BiFunction<EquipmentSlot, ItemStack, T> mapper)
+    {
+        for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR)
+        {
+            if (slot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR)
+            {
+                ItemStack stack = livingEntity.getItemBySlot(slot);
+                if (!stack.isEmpty()) {listToFill.add(mapper.apply(slot, stack));}
+            }
+        }
+    }
+
+    public static List<ItemStack> getInHandsItemList(LivingEntity livingEntity)
+    {
+        List<ItemStack> list = new ArrayList<>();
+        addInHandsItemToList(list, livingEntity, (slot, stack) -> stack);
+        return list;
+    }
+
+    public static <T> void addInHandsItemToList(List<T> listToFill, LivingEntity livingEntity, BiFunction<EquipmentSlot, ItemStack, T> mapper)
+    {
+        for (EquipmentSlot slot : EquipmentSlotGroup.HAND)
+        {
+            ItemStack stack = livingEntity.getItemBySlot(slot);
+            if (!stack.isEmpty()) {listToFill.add(mapper.apply(slot, stack));}
+        }
+    }
+
+    public static int countMagmaticGelStuff(LivingEntity livingEntity) {return ItemHelper.countMagmaticGelStuff(getEquippedHumanoidArmorItemList(livingEntity));}
     public static int countLunaticStuff(LivingEntity livingEntity) {return ItemHelper.countLunaticStuff(getEquippedHumanoidArmorItemList(livingEntity));}
     public static int countShadowStuff(LivingEntity livingEntity) {return ItemHelper.countShadowStuff(getEquippedHumanoidArmorItemList(livingEntity));}
     public static int countArsonistStuff(LivingEntity livingEntity) {return ItemHelper.countArsonistStuff(getEquippedHumanoidArmorItemList(livingEntity));}
     public static int countVoluciteStuff(LivingEntity livingEntity) {return ItemHelper.countVoluciteStuff(getEquippedHumanoidArmorItemList(livingEntity));}
     public static int countHeavyStuff(LivingEntity livingEntity) {return ItemHelper.countHeavyStuff(getEquippedHumanoidArmorItemList(livingEntity));}
 
+    public static boolean hasFullMagmaticGelStuff(LivingEntity livingEntity) {return countMagmaticGelStuff(livingEntity) == 4;}
     public static boolean hasFullLunaticStuff(LivingEntity livingEntity) {return countLunaticStuff(livingEntity) == 4;}
+    public static boolean hasFullShadowStuff(LivingEntity livingEntity) {return countShadowStuff(livingEntity) == 4;}
     public static boolean hasFullVoluciteStuff(LivingEntity livingEntity) {return countVoluciteStuff(livingEntity) == 4;}
     public static boolean hasFullArsonistStuff(LivingEntity livingEntity) {return countArsonistStuff(livingEntity) == 4;}
     public static boolean hasNoLunaticStuff(LivingEntity livingEntity) {return countLunaticStuff(livingEntity) == 0;}

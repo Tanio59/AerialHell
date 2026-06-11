@@ -2,11 +2,13 @@ package fr.factionbedrock.aerialhell.Entity.Monster.Shadow;
 
 import com.google.common.collect.ImmutableList;
 import fr.factionbedrock.aerialhell.Entity.AI.FleeBlockGoal;
+import fr.factionbedrock.aerialhell.Entity.Monster.ShadowMisleadableEntity;
 import fr.factionbedrock.aerialhell.Registry.AerialHellBlocks;
 import fr.factionbedrock.aerialhell.Registry.AerialHellMobEffects;
 import fr.factionbedrock.aerialhell.Registry.AerialHellSoundEvents;
 import fr.factionbedrock.aerialhell.Util.EntityHelper;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.Entity;
@@ -32,22 +34,40 @@ import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.List;
 
-public class ShadowTrollEntity extends Monster
+public class ShadowTrollEntity extends Monster implements ShadowMisleadableEntity
 {
 	public static final EntityDataAccessor<Boolean> DISAPPEARING = SynchedEntityData.<Boolean>defineId(ShadowTrollEntity.class, EntityDataSerializers.BOOLEAN);
 	private int timeDisappearing;
-	
+
     public ShadowTrollEntity(EntityType<? extends ShadowTrollEntity> type, Level worldIn)
     {
         super(type, worldIn);
     }
-    
-    @Override
-    protected void registerGoals()
+
+    /* ------- MisleadableEntity : Interface method implementation ------- */
+    @Override public Mob getSelf() {return this;}
+    /* ------------------------------------------------------------------- */
+
+    /* ------- MisleadableEntity : Superclass methods Overridden to delegate to interface ------- */
+    @Override public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount)
+    {
+        return this.misleadableHurtServer(serverLevel, source, amount, super::hurtServer);
+    }
+
+    @Override public void die(DamageSource damageSource)
+    {
+        this.misleadableDie(damageSource);
+        super.die(damageSource);
+    }
+
+    @Override public boolean canAttack(LivingEntity target) {return this.misleadableCanAttack(target, super::canAttack);}
+    /* ------------------------------------------------------------------------------------------ */
+
+    @Override protected void registerGoals()
     {
         List<Block> blocksToAvoid = ImmutableList.of(AerialHellBlocks.VOLUCITE_TORCH.get(), AerialHellBlocks.VOLUCITE_WALL_TORCH.get());
         this.goalSelector.addGoal(1, new FleeBlockGoal<>(this, blocksToAvoid, 1.0D, 1.2D));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, (potentialTarget, serverLevel) -> !this.isMisleadedBy(potentialTarget)));
 		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.25D, false));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.6D));

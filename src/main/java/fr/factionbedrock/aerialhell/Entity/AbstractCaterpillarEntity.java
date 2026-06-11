@@ -24,8 +24,7 @@ public class AbstractCaterpillarEntity extends Silverfish
         super(type, worldIn);
     }
 	
-	@Override
-	protected void registerGoals()
+	@Override protected void registerGoals()
 	{
 	      this.goalSelector.addGoal(1, new FloatGoal(this));
 	      this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
