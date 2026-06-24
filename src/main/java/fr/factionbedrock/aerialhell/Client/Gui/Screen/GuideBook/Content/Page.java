@@ -42,21 +42,27 @@ public class Page
 
     public int pageIndex() {return this.pageIndex;}
 
+    public Page addSimpleText(int startLineIndex, int lastLineIndex, int lineWidth, Alignment alignment, String text)
+    {
+        this.pageElements.add(new ParagraphFromSimpleText(startLineIndex, lastLineIndex, 0, lineWidth, alignment, 0xFF7A5C3A, text));
+        return this;
+    }
+
     public Page addParagraph(int startLineIndex, int lastLineIndex, int lineStartOffset, int lineWidth, Alignment alignment, String paragraphName)
     {
-        this.pageElements.add(new Paragraph(startLineIndex, lastLineIndex, lineStartOffset, lineWidth, alignment, 0xFF7A5C3A, "aerialhell.guide_book."+ this.pageName +"."+paragraphName));
+        this.pageElements.add(new ParagraphFromKey(startLineIndex, lastLineIndex, lineStartOffset, lineWidth, alignment, 0xFF7A5C3A, "aerialhell.guide_book."+ this.pageName +"."+paragraphName));
         return this;
     }
 
     public Page addParagraph(int startLineIndex, int lastLineIndex, int lineWidth, Alignment alignment, String paragraphName)
     {
-        this.pageElements.add(new Paragraph(startLineIndex, lastLineIndex, 0, lineWidth, alignment, 0xFF7A5C3A, "aerialhell.guide_book."+ this.pageName +"."+paragraphName));
+        this.pageElements.add(new ParagraphFromKey(startLineIndex, lastLineIndex, 0, lineWidth, alignment, 0xFF7A5C3A, "aerialhell.guide_book."+ this.pageName +"."+paragraphName));
         return this;
     }
 
     public Page addParagraph(int startLineIndex, int lastLineIndex, int lineWidth, Alignment alignment, int color, String paragraphName)
     {
-        this.pageElements.add(new Paragraph(startLineIndex, lastLineIndex, 0, lineWidth, alignment, color, "aerialhell.guide_book."+ this.pageName +"."+paragraphName));
+        this.pageElements.add(new ParagraphFromKey(startLineIndex, lastLineIndex, 0, lineWidth, alignment, color, "aerialhell.guide_book."+ this.pageName +"."+paragraphName));
         return this;
     }
 
@@ -67,7 +73,7 @@ public class Page
         return this;
     }
 
-    public Page addTextureDisplay(ElementPositionInfo positionInfo, float scale, String path, float u, float v, int width, int height, int textureWidth, int textureHeight, String tooltipKey) {return this.addTextureDisplay(positionInfo, scale, new TextureInfo(Identifier.fromNamespaceAndPath(AerialHell.MODID, path), u, v, width, height, textureWidth, textureHeight), tooltipKey);}
+    public Page addTextureDisplay(ElementPositionInfo positionInfo, float scale, String path, float u, float v, int width, int height, int textureWidth, int textureHeight, String tooltipKey) {return this.addTextureDisplay(positionInfo, scale, new TextureInfo(Identifier.fromNamespaceAndPath(AerialHell.MODID, "textures/"+path+".png"), u, v, width, height, textureWidth, textureHeight), tooltipKey);}
     public Page addTextureDisplay(ElementPositionInfo positionInfo, float scale, String path, int width, int height) {return this.addTextureDisplay(positionInfo, scale, path, width, height, "");}
     public Page addTextureDisplay(ElementPositionInfo positionInfo, float scale, String path, int width, int height, String tooltipKey) {return this.addTextureDisplay(positionInfo, scale, new TextureInfo(Identifier.fromNamespaceAndPath(AerialHell.MODID, "textures/"+path+".png"), width, height), tooltipKey);}
     public Page addTextureDisplay(ElementPositionInfo positionInfo, float scale, TextureInfo textureInfo) {return this.addTextureDisplay(positionInfo, scale, textureInfo, "");}
