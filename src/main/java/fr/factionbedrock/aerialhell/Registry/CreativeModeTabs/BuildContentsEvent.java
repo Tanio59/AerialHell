@@ -679,10 +679,10 @@ public class BuildContentsEvent
             itemsToAdd.add(AerialHellItems.ARSONIST_SHURIKEN.get());
             itemsToAdd.add(AerialHellItems.LIGHTNING_SHURIKEN.get());
 
-            itemsToAdd.add(AerialHellItems.RUBY_BLOWPIPE_ARROW.get());
-            itemsToAdd.add(AerialHellItems.VOLUCITE_BLOWPIPE_ARROW.get());
-            itemsToAdd.add(AerialHellItems.RUBY_BLOWPIPE.get());
-            itemsToAdd.add(AerialHellItems.VOLUCITE_BLOWPIPE.get());
+            itemsToAdd.add(AerialHellItems.RUBY_SHARD.get());
+            itemsToAdd.add(AerialHellItems.VOLUCITE_SHARD.get());
+            itemsToAdd.add(AerialHellItems.RUBY_RESONATOR.get());
+            itemsToAdd.add(AerialHellItems.VOLUCITE_RESONATOR.get());
 
             itemsToAdd.add(AerialHellItems.SKY_WOOD_SWORD.get());
             itemsToAdd.add(AerialHellItems.STELLAR_STONE_SWORD.get());
