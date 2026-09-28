@@ -2,6 +2,7 @@ package fr.factionbedrock.aerialhell.World;
 
 import fr.factionbedrock.aerialhell.Registry.AerialHellBlocks;
 import fr.factionbedrock.aerialhell.Registry.Worldgen.AerialHellPOI;
+import fr.factionbedrock.aerialhell.World.Structure.AbstractAerialHellStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -97,7 +98,7 @@ public class AerialHellTeleporter
                             int j1 = i1 - l;
                             if (j1 <= 0 || j1 >= 3) {
                                 mutablePos1.setY(l);
-                                if (this.canHostFrame(mutablePos1, mutablePos, direction, 0)) {
+                                if (!this.isInsideStructure(mutablePos1) && this.canHostFrame(mutablePos1, mutablePos, direction, 0)) {
                                     double d2 = pos.distSqr(mutablePos1);
                                     if (this.canHostFrame(mutablePos1, mutablePos, direction, -1)
                                             && this.canHostFrame(mutablePos1, mutablePos, direction, 1)
@@ -169,6 +170,12 @@ public class AerialHellTeleporter
         }
 
         return Optional.of(new BlockUtil.FoundRectangle(blockPos.immutable(), 2, 3));
+    }
+
+    //the portal must not be created inside a structure (dungeon rooms, buildings...)
+    private boolean isInsideStructure(BlockPos pos)
+    {
+        return this.level.structureManager().getStructureWithPieceAt(pos, structure -> structure.value() instanceof AbstractAerialHellStructure).isValid();
     }
 
     private boolean canPortalReplaceBlock(BlockPos.MutableBlockPos pos)

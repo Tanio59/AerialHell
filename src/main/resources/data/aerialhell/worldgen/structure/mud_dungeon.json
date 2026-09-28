@@ -15,7 +15,7 @@
       ]
     }
   },
-  "terrain_adaptation": "none",
+  "terrain_adaptation": "bury",
   "start_pool": "aerialhell:mud_dungeon/boss_room_back_wall_pool",
   "size": 20,
   "start_height": {

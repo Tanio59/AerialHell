@@ -32,6 +32,7 @@ public class CopperPineCottageStructure extends AbstractClassicLittleStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.COPPER_PINE_COTTAGE_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 40;}
 
     @Override protected int getMinY() {return 50;}
     @Override protected int getMaxY() {return 260;}

@@ -32,6 +32,7 @@ public class SlipperySandOceanAbandonnedStructure extends AbstractClassicLittleS
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.SLIPPERY_SAND_OCEAN_ABANDONNED_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 20;}
 
     @Override protected int getMinY() {return 50;}
     @Override protected int getMaxY() {return 190;}

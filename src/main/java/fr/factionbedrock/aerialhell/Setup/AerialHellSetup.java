@@ -14,6 +14,7 @@ import fr.factionbedrock.aerialhell.Registry.AerialHellMenuTypes;
 import fr.factionbedrock.aerialhell.Registry.Entities.AerialHellEntityAttributes;
 import fr.factionbedrock.aerialhell.Registry.TrimMaterials.AerialHellTrimMaterials;
 import fr.factionbedrock.aerialhell.Registry.Worldgen.*;
+import fr.factionbedrock.aerialhell.World.Structure.StructureCollisionHelper;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -77,6 +78,7 @@ public class AerialHellSetup
         bus.addListener(ToolsAndArmorEventListener::onPlayerHarvest);
         bus.addListener(CustomBrewingRecipe::addBrewingRecipes);
         bus.addListener(DatapackSyncHandler::onDatapackSync);
+        bus.addListener(StructureCollisionHelper::onServerStopped);
     }
 
     public static void listen(IEventBus bus)

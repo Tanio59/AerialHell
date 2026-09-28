@@ -53,4 +53,6 @@ public class ShadowCatacombsStructure extends AbstractAerialHellStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.SHADOW_CATACOMBS_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 80;}
+    @Override protected PlacementType getPlacementType() {return PlacementType.UNDERGROUND;}
 }

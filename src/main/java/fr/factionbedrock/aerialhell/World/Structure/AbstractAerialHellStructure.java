@@ -1,5 +1,6 @@
 package fr.factionbedrock.aerialhell.World.Structure;
 
+import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
@@ -8,6 +9,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSetting
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public abstract class AbstractAerialHellStructure extends Structure
 {
@@ -129,8 +132,27 @@ public abstract class AbstractAerialHellStructure extends Structure
                 context.randomState());
     }
 
+    //how the structure is supposed to be placed relatively to the terrain. Used to prevent the structure from colliding with the terrain.
+    public enum PlacementType {GROUNDED, FLOATING, HANGING, UNDERGROUND}
+
+    protected PlacementType getPlacementType() {return this.projectStartToHeightmap.isPresent() ? PlacementType.GROUNDED : PlacementType.FLOATING;}
+
+    //when two structures would collide, the one with the highest priority generates
+    protected abstract int getGenerationPriority();
+
     @Override
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context)
+    {
+        Optional<Structure.GenerationStub> stub = this.findTerrainValidGenerationPoint(context);
+        if (stub.isEmpty()) {return Optional.empty();}
+
+        StructureCollisionHelper.StructureLayout layout = StructureCollisionHelper.StructureLayout.of(stub.get().getPiecesBuilder());
+        if (StructureCollisionHelper.collidesWithPriorStructure(this, context, layout)) {return Optional.empty();}
+        return stub;
+    }
+
+    //generation point which doesn't collide with the terrain, other structures are not taken into account
+    protected Optional<Structure.GenerationStub> findTerrainValidGenerationPoint(Structure.GenerationContext context)
     {
         if (!this.isStructureChunk(context)) {return Optional.empty();}
 
@@ -151,7 +173,23 @@ public abstract class AbstractAerialHellStructure extends Structure
                         DimensionPadding.ZERO, // dimensionPadding - Optional thing to prevent generating too close to the bottom or top of the dimension.
                         LiquidSettings.IGNORE_WATERLOGGING); // liquidSettings - Optional thing to control whether the structure will be waterlogged when replacing pre-existing water in the world.
 
-        return structurePiecesGenerator;
+        if (structurePiecesGenerator.isEmpty()) {return Optional.empty();}
+
+        //pieces are built now (instead of later by vanilla) to check the structure layout. The random used is the same, so the layout is the same.
+        StructurePiecesBuilder builder = structurePiecesGenerator.get().getPiecesBuilder();
+        BlockPos position = structurePiecesGenerator.get().position();
+        if (builder.isEmpty() || !StructureCollisionHelper.isValidBiome(context, position)) {return Optional.empty();}
+
+        OptionalInt verticalOffset = StructureCollisionHelper.findTerrainFreeVerticalOffset(this.getPlacementType(), context, builder, position);
+        if (verticalOffset.isEmpty()) {return Optional.empty();}
+        if (verticalOffset.getAsInt() != 0)
+        {
+            builder.offsetPiecesVertically(verticalOffset.getAsInt());
+            position = position.above(verticalOffset.getAsInt());
+            if (!StructureCollisionHelper.isValidBiome(context, position)) {return Optional.empty();}
+        }
+
+        return Optional.of(new Structure.GenerationStub(position, Either.right(builder)));
     }
 
     @Nullable protected BlockPos findStructureCenter(Structure.GenerationContext context)

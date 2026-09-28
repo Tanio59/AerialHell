@@ -39,4 +39,5 @@ public class VoluciteCastleStructure extends AbstractAerialHellStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.VOLUCITE_CASTLE.get();}
+    @Override protected int getGenerationPriority() {return 100;}
 }

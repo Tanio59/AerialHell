@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import fr.factionbedrock.aerialhell.Registry.Worldgen.AerialHellStructures;
-import fr.factionbedrock.aerialhell.Util.StructureHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -35,9 +34,10 @@ public class FloatingBoatStructure extends AbstractAerialHellStructure
 
     @Override protected boolean isStructureChunk(Structure.GenerationContext context)
     {
-        //cannot spawn next to another structure
-        return !StructureHelper.hasDungeonNearby(context, 150, true, 100);
+        //collisions with other structures and with the terrain are checked in AbstractAerialHellStructure
+        return true;
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.FLOATING_BOAT.get();}
+    @Override protected int getGenerationPriority() {return 50;}
 }

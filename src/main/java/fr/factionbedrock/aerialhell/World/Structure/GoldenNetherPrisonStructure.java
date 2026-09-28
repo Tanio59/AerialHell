@@ -40,4 +40,5 @@ public class GoldenNetherPrisonStructure extends AbstractAerialHellStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.GOLDEN_NETHER_PRISON_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 90;}
 }

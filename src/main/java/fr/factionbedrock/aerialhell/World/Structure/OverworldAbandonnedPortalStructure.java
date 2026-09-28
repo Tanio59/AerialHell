@@ -38,4 +38,5 @@ public class OverworldAbandonnedPortalStructure extends AbstractAerialHellStruct
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.OVERWORLD_ABANDONNED_PORTAL_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 10;}
 }

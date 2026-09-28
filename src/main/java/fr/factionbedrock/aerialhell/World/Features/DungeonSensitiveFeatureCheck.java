@@ -14,20 +14,25 @@ import java.util.List;
 
 public interface DungeonSensitiveFeatureCheck
 {
+    //big features (tagged cant_place_in_dungeons) must stay away from structures, others only must not start inside a structure
+    int BIG_FEATURE_STRUCTURE_DISTANCE = 16, SMALL_FEATURE_STRUCTURE_DISTANCE = 2;
+
     default boolean isDungeonSensitiveValid(FeaturePlaceContext<? extends FeatureConfiguration> context)
+    {
+        int distance = this.isBigFeature(context) ? BIG_FEATURE_STRUCTURE_DISTANCE : SMALL_FEATURE_STRUCTURE_DISTANCE;
+        return !FeatureHelper.isFeatureGeneratingNextToStructure(context, distance, distance);
+    }
+
+    private boolean isBigFeature(FeaturePlaceContext<? extends FeatureConfiguration> context)
     {
         Registry<ConfiguredFeature<?, ?>> registry = context.level().registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE);
 
         for (ResourceKey<ConfiguredFeature<?, ?>> key : this.getAssociatedConfiguredFeatures())
         {
             Holder<ConfiguredFeature<?, ?>> holder = registry.getOrThrow(key);
-            if (holder.is(AerialHellTags.ConfiguredFeatures.CANT_PLACE_IN_DUNGEONS))
-            {
-                if (FeatureHelper.isFeatureGeneratingNextToDungeon(context)) {return false;}
-                else {return true;} //if the feature is not generating next to a dungeon, it can generate, whatever is the configured feature
-            }
+            if (holder.is(AerialHellTags.ConfiguredFeatures.CANT_PLACE_IN_DUNGEONS)) {return true;}
         }
-        return true;
+        return false;
     }
 
     List<ResourceKey<ConfiguredFeature<?, ?>>> getAssociatedConfiguredFeatures();

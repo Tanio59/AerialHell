@@ -1,6 +1,5 @@
 package fr.factionbedrock.aerialhell.World.Structure;
 
-import fr.factionbedrock.aerialhell.Util.StructureHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -20,9 +19,7 @@ public abstract class AbstractClassicLittleStructure extends AbstractAerialHellS
 
     @Override protected boolean isStructureChunk(Structure.GenerationContext context)
     {
-    	//cannot spawn next to another structure
-    	if (StructureHelper.hasDungeonNearby(context, 150, true, 100)) {return false;}
-
+        //collisions with other structures and with the terrain are checked in AbstractAerialHellStructure
         int landHeight = getTerrainHeight(context);
         return landHeight > getMinY() && landHeight < getMaxY();
     }

@@ -1,17 +1,14 @@
 package fr.factionbedrock.aerialhell.Util;
 
-import fr.factionbedrock.aerialhell.Registry.Misc.AerialHellTags;
+import fr.factionbedrock.aerialhell.World.Structure.AbstractAerialHellStructure;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.SectionPos;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -21,50 +18,64 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.material.MapColor;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class FeatureHelper
 {
-    public static boolean isFeatureGeneratingNextToDungeon(FeaturePlaceContext<?> context)
+    //true if a piece of an Aerial Hell structure is closer than the given distances to the feature origin
+    public static boolean isFeatureGeneratingNextToStructure(FeaturePlaceContext<?> context, int horizontalDistance, int verticalDistance)
     {
-        WorldGenLevel level = context.level();
+        //features placed outside of world generation (saplings, bone meal) are not restricted
+        if (!(context.level() instanceof WorldGenRegion region)) {return false;}
+
         BlockPos origin = context.origin();
+        //horizontalDistance must be <= 16 : only the structure references of the chunks next to the feature chunk are available
+        BoundingBox area = new BoundingBox(origin.getX() - horizontalDistance, origin.getY() - verticalDistance, origin.getZ() - horizontalDistance, origin.getX() + horizontalDistance, origin.getY() + verticalDistance, origin.getZ() + horizontalDistance);
+        return !getAerialHellStructurePieceBoxes(region, area).isEmpty();
+    }
 
-        var registryAccess = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        HolderSet.Named<Structure> taggedStructures = registryAccess.get(AerialHellTags.Structures.DUNGEONS).orElse(null);
-        if (taggedStructures == null) return false;
+    /**
+     * @return the bounding boxes of the Aerial Hell structure pieces intersecting the area.
+     * Only works during the features generation step, and for an area contained in the chunks next to the region center.
+     */
+    public static List<BoundingBox> getAerialHellStructurePieceBoxes(WorldGenRegion region, BoundingBox area)
+    {
+        List<BoundingBox> boxes = new ArrayList<>();
+        Set<StructureStart> checkedStarts = Collections.newSetFromMap(new IdentityHashMap<>());
+        ChunkPos center = region.getCenter();
 
-        int originChunkX = origin.getX() >> 4;
-        int originChunkZ = origin.getZ() >> 4;
-        int chunkRadius = 3;
-
-        for (int dx = -chunkRadius; dx <= chunkRadius; dx++)
+        int minChunkX = Math.max(SectionPos.blockToSectionCoord(area.minX()), center.x() - 1), maxChunkX = Math.min(SectionPos.blockToSectionCoord(area.maxX()), center.x() + 1);
+        int minChunkZ = Math.max(SectionPos.blockToSectionCoord(area.minZ()), center.z() - 1), maxChunkZ = Math.min(SectionPos.blockToSectionCoord(area.maxZ()), center.z() + 1);
+        for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++)
         {
-            for (int dz = -chunkRadius; dz <= chunkRadius; dz++)
+            for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ++)
             {
-                ChunkAccess chunk = level.getChunk(originChunkX + dx, originChunkZ + dz);
-
-                for (Holder<Structure> entry : taggedStructures)
+                //references of a chunk : positions of the starts of structures having pieces in this chunk
+                for (Map.Entry<Structure, LongSet> entry : region.getChunk(chunkX, chunkZ).getAllReferences().entrySet())
                 {
-                    Structure structure = entry.value();
-                    StructureStart start = chunk.getAllStarts().get(structure);
-                    if (start != null && start.isValid() && isYInStructureHeight(origin.getY(), start)) {return true;}
+                    if (!(entry.getKey() instanceof AbstractAerialHellStructure)) {continue;}
+                    for (long startChunkPos : entry.getValue())
+                    {
+                        int startChunkX = ChunkPos.getX(startChunkPos), startChunkZ = ChunkPos.getZ(startChunkPos);
+                        //structure starts are only available up to 8 chunks from the region center
+                        if (center.getChessboardDistance(startChunkX, startChunkZ) > 8) {continue;}
+
+                        StructureStart start = region.getChunk(startChunkX, startChunkZ).getStartForStructure(entry.getKey());
+                        if (start == null || !start.isValid() || !checkedStarts.add(start)) {continue;}
+                        for (StructurePiece piece : start.getPieces())
+                        {
+                            if (piece.getBoundingBox().intersects(area)) {boxes.add(piece.getBoundingBox());}
+                        }
+                    }
                 }
             }
         }
-        return false;
-    }
-
-    public static boolean isYInStructureHeight(int y, StructureStart start)
-    {
-        int minY = start.getPieces().getFirst().getBoundingBox().minY(), maxY = start.getPieces().getFirst().getBoundingBox().maxY();
-        for (StructurePiece piece : start.getPieces())
-        {
-            BoundingBox box = piece.getBoundingBox();
-            if (box.minY() < minY) {minY = box.minY();}
-            if (box.maxY() > maxY) {maxY = box.maxY();}
-
-            if (y >= minY && y <= maxY) {return true;}
-        }
-        return false;
+        return boxes;
     }
 
     public static boolean isShadowBiome(Biome biome)

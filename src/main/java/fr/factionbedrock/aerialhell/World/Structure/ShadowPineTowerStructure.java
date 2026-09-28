@@ -32,6 +32,7 @@ public class ShadowPineTowerStructure extends AbstractClassicLittleStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.SHADOW_PINE_TOWER_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 45;}
 
     @Override protected int getMinY() {return 50;}
     @Override protected int getMaxY() {return 190;}

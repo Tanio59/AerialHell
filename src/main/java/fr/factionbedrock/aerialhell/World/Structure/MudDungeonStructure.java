@@ -59,4 +59,6 @@ public class MudDungeonStructure extends AbstractAerialHellStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.MUD_DUNGEON_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 75;}
+    @Override protected PlacementType getPlacementType() {return PlacementType.UNDERGROUND;}
 }

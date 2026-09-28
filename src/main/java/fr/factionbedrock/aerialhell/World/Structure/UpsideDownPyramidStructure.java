@@ -40,6 +40,8 @@ public class UpsideDownPyramidStructure extends AbstractAerialHellStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.UPSIDE_DOWN_PYRAMID.get();}
+    @Override protected int getGenerationPriority() {return 60;}
+    @Override protected PlacementType getPlacementType() {return PlacementType.HANGING;}
 
     protected static int getGenerationHeight(Structure.GenerationContext context) //WIP
     {

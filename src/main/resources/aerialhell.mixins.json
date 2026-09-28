@@ -3,13 +3,15 @@
 	"package": "fr.factionbedrock.aerialhell.Mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"ChunkGeneratorFeaturePlacementMixin",
 		"LivingEntityFallFlyingMixin",
 		"LivingEntityGravityMixin",
 		"ServerPlayerGameModeMixin",
 		"ServerPlayerTickMixin",
 		"RenderSkyMixin",
 		"UseItemFovModifierMixin",
-		"UseItemInHandRendererMixin"
+		"UseItemInHandRendererMixin",
+		"WorldGenRegionStructureProtectionMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

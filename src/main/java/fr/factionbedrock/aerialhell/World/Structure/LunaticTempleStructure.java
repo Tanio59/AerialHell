@@ -45,7 +45,7 @@ public class LunaticTempleStructure extends AbstractAerialHellStructure
         long seed = context.seed();
         BlockPos centerOfChunk = chunkpos.getMiddleBlockPosition(0);
 
-        if (StructureHelper.hasGoldenNetherPrisonNearby(chunkGenerator, seed, chunkpos.x(), chunkpos.z(), 6, true)) {return false;}
+        //collisions with other structures (golden nether prison, ...) and with the terrain are checked in AbstractAerialHellStructure
         /* biomeSource.getNoiseBiome(x,y,z) doesn't return the right biome. Do not use this method for biome check.
         List<BlockPos> checkShadowBiomePos = ImmutableList.of(centerOfChunk.north(20), centerOfChunk.south(20), centerOfChunk.east(20), centerOfChunk.west(20));
         for (BlockPos pos : checkShadowBiomePos)
@@ -57,4 +57,5 @@ public class LunaticTempleStructure extends AbstractAerialHellStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.LUNATIC_TEMPLE_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 85;}
 }

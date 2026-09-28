@@ -32,6 +32,7 @@ public class AerialHellAbandonnedPortalStructure extends AbstractClassicLittleSt
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.AERIAL_HELL_ABANDONNED_PORTAL_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 30;}
 
     @Override protected int getMinY() {return 60;}
     @Override protected int getMaxY() {return 270;}

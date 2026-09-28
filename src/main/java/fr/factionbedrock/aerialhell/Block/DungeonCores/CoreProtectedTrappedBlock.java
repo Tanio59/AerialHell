@@ -41,12 +41,16 @@ public class CoreProtectedTrappedBlock extends CoreProtectedBlock
 			{
 				EntityType<?> entityType = getEntity(this);
 				Entity entity = entityType.create(world, EntitySpawnReason.MOB_SUMMONED);
-				entity.absSnapTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, (rand.nextFloat() - 0.5F) * 180.0F, 0.0F);
-				if (this == AerialHellBlocks.TRAPPED_MUD_BRICKS.get() || this == AerialHellBlocks.TRAPPED_LIGHT_MUD_BRICKS.get() && entity instanceof MudSoldierEntity)
+				//entity is null if it can't spawn (monsters in peaceful difficulty)
+				if (entity != null)
 				{
-					((MudSoldierEntity) entity).setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
+					entity.absSnapTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, (rand.nextFloat() - 0.5F) * 180.0F, 0.0F);
+					if (entity instanceof MudSoldierEntity mudSoldier)
+					{
+						mudSoldier.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
+					}
+					world.addFreshEntity(entity);
 				}
-				world.addFreshEntity(entity);
 			}
 			world.playSound(null, pos, AerialHellSoundEvents.TRAPPED_BLOCK_STEP.get(), SoundSource.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.1F + 0.9F);
 		}

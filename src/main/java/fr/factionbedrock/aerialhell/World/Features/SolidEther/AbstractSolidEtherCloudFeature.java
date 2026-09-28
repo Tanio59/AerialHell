@@ -31,10 +31,28 @@ public abstract class AbstractSolidEtherCloudFeature extends Feature<NoneFeature
     {
         super(codec);
     }
-    
+
+    //clouds must float in the air : they don't generate if the terrain (or anything else) is in the way of their main body
+    protected boolean hasFreeSpace(WorldGenLevel level, BlockPos pos, int sizeX, int sizeZ)
+    {
+        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
+        for (int x = -sizeX - 2; x <= sizeX + 2; x += 2)
+        {
+            for (int z = -sizeZ - 2; z <= sizeZ + 2; z += 2)
+            {
+                for (int y = -2; y <= 3; y++)
+                {
+                    if (!level.isEmptyBlock(mutablePos.setWithOffset(pos, x, y, z))) {return false;}
+                }
+            }
+        }
+        return true;
+    }
+
     protected void generateFourLayersFirstEllipsis(FeaturePlaceContext<NoneFeatureConfiguration> context, int sizeX, int sizeZ, BlockPos pos)
     {
         WorldGenLevel reader = context.level(); RandomSource rand = context.random();
+        if (!this.hasFreeSpace(reader, pos, sizeX, sizeZ)) {return;}
     	for(int x = pos.getX() - sizeX; x < pos.getX() + sizeX+1; x++)
         {
             for(int z = pos.getZ() - sizeZ; z < pos.getZ() + sizeZ+1; z++)
@@ -98,6 +116,7 @@ public abstract class AbstractSolidEtherCloudFeature extends Feature<NoneFeature
     protected void generateFirstEllipsis(FeaturePlaceContext<NoneFeatureConfiguration> context, int sizeX, int sizeZ, BlockPos pos)
     {
         WorldGenLevel reader = context.level(); RandomSource rand = context.random();
+        if (!this.hasFreeSpace(reader, pos, sizeX, sizeZ)) {return;}
     	for(int x = pos.getX() - sizeX; x < pos.getX() + sizeX+1; x++)
         {
             for(int z = pos.getZ() - sizeZ; z < pos.getZ() + sizeZ+1; z++)

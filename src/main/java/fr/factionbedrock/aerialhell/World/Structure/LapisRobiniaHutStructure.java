@@ -32,6 +32,7 @@ public class LapisRobiniaHutStructure extends AbstractClassicLittleStructure
     }
 
     @Override public StructureType<?> type() {return AerialHellStructures.LAPIS_ROBINIA_HUT_STRUCTURE.get();}
+    @Override protected int getGenerationPriority() {return 40;}
 
     @Override protected int getMinY() {return 50;}
     @Override protected int getMaxY() {return 260;}
