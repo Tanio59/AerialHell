@@ -47,6 +47,7 @@ public class AerialHellModelLayers
     public static final ModelLayerLocation CORTINARIUS_COW_SHROOM = createModelLayerLocation( "cortinarius_cow_shroom", "shrooms");
     public static final ModelLayerLocation CRYSTAL_GOLEM_CRYSTAL = createModelLayerLocation("crystal_golem_crystal", "crystals");
     public static final ModelLayerLocation SPIDER_SPIKE = createModelLayerLocation("spider_spike", "spikes");
+    public static final ModelLayerLocation GLIDING_TURTLE_SADDLE = createModelLayerLocation("gliding_turtle_saddle", "saddle");
 
     public static final ModelLayerLocation RESONATOR_SHARD = createModelLayerLocation("resonator_shard");
 

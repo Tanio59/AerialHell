@@ -15,7 +15,7 @@ public class GlideGoal extends Goal
 
     public GlideGoal(GlidingTurtleEntity entity) {this.goalOwner = entity;}
 
-    @Override public boolean canUse() {return true;}
+    @Override public boolean canUse() {return !this.goalOwner.isVehicle();} //ridden turtle is controlled by its rider
     @Override public void start() {this.resetTask();}
     @Override public void stop() {goalOwner.setGliding(false);}
     @Override public boolean requiresUpdateEveryTick() {return true;}

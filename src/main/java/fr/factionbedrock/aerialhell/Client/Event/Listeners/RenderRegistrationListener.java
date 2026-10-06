@@ -148,6 +148,7 @@ public class RenderRegistrationListener
         event.registerLayerDefinition(AerialHellModelLayers.CORTINARIUS_COW_SHROOM, CortinariusCowShroomModel::createBodyLayer);
         event.registerLayerDefinition(AerialHellModelLayers.CRYSTAL_GOLEM_CRYSTAL, CrystalGolemCrystalModel::createBodyLayer);
         event.registerLayerDefinition(AerialHellModelLayers.SPIDER_SPIKE, HellSpiderSpikeModel::createBodyLayer);
+        event.registerLayerDefinition(AerialHellModelLayers.GLIDING_TURTLE_SADDLE, GlidingTurtleSaddleModel::createBodyLayer);
 
         event.registerLayerDefinition(AerialHellModelLayers.EMPTY, EmptyModel::createBodyLayer);
 
