@@ -139,6 +139,22 @@
         },
         {
           "type": "item",
+          "name": "aerialhell:obsidian_spear",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "min": 5.0,
+                "max": 10.0,
+                "type": "minecraft:uniform"
+              },
+              "treasure": true
+            }
+          ],
+          "weight": 1
+        },
+        {
+          "type": "item",
           "name": "aerialhell:obsidian_axe",
           "functions": [
             {

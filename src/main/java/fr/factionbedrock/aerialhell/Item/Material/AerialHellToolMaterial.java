@@ -70,6 +70,12 @@ public class AerialHellToolMaterial extends ExtraAttributeModifiersMaterial
                 .component(DataComponents.WEAPON, new Weapon(1));
     }
 
+    //vanilla spear properties (durability, repair, enchantability, kinetic & piercing weapon components, attributes) using this material
+    public AerialHellItem.Properties applySpearProperties(AerialHellItem.Properties properties, SpearStats stats)
+    {
+        return (AerialHellItem.Properties) properties.spear(this.vanillaMaterial, stats.attackDuration(), stats.damageMultiplier(), stats.delay(), stats.dismountTime(), stats.dismountThreshold(), stats.knockbackTime(), stats.knockbackThreshold(), stats.damageTime(), stats.damageThreshold());
+    }
+
     private List<Tool.Rule> getSwordRules(HolderGetter<Block> registrationLookup)
     {
         return List.of(

@@ -11,6 +11,7 @@ import fr.factionbedrock.aerialhell.Item.Material.AerialHellArmorMaterials;
 import fr.factionbedrock.aerialhell.Item.Material.AerialHellToolMaterials;
 import fr.factionbedrock.aerialhell.Item.Material.AttributeEntry;
 import fr.factionbedrock.aerialhell.Item.Material.AttributeEntryList;
+import fr.factionbedrock.aerialhell.Item.Material.SpearStats;
 import fr.factionbedrock.aerialhell.Item.Tools.*;
 import fr.factionbedrock.aerialhell.Registry.Entities.AerialHellEntities;
 import fr.factionbedrock.aerialhell.Registry.Misc.AerialHellJukeboxSongs;
@@ -941,6 +942,17 @@ public class AerialHellItems
     public static final DeferredItem<Item> NETHERIAN_KING_SWORD = ITEMS.register(Keys.NETHERIAN_KING_SWORD.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.NETHERIAN_KING_SWORD).sword(AerialHellToolMaterials.OBSIDIAN, 1, -2.4F).fireResistant().rarity(AerialHellRarities.LEGENDARY.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.NETHERIAN_KING_SWORD))));
     public static final DeferredItem<Item> GLASS_CANON_SWORD = ITEMS.register(Keys.GLASS_CANON_SWORD.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.GLASS_CANON_SWORD).sword(AerialHellToolMaterials.ARSONIST, 7, -1.6F).fireResistant().rarity(AerialHellRarities.MYTHICAL.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.GLASS_CANNON_ARMORED_GLASS).nextAbility(AerialHellItemAbilities.GLASS_CANNON_LIFTOFF))));
     public static final DeferredItem<Item> GOD_SWORD = ITEMS.register(Keys.GOD_SWORD.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.GOD_SWORD).sword(AerialHellToolMaterials.ARSONIST, 3, -2.4F).fireResistant().rarity(AerialHellRarities.MYTHICAL.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.GOD))));
+
+    //spears (volucite spear has no ability : VOLUCITE_POWER is triggered on use, which would prevent the spear charge)
+    public static final DeferredItem<Item> SKY_WOOD_SPEAR = ITEMS.register(Keys.SKY_WOOD_SPEAR.identifier().getPath(), () -> new Item(new AerialHellItem.Properties().setId(Keys.SKY_WOOD_SPEAR).spear(AerialHellToolMaterials.SKY_WOOD, SpearStats.WOOD)));
+    public static final DeferredItem<Item> STELLAR_STONE_SPEAR = ITEMS.register(Keys.STELLAR_STONE_SPEAR.identifier().getPath(), () -> new Item(new AerialHellItem.Properties().setId(Keys.STELLAR_STONE_SPEAR).spear(AerialHellToolMaterials.STELLAR_STONE, SpearStats.STONE)));
+    public static final DeferredItem<Item> RUBY_SPEAR = ITEMS.register(Keys.RUBY_SPEAR.identifier().getPath(), () -> new Item(new AerialHellItem.Properties().setId(Keys.RUBY_SPEAR).spear(AerialHellToolMaterials.RUBY, SpearStats.IRON)));
+    public static final DeferredItem<Item> AZURITE_SPEAR = ITEMS.register(Keys.AZURITE_SPEAR.identifier().getPath(), () -> new Item(new AerialHellItem.Properties().setId(Keys.AZURITE_SPEAR).spear(AerialHellToolMaterials.AZURITE, SpearStats.COPPER)));
+    public static final DeferredItem<Item> MAGMATIC_GEL_SPEAR = ITEMS.register(Keys.MAGMATIC_GEL_SPEAR.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.MAGMATIC_GEL_SPEAR).spear(AerialHellToolMaterials.MAGMATIC_GEL, SpearStats.GOLD).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.MAGMATIC_GEL_TOOL))));
+    public static final DeferredItem<Item> OBSIDIAN_SPEAR = ITEMS.register(Keys.OBSIDIAN_SPEAR.identifier().getPath(), () -> new Item(new AerialHellItem.Properties().setId(Keys.OBSIDIAN_SPEAR).spear(AerialHellToolMaterials.OBSIDIAN, SpearStats.DIAMOND).rarity(Rarity.EPIC)));
+    public static final DeferredItem<Item> VOLUCITE_SPEAR = ITEMS.register(Keys.VOLUCITE_SPEAR.identifier().getPath(), () -> new Item(new AerialHellItem.Properties().setId(Keys.VOLUCITE_SPEAR).spear(AerialHellToolMaterials.VOLUCITE, SpearStats.NETHERITE).rarity(AerialHellRarities.VIBRANT.getValue())));
+    public static final DeferredItem<Item> LUNATIC_SPEAR = ITEMS.register(Keys.LUNATIC_SPEAR.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.LUNATIC_SPEAR).spear(AerialHellToolMaterials.LUNATIC, SpearStats.NETHERITE).rarity(AerialHellRarities.LEGENDARY.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.LUNAR_TOOL))));
+    public static final DeferredItem<Item> ARSONIST_SPEAR = ITEMS.register(Keys.ARSONIST_SPEAR.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.ARSONIST_SPEAR).spear(AerialHellToolMaterials.ARSONIST, SpearStats.NETHERITE).fireResistant().rarity(AerialHellRarities.MYTHICAL.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.ARSONIST_TOOL))));
 
     public static final DeferredItem<Item> FORGOTTEN_BATTLE_TRIDENT = ITEMS.register(Keys.FORGOTTEN_BATTLE_TRIDENT.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.FORGOTTEN_BATTLE_TRIDENT).sword(AerialHellToolMaterials.VOLUCITE, 3, -2.9F, new AttributeEntryList().add(AttributeEntry.movementSpeed(0.2F)).add(AttributeEntry.entityInteractionRange(2.0F))).durability(1000).rarity(AerialHellRarities.LEGENDARY.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.FORGOTTEN_BATTLE_TRIDENT))));
 
@@ -1917,6 +1929,16 @@ public class AerialHellItems
         public static final ResourceKey<Item> NETHERIAN_KING_SWORD = createKey("netherian_king_sword");
         public static final ResourceKey<Item> GLASS_CANON_SWORD = createKey("glass_canon_sword");
         public static final ResourceKey<Item> GOD_SWORD = createKey("god_sword");
+
+        public static final ResourceKey<Item> SKY_WOOD_SPEAR = createKey("sky_wood_spear");
+        public static final ResourceKey<Item> STELLAR_STONE_SPEAR = createKey("stellar_stone_spear");
+        public static final ResourceKey<Item> RUBY_SPEAR = createKey("ruby_spear");
+        public static final ResourceKey<Item> AZURITE_SPEAR = createKey("azurite_spear");
+        public static final ResourceKey<Item> MAGMATIC_GEL_SPEAR = createKey("magmatic_gel_spear");
+        public static final ResourceKey<Item> OBSIDIAN_SPEAR = createKey("obsidian_spear");
+        public static final ResourceKey<Item> VOLUCITE_SPEAR = createKey("volucite_spear");
+        public static final ResourceKey<Item> LUNATIC_SPEAR = createKey("lunatic_spear");
+        public static final ResourceKey<Item> ARSONIST_SPEAR = createKey("arsonist_spear");
 
         public static final ResourceKey<Item> FORGOTTEN_BATTLE_TRIDENT = createKey("forgotten_battle_trident");
 
