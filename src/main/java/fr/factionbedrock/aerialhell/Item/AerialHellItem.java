@@ -413,6 +413,8 @@ public class AerialHellItem extends WithInformationItem
 
 		public AerialHellItem.Properties spear(AerialHellToolMaterial material, SpearStats stats) {return material.applySpearProperties(this, stats);}
 
+		public AerialHellItem.Properties mace(AerialHellToolMaterial material, float attackDamage, float attackSpeed) {return material.applyMaceProperties(this, attackDamage, attackSpeed, new AttributeEntryList());}
+
 		public AerialHellItem.Properties maxUseDuration(int useDuration) {this.maxUseDuration = useDuration; return this;}
 
 		public AerialHellItem.Properties useAnimation(ItemUseAnimation itemUseAnimation) {this.itemUseAnimation = itemUseAnimation; return this;}

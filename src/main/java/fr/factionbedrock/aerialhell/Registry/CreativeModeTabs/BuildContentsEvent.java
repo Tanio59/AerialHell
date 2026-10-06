@@ -720,6 +720,7 @@ public class BuildContentsEvent
             itemsToAdd.add(AerialHellItems.GOD_SWORD.get());
 
             itemsToAdd.add(AerialHellItems.FORGOTTEN_BATTLE_TRIDENT.get());
+            itemsToAdd.add(AerialHellItems.ARSONIST_MACE.get());
 
             itemsToAdd.add(AerialHellItems.HEAVY_AXE.get());
             itemsToAdd.add(AerialHellItems.AXE_OF_LIGHT.get());

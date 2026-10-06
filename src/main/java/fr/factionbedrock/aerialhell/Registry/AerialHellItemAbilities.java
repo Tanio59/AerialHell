@@ -9,9 +9,12 @@ import fr.factionbedrock.aerialhell.Item.Ability.Module.*;
 import fr.factionbedrock.aerialhell.Registry.Entities.AerialHellEntities;
 import fr.factionbedrock.aerialhell.Registry.Misc.AerialHellTags;
 import fr.factionbedrock.aerialhell.Util.EntityHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,7 +25,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.MaceItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -136,6 +143,46 @@ public class AerialHellItemAbilities
 
     private static final ActionModule IGNITE_OTHER = ActionModule.onOther((otherEntity) -> otherEntity.igniteForSeconds(5));
 
+    //fire disc radius grows with item owner vertical speed (falling at ~0.5 block/tick : ~2.75 blocks radius, ~1.5 block/tick : ~5.25 blocks radius)
+    private static final float FIRE_DISC_BASE_RADIUS = 1.5F, FIRE_DISC_RADIUS_PER_VERTICAL_SPEED = 2.5F, FIRE_DISC_MAX_RADIUS = 8.0F;
+    private static final ActionModule FIRE_DISC_AROUND_OTHER = ActionModule.create((stack, itemOwner, equipmentSlot, usingItemInfo, damageInfo, miningInfo) ->
+    {
+        if (!(itemOwner.level() instanceof ServerLevel serverLevel) || damageInfo == null || damageInfo.otherEntity() == null) {return;}
+        if (itemOwner instanceof Player player && !player.mayBuild()) {return;}
+        //getKnownMovement : server side, player delta movement is not updated, known movement is the last movement sent by the client
+        float verticalSpeed = (float) Math.abs(itemOwner.getKnownMovement().y);
+        float radius = Math.min(FIRE_DISC_MAX_RADIUS, FIRE_DISC_BASE_RADIUS + verticalSpeed * FIRE_DISC_RADIUS_PER_VERTICAL_SPEED);
+        placeFireDisc(serverLevel, itemOwner, damageInfo.otherEntity(), radius);
+    });
+
+    //places fire on every free spot of a disc centered on center entity, except right where the item owner will land
+    private static void placeFireDisc(ServerLevel level, LivingEntity itemOwner, Entity center, float radius)
+    {
+        BlockPos centerPos = center.blockPosition();
+        int intRadius = Mth.ceil(radius);
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        for (int dx = -intRadius; dx <= intRadius; dx++)
+        {
+            for (int dz = -intRadius; dz <= intRadius; dz++)
+            {
+                if (dx * dx + dz * dz > radius * radius) {continue;}
+                double ownerDistX = centerPos.getX() + dx + 0.5D - itemOwner.getX(), ownerDistZ = centerPos.getZ() + dz + 0.5D - itemOwner.getZ();
+                if (ownerDistX * ownerDistX + ownerDistZ * ownerDistZ < 2.25D) {continue;}
+
+                //searching the highest free spot near center height where fire can stay
+                for (int dy = 1; dy >= -2; dy--)
+                {
+                    pos.set(centerPos.getX() + dx, centerPos.getY() + dy, centerPos.getZ() + dz);
+                    if (!level.getBlockState(pos).isAir()) {continue;}
+                    BlockState fireState = BaseFireBlock.getState(level, pos);
+                    if (fireState.canSurvive(level, pos)) {level.setBlock(pos, fireState, Block.UPDATE_ALL_IMMEDIATE); break;}
+                }
+            }
+        }
+        level.sendParticles(ParticleTypes.FLAME, center.getX(), center.getY() + 0.2D, center.getZ(), (int) (radius * radius * 6), radius / 2, 0.1D, radius / 2, 0.05D);
+        level.playSound(null, center.getX(), center.getY(), center.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 0.7F + level.getRandom().nextFloat() * 0.2F);
+    }
+
     private static final SideEffectModule.Cooldown NETHERIAN_KING_SWORD_COOLDOWN = SideEffectModule.Cooldown.builder().of(((itemOwner) -> EntityHelper.hasFullArsonistStuff(itemOwner) ? 300 : 600));
 
     private static final SideEffectModule.Cooldown LIGHT_WEAPON_COOLDOWN = SideEffectModule.Cooldown.builder().of(((itemOwner) -> EntityHelper.hasFullLunaticStuff(itemOwner) ? 80 : 160));
@@ -163,6 +210,8 @@ public class AerialHellItemAbilities
     private static final ConditionModule OTHER_IS_NOT_SHADOW_IMMUNE = OTHER_IS_SHADOW_IMMUNE.opposite();
     private static final ConditionModule OTHER_IS_LIGHT_ENTITY = ConditionModule.otherEntityCondition(EntityHelper::isLightEntity);
     private static final ConditionModule OTHER_IS_NOT_LIGHT_ENTITY = OTHER_IS_LIGHT_ENTITY.opposite();
+    private static final ConditionModule IS_SMASH_ATTACKING = ConditionModule.itemOwnerCondition(MaceItem::canSmashAttack);
+    private static final ConditionModule IS_DIRECT_HIT = new ConditionModule((stack, itemOwner, equipmentSlot, usingItemInfo, damageInfo, miningInfo) -> damageInfo != null && damageInfo.damageSource() != null && damageInfo.damageSource().getDirectEntity() == itemOwner);
 
     private static final ConditionModule.OwnerHasItemInInventory.Builder OWNER_HAS_ITEM = ConditionModule.OwnerHasItemInInventory.builder();
     private static final ConditionModule.TicksUsed.Builder TICKS_USED = ConditionModule.TicksUsed.builder();
@@ -552,6 +601,15 @@ public class AerialHellItemAbilities
                     .addActions(MULTIPLY_MINING_SPEED.by((itemOwner, state) -> itemOwner.isOnFire() ? 2.0F : 1.0F))
                     .build()
             ).build();
+
+    //smash attack (falling hit) only, to use before ARSONIST_TOOL in an AbilitySelector : regular hits fall back to ARSONIST_TOOL
+    public static final ItemAbility ARSONIST_MACE = ItemAbility.builder()
+            .setDescId("arsonist_mace")
+            .addOnDealDamageModules(ModuleList.builder()
+                    .addActions(FIRE_DISC_AROUND_OTHER, IGNITE_OTHER, MULTIPLY_DAMAGE.by(itemOwner -> itemOwner.isOnFire() ? 1.5F : 1.0F, TestTarget.ITEM_OWNER))
+                    .addConditions(IN_MAIN_HAND, IS_DIRECT_HIT, IS_SMASH_ATTACKING)
+                    .build())
+            .build();
 
     public static final ItemAbility MINE_STONE_FAST = ItemAbility.builder()
             .setDescId("mine_stone_fast")

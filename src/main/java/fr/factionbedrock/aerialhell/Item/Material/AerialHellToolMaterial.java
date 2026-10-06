@@ -70,6 +70,15 @@ public class AerialHellToolMaterial extends ExtraAttributeModifiersMaterial
                 .component(DataComponents.WEAPON, new Weapon(1));
     }
 
+    //same components as vanilla mace (see Items.MACE), attack damage includes material attack damage bonus
+    public AerialHellItem.Properties applyMaceProperties(AerialHellItem.Properties properties, float attackDamage, float attackSpeed, AttributeEntryList additionalAttributes)
+    {
+        return (AerialHellItem.Properties) this.applyCommonProperties(properties)
+                .component(DataComponents.TOOL, new Tool(List.of(), 1.0F, 2, false))
+                .attributes(this.createAttributes(attackDamage, attackSpeed, additionalAttributes))
+                .component(DataComponents.WEAPON, new Weapon(1));
+    }
+
     //vanilla spear properties (durability, repair, enchantability, kinetic & piercing weapon components, attributes) using this material
     public AerialHellItem.Properties applySpearProperties(AerialHellItem.Properties properties, SpearStats stats)
     {

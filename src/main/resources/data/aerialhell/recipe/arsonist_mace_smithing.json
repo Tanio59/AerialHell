@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": "minecraft:mace",
+  "addition": "aerialhell:arsonist_ingot",
+  "result": {
+    "id": "aerialhell:arsonist_mace"
+  },
+  "template": "aerialhell:arsonist_upgrade_smithing_template"
+}

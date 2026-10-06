@@ -954,6 +954,8 @@ public class AerialHellItems
     public static final DeferredItem<Item> LUNATIC_SPEAR = ITEMS.register(Keys.LUNATIC_SPEAR.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.LUNATIC_SPEAR).spear(AerialHellToolMaterials.LUNATIC, SpearStats.NETHERITE).rarity(AerialHellRarities.LEGENDARY.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.LUNAR_TOOL))));
     public static final DeferredItem<Item> ARSONIST_SPEAR = ITEMS.register(Keys.ARSONIST_SPEAR.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.ARSONIST_SPEAR).spear(AerialHellToolMaterials.ARSONIST, SpearStats.NETHERITE).fireResistant().rarity(AerialHellRarities.MYTHICAL.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.ARSONIST_TOOL))));
 
+    public static final DeferredItem<Item> ARSONIST_MACE = ITEMS.register(Keys.ARSONIST_MACE.identifier().getPath(), () -> new ArsonistMaceItem(new AerialHellItem.Properties().setId(Keys.ARSONIST_MACE).mace(AerialHellToolMaterials.ARSONIST, 1.0F, -3.4F).fireResistant().rarity(AerialHellRarities.MYTHICAL.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.ARSONIST_MACE).nextAbility(AerialHellItemAbilities.ARSONIST_TOOL))));
+
     public static final DeferredItem<Item> FORGOTTEN_BATTLE_TRIDENT = ITEMS.register(Keys.FORGOTTEN_BATTLE_TRIDENT.identifier().getPath(), () -> new AerialHellItem(new AerialHellItem.Properties().setId(Keys.FORGOTTEN_BATTLE_TRIDENT).sword(AerialHellToolMaterials.VOLUCITE, 3, -2.9F, new AttributeEntryList().add(AttributeEntry.movementSpeed(0.2F)).add(AttributeEntry.entityInteractionRange(2.0F))).durability(1000).rarity(AerialHellRarities.LEGENDARY.getValue()).abilitySelector(AbilitySelector.of(AerialHellItemAbilities.FORGOTTEN_BATTLE_TRIDENT))));
 
     //armor
@@ -1939,6 +1941,8 @@ public class AerialHellItems
         public static final ResourceKey<Item> VOLUCITE_SPEAR = createKey("volucite_spear");
         public static final ResourceKey<Item> LUNATIC_SPEAR = createKey("lunatic_spear");
         public static final ResourceKey<Item> ARSONIST_SPEAR = createKey("arsonist_spear");
+
+        public static final ResourceKey<Item> ARSONIST_MACE = createKey("arsonist_mace");
 
         public static final ResourceKey<Item> FORGOTTEN_BATTLE_TRIDENT = createKey("forgotten_battle_trident");
 
