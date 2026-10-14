@@ -1,6 +1,5 @@
 package fr.factionbedrock.aerialhell.Block.Furnaces;
 
-import com.mojang.serialization.MapCodec;
 import fr.factionbedrock.aerialhell.Client.Registry.AerialHellParticleTypes;
 import fr.factionbedrock.aerialhell.BlockEntity.OscillatorBlockEntity;
 import fr.factionbedrock.aerialhell.Registry.AerialHellBlockEntities;
@@ -24,14 +23,10 @@ import org.joml.Vector3d;
 
 public class OscillatorBlock extends AbstractAerialHellFurnaceBlock
 {
-	public static final MapCodec<OscillatorBlock> CODEC = simpleCodec(OscillatorBlock::new);
-
 	public OscillatorBlock(BlockBehaviour.Properties properties)
 	{
 		super(properties);
 	}
-
-	@Override protected @NotNull MapCodec<? extends AbstractFurnaceBlock> codec() {return CODEC;}
 
 	@Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {return new OscillatorBlockEntity(pos, state);}
 

@@ -1,9 +1,15 @@
 {
   "parent": "aerialhell:story/kill_mud_boss",
   "display": {
-    "icon": {"id": "aerialhell:light_lunatic_stone"},
-    "title": {"translate": "advancements.story.enter_lunatic_dungeon.title"},
-    "description": {"translate": "advancements.story.enter_lunatic_dungeon.desc"},
+    "icon": {
+      "id": "aerialhell:light_lunatic_stone"
+    },
+    "title": {
+      "translate": "advancements.story.enter_lunatic_dungeon.title"
+    },
+    "description": {
+      "translate": "advancements.story.enter_lunatic_dungeon.desc"
+    },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
@@ -13,17 +19,25 @@
     "in_lunatic_temple": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {"location": {"structures": "aerialhell:lunatic_temple"}}
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "location": {
+              "structures": "aerialhell:lunatic_temple"
+            }
           }
-        ]
+        }
       }
     }
   },
-  "requirements": [["in_lunatic_temple"]],
-  "rewards": {"function": "aerialhell:advancement_story_sound"},
+  "requirements": [
+    [
+      "in_lunatic_temple"
+    ]
+  ],
+  "rewards": {
+    "function": "aerialhell:advancement_story_sound"
+  },
   "sends_telemetry_event": false
 }

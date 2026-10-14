@@ -1,9 +1,15 @@
 {
   "parent": "aerialhell:story/kill_lunatic_boss",
   "display": {
-    "icon": {"id": "aerialhell:light_golden_nether_bricks"},
-    "title": {"translate": "advancements.story.enter_golden_nether_dungeon.title"},
-    "description": {"translate": "advancements.story.enter_golden_nether_dungeon.desc"},
+    "icon": {
+      "id": "aerialhell:light_golden_nether_bricks"
+    },
+    "title": {
+      "translate": "advancements.story.enter_golden_nether_dungeon.title"
+    },
+    "description": {
+      "translate": "advancements.story.enter_golden_nether_dungeon.desc"
+    },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
@@ -13,17 +19,25 @@
     "in_golden_nether_prison": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {"location": {"structures": "aerialhell:golden_nether_prison"}}
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "location": {
+              "structures": "aerialhell:golden_nether_prison"
+            }
           }
-        ]
+        }
       }
     }
   },
-  "requirements": [["in_golden_nether_prison"]],
-  "rewards": {"function": "aerialhell:advancement_story_sound"},
+  "requirements": [
+    [
+      "in_golden_nether_prison"
+    ]
+  ],
+  "rewards": {
+    "function": "aerialhell:advancement_story_sound"
+  },
   "sends_telemetry_event": false
 }

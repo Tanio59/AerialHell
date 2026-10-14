@@ -4,7 +4,7 @@ import fr.factionbedrock.aerialhell.Registry.AerialHellBlocks;
 import fr.factionbedrock.aerialhell.Util.FeatureHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import fr.factionbedrock.aerialhell.World.Features.Util.FeaturePlaceContext;
 import org.joml.Vector3f;
 
 import java.util.function.Supplier;
@@ -52,7 +52,7 @@ public class SplineKnotsDeformedStraightLine extends StraightLine implements Spl
             i++;
         }
         if (generateDebug) {this.generateDebug();}
-        return new BlockPos(placementPos);
+        return placementPos.immutable();
     }
 
     @Override public void generateDebug()

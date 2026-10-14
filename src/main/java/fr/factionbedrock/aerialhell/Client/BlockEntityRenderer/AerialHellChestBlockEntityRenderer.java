@@ -123,7 +123,12 @@ public class AerialHellChestBlockEntityRenderer extends ChestRenderer<AerialHell
 		boolean isGhost = spriteId.texture() == AerialHellChestMaterials.GHOST_BOAT_LEFT.sprite() || spriteId.texture() == AerialHellChestMaterials.GHOST_BOAT_RIGHT.sprite() || spriteId.texture() == AerialHellChestMaterials.GHOST_BOAT_SINGLE.sprite();
 		RenderType rendertype = isGhost ? spriteId.renderType(RenderTypes::entityTranslucent) : spriteId.renderType(RenderTypes::entityCutout);
 		TextureAtlasSprite textureatlassprite = this.sprites.get(spriteId);
-		submitNodeCollector.submitModel(model, openess, poseStack, rendertype, renderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, textureatlassprite, 0, renderState.breakProgress);
+		submitNodeCollector.submitModel(model, openess, poseStack, rendertype, renderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, textureatlassprite, 0);
+		//since 26.3, crumbling overlay is submitted separately (copy of vanilla ChestRenderer submit)
+		if (renderState.breakProgress != null)
+		{
+			submitNodeCollector.order(1).submitCrumblingOverlay(model, openess, poseStack, rendertype, renderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, renderState.breakProgress);
+		}
 		poseStack.popPose();
 	}
 }

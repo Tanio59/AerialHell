@@ -24,9 +24,12 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.Compostable;
 import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -34,39 +37,47 @@ import static fr.factionbedrock.aerialhell.AerialHell.MODID;
 
 public class AerialHellItems
 {
-    public static void registerCompostableItems()
+    //since 26.3, compostable items are defined by the minecraft:compostable item component, referencing a context int provider (see data/aerialhell/context_int_provider/compostable)
+    public static void registerCompostableItems(ModifyDefaultComponentsEvent event)
     {
-        ComposterBlock.COMPOSTABLES.put(STELLAR_GRASS.get().asItem(), 0.1F);
-        ComposterBlock.COMPOSTABLES.put(STELLAR_TALL_GRASS.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(STELLAR_GRASS_BALL.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(STELLAR_DEAD_BUSH.get().asItem(), 0.1F);
-        ComposterBlock.COMPOSTABLES.put(BLUE_FLOWER.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(BLACK_ROSE.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(BELLFLOWER.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(AERIAL_BERRY.get().asItem(), 0.5F);
-        ComposterBlock.COMPOSTABLES.put(VIBRANT_AERIAL_BERRY.get().asItem(), 0.85F);
-        ComposterBlock.COMPOSTABLES.put(FROZEN_AERIAL_BERRY.get().asItem(), 0.85F);
-        ComposterBlock.COMPOSTABLES.put(AERIAL_BERRY_SEEDS.get().asItem(), 0.1F);
-        ComposterBlock.COMPOSTABLES.put(VIBRANT_AERIAL_BERRY_SEEDS.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(COPPER_PINE_CONE.get().asItem(), 0.5F);
-        ComposterBlock.COMPOSTABLES.put(AERIAL_TREE_LEAVES.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(AERIAL_TREE_SAPLING.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(GOLDEN_BEECH_LEAVES.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(GOLDEN_BEECH_SAPLING.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(COPPER_PINE_LEAVES.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(COPPER_PINE_SAPLING.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(LAPIS_ROBINIA_SAPLING.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(LAPIS_ROBINIA_LEAVES.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(SHADOW_PINE_SAPLING.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(SHADOW_PINE_LEAVES.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(STELLAR_JUNGLE_TREE_SAPLING.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(STELLAR_JUNGLE_TREE_LEAVES.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(CORTINARIUS_VIOLACEUS.get().asItem(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(GIANT_CORTINARIUS_VIOLACEUS_CAP_BLOCK.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(SKY_CACTUS_FIBER.get().asItem(), 0.1F);
-        ComposterBlock.COMPOSTABLES.put(SKY_CACTUS.get().asItem(), 0.4F);
-        ComposterBlock.COMPOSTABLES.put(VIBRANT_SKY_CACTUS_FIBER.get().asItem(), 0.2F);
-        ComposterBlock.COMPOSTABLES.put(VIBRANT_SKY_CACTUS.get().asItem(), 0.8F);
+        compostable(event, STELLAR_GRASS, 0.1F);
+        compostable(event, STELLAR_TALL_GRASS, 0.2F);
+        compostable(event, STELLAR_GRASS_BALL, 0.2F);
+        compostable(event, STELLAR_DEAD_BUSH, 0.1F);
+        compostable(event, BLUE_FLOWER, 0.2F);
+        compostable(event, BLACK_ROSE, 0.2F);
+        compostable(event, BELLFLOWER, 0.2F);
+        compostable(event, AERIAL_BERRY, 0.5F);
+        compostable(event, VIBRANT_AERIAL_BERRY, 0.85F);
+        compostable(event, FROZEN_AERIAL_BERRY, 0.85F);
+        compostable(event, AERIAL_BERRY_SEEDS, 0.1F);
+        compostable(event, VIBRANT_AERIAL_BERRY_SEEDS, 0.2F);
+        compostable(event, COPPER_PINE_CONE, 0.5F);
+        compostable(event, AERIAL_TREE_LEAVES, 0.3F);
+        compostable(event, AERIAL_TREE_SAPLING, 0.3F);
+        compostable(event, GOLDEN_BEECH_LEAVES, 0.3F);
+        compostable(event, GOLDEN_BEECH_SAPLING, 0.3F);
+        compostable(event, COPPER_PINE_LEAVES, 0.3F);
+        compostable(event, COPPER_PINE_SAPLING, 0.3F);
+        compostable(event, LAPIS_ROBINIA_SAPLING, 0.3F);
+        compostable(event, LAPIS_ROBINIA_LEAVES, 0.3F);
+        compostable(event, SHADOW_PINE_SAPLING, 0.3F);
+        compostable(event, SHADOW_PINE_LEAVES, 0.3F);
+        compostable(event, STELLAR_JUNGLE_TREE_SAPLING, 0.3F);
+        compostable(event, STELLAR_JUNGLE_TREE_LEAVES, 0.3F);
+        compostable(event, CORTINARIUS_VIOLACEUS, 0.3F);
+        compostable(event, GIANT_CORTINARIUS_VIOLACEUS_CAP_BLOCK, 0.2F);
+        compostable(event, SKY_CACTUS_FIBER, 0.1F);
+        compostable(event, SKY_CACTUS, 0.4F);
+        compostable(event, VIBRANT_SKY_CACTUS_FIBER, 0.2F);
+        compostable(event, VIBRANT_SKY_CACTUS, 0.8F);
+    }
+
+    //the chance to add a layer is given by aerialhell:compostable/chance_<chance * 100> context int provider
+    private static void compostable(ModifyDefaultComponentsEvent event, ItemLike item, float chance)
+    {
+        ResourceKey<ContextIntProvider> layers = ResourceKey.create(Registries.CONTEXT_INT_PROVIDER, Identifier.fromNamespaceAndPath(MODID, "compostable/chance_" + Math.round(chance * 100)));
+        event.modify(item, (components, context, modifiedItem) -> components.set(DataComponents.COMPOSTABLE, new Compostable(layers)));
     }
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
@@ -710,24 +721,24 @@ public class AerialHellItems
     public static final DeferredItem<Item> MAGMATIC_GEL_STAIRS = ITEMS.register(Keys.MAGMATIC_GEL_STAIRS.identifier().getPath(), () -> new BlockItem(AerialHellBlocks.MAGMATIC_GEL_STAIRS.get(), new Item.Properties().setId(Keys.MAGMATIC_GEL_STAIRS).useBlockDescriptionPrefix()));
 
     //signs
-    public static final DeferredItem<Item> AERIAL_TREE_SIGN = ITEMS.register(Keys.AERIAL_TREE_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.AERIAL_TREE_STANDING_SIGN.get(), AerialHellBlocks.AERIAL_TREE_WALL_SIGN.get(), new Item.Properties().setId(Keys.AERIAL_TREE_SIGN).useBlockDescriptionPrefix()));
-    public static final DeferredItem<Item> GOLDEN_BEECH_SIGN = ITEMS.register(Keys.GOLDEN_BEECH_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.GOLDEN_BEECH_STANDING_SIGN.get(), AerialHellBlocks.GOLDEN_BEECH_WALL_SIGN.get(), new Item.Properties().setId(Keys.GOLDEN_BEECH_SIGN).useBlockDescriptionPrefix()));
-    public static final DeferredItem<Item> COPPER_PINE_SIGN = ITEMS.register(Keys.COPPER_PINE_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.COPPER_PINE_STANDING_SIGN.get(), AerialHellBlocks.COPPER_PINE_WALL_SIGN.get(), new Item.Properties().setId(Keys.COPPER_PINE_SIGN).useBlockDescriptionPrefix()));
-    public static final DeferredItem<Item> LAPIS_ROBINIA_SIGN = ITEMS.register(Keys.LAPIS_ROBINIA_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.LAPIS_ROBINIA_STANDING_SIGN.get(), AerialHellBlocks.LAPIS_ROBINIA_WALL_SIGN.get(), new Item.Properties().setId(Keys.LAPIS_ROBINIA_SIGN).useBlockDescriptionPrefix()));
-    public static final DeferredItem<Item> SHADOW_PINE_SIGN = ITEMS.register(Keys.SHADOW_PINE_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.SHADOW_PINE_STANDING_SIGN.get(), AerialHellBlocks.SHADOW_PINE_WALL_SIGN.get(), new Item.Properties().setId(Keys.SHADOW_PINE_SIGN).useBlockDescriptionPrefix()));
-    public static final DeferredItem<Item> STELLAR_JUNGLE_TREE_SIGN = ITEMS.register(Keys.STELLAR_JUNGLE_TREE_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.STELLAR_JUNGLE_TREE_STANDING_SIGN.get(), AerialHellBlocks.STELLAR_JUNGLE_TREE_WALL_SIGN.get(), new Item.Properties().setId(Keys.STELLAR_JUNGLE_TREE_SIGN).useBlockDescriptionPrefix()));
-    public static final DeferredItem<Item> SKY_CACTUS_FIBER_SIGN = ITEMS.register(Keys.SKY_CACTUS_FIBER_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.SKY_CACTUS_FIBER_STANDING_SIGN.get(), AerialHellBlocks.SKY_CACTUS_FIBER_WALL_SIGN.get(), new Item.Properties().setId(Keys.SKY_CACTUS_FIBER_SIGN).useBlockDescriptionPrefix()));
-    public static final DeferredItem<Item> GRAY_SHROOM_SIGN = ITEMS.register(Keys.GRAY_SHROOM_SIGN.identifier().getPath(), () -> new SignItem(AerialHellBlocks.GRAY_SHROOM_STANDING_SIGN.get(), AerialHellBlocks.GRAY_SHROOM_WALL_SIGN.get(), new Item.Properties().setId(Keys.GRAY_SHROOM_SIGN).useBlockDescriptionPrefix()));
+    public static final DeferredItem<Item> AERIAL_TREE_SIGN = ITEMS.register(Keys.AERIAL_TREE_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.AERIAL_TREE_STANDING_SIGN.get(), AerialHellBlocks.AERIAL_TREE_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.AERIAL_TREE_SIGN).useBlockDescriptionPrefix().signText()));
+    public static final DeferredItem<Item> GOLDEN_BEECH_SIGN = ITEMS.register(Keys.GOLDEN_BEECH_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.GOLDEN_BEECH_STANDING_SIGN.get(), AerialHellBlocks.GOLDEN_BEECH_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.GOLDEN_BEECH_SIGN).useBlockDescriptionPrefix().signText()));
+    public static final DeferredItem<Item> COPPER_PINE_SIGN = ITEMS.register(Keys.COPPER_PINE_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.COPPER_PINE_STANDING_SIGN.get(), AerialHellBlocks.COPPER_PINE_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.COPPER_PINE_SIGN).useBlockDescriptionPrefix().signText()));
+    public static final DeferredItem<Item> LAPIS_ROBINIA_SIGN = ITEMS.register(Keys.LAPIS_ROBINIA_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.LAPIS_ROBINIA_STANDING_SIGN.get(), AerialHellBlocks.LAPIS_ROBINIA_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.LAPIS_ROBINIA_SIGN).useBlockDescriptionPrefix().signText()));
+    public static final DeferredItem<Item> SHADOW_PINE_SIGN = ITEMS.register(Keys.SHADOW_PINE_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.SHADOW_PINE_STANDING_SIGN.get(), AerialHellBlocks.SHADOW_PINE_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.SHADOW_PINE_SIGN).useBlockDescriptionPrefix().signText()));
+    public static final DeferredItem<Item> STELLAR_JUNGLE_TREE_SIGN = ITEMS.register(Keys.STELLAR_JUNGLE_TREE_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.STELLAR_JUNGLE_TREE_STANDING_SIGN.get(), AerialHellBlocks.STELLAR_JUNGLE_TREE_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.STELLAR_JUNGLE_TREE_SIGN).useBlockDescriptionPrefix().signText()));
+    public static final DeferredItem<Item> SKY_CACTUS_FIBER_SIGN = ITEMS.register(Keys.SKY_CACTUS_FIBER_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.SKY_CACTUS_FIBER_STANDING_SIGN.get(), AerialHellBlocks.SKY_CACTUS_FIBER_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.SKY_CACTUS_FIBER_SIGN).useBlockDescriptionPrefix().signText()));
+    public static final DeferredItem<Item> GRAY_SHROOM_SIGN = ITEMS.register(Keys.GRAY_SHROOM_SIGN.identifier().getPath(), () -> new StandingAndWallBlockItem(AerialHellBlocks.GRAY_SHROOM_STANDING_SIGN.get(), AerialHellBlocks.GRAY_SHROOM_WALL_SIGN.get(), Direction.DOWN, new Item.Properties().setId(Keys.GRAY_SHROOM_SIGN).useBlockDescriptionPrefix().signText()));
 
     //hanging signs
-    public static final DeferredItem<Item> AERIAL_TREE_HANGING_SIGN = ITEMS.register(Keys.AERIAL_TREE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.AERIAL_TREE_HANGING_SIGN.get(), AerialHellBlocks.AERIAL_TREE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.AERIAL_TREE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
-    public static final DeferredItem<Item> GOLDEN_BEECH_HANGING_SIGN = ITEMS.register(Keys.GOLDEN_BEECH_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.GOLDEN_BEECH_HANGING_SIGN.get(), AerialHellBlocks.GOLDEN_BEECH_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.GOLDEN_BEECH_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
-    public static final DeferredItem<Item> COPPER_PINE_HANGING_SIGN = ITEMS.register(Keys.COPPER_PINE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.COPPER_PINE_HANGING_SIGN.get(), AerialHellBlocks.COPPER_PINE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.COPPER_PINE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
-    public static final DeferredItem<Item> LAPIS_ROBINIA_HANGING_SIGN = ITEMS.register(Keys.LAPIS_ROBINIA_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.LAPIS_ROBINIA_HANGING_SIGN.get(), AerialHellBlocks.LAPIS_ROBINIA_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.LAPIS_ROBINIA_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
-    public static final DeferredItem<Item> SHADOW_PINE_HANGING_SIGN = ITEMS.register(Keys.SHADOW_PINE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.SHADOW_PINE_HANGING_SIGN.get(), AerialHellBlocks.SHADOW_PINE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.SHADOW_PINE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
-    public static final DeferredItem<Item> STELLAR_JUNGLE_TREE_HANGING_SIGN = ITEMS.register(Keys.STELLAR_JUNGLE_TREE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.STELLAR_JUNGLE_TREE_HANGING_SIGN.get(), AerialHellBlocks.STELLAR_JUNGLE_TREE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.STELLAR_JUNGLE_TREE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
-    public static final DeferredItem<Item> SKY_CACTUS_FIBER_HANGING_SIGN = ITEMS.register(Keys.SKY_CACTUS_FIBER_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.SKY_CACTUS_FIBER_HANGING_SIGN.get(), AerialHellBlocks.SKY_CACTUS_FIBER_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.SKY_CACTUS_FIBER_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
-    public static final DeferredItem<Item> GRAY_SHROOM_HANGING_SIGN = ITEMS.register(Keys.GRAY_SHROOM_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.GRAY_SHROOM_HANGING_SIGN.get(), AerialHellBlocks.GRAY_SHROOM_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.GRAY_SHROOM_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16)));
+    public static final DeferredItem<Item> AERIAL_TREE_HANGING_SIGN = ITEMS.register(Keys.AERIAL_TREE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.AERIAL_TREE_HANGING_SIGN.get(), AerialHellBlocks.AERIAL_TREE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.AERIAL_TREE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
+    public static final DeferredItem<Item> GOLDEN_BEECH_HANGING_SIGN = ITEMS.register(Keys.GOLDEN_BEECH_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.GOLDEN_BEECH_HANGING_SIGN.get(), AerialHellBlocks.GOLDEN_BEECH_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.GOLDEN_BEECH_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
+    public static final DeferredItem<Item> COPPER_PINE_HANGING_SIGN = ITEMS.register(Keys.COPPER_PINE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.COPPER_PINE_HANGING_SIGN.get(), AerialHellBlocks.COPPER_PINE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.COPPER_PINE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
+    public static final DeferredItem<Item> LAPIS_ROBINIA_HANGING_SIGN = ITEMS.register(Keys.LAPIS_ROBINIA_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.LAPIS_ROBINIA_HANGING_SIGN.get(), AerialHellBlocks.LAPIS_ROBINIA_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.LAPIS_ROBINIA_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
+    public static final DeferredItem<Item> SHADOW_PINE_HANGING_SIGN = ITEMS.register(Keys.SHADOW_PINE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.SHADOW_PINE_HANGING_SIGN.get(), AerialHellBlocks.SHADOW_PINE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.SHADOW_PINE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
+    public static final DeferredItem<Item> STELLAR_JUNGLE_TREE_HANGING_SIGN = ITEMS.register(Keys.STELLAR_JUNGLE_TREE_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.STELLAR_JUNGLE_TREE_HANGING_SIGN.get(), AerialHellBlocks.STELLAR_JUNGLE_TREE_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.STELLAR_JUNGLE_TREE_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
+    public static final DeferredItem<Item> SKY_CACTUS_FIBER_HANGING_SIGN = ITEMS.register(Keys.SKY_CACTUS_FIBER_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.SKY_CACTUS_FIBER_HANGING_SIGN.get(), AerialHellBlocks.SKY_CACTUS_FIBER_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.SKY_CACTUS_FIBER_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
+    public static final DeferredItem<Item> GRAY_SHROOM_HANGING_SIGN = ITEMS.register(Keys.GRAY_SHROOM_HANGING_SIGN.identifier().getPath(), () -> new HangingSignItem(AerialHellBlocks.GRAY_SHROOM_HANGING_SIGN.get(), AerialHellBlocks.GRAY_SHROOM_WALL_HANGING_SIGN.get(), new Item.Properties().setId(Keys.GRAY_SHROOM_HANGING_SIGN).useBlockDescriptionPrefix().stacksTo(16).signText()));
 
     //crafting tables
     public static final DeferredItem<Item> AERIAL_TREE_CRAFTING_TABLE = ITEMS.register(Keys.AERIAL_TREE_CRAFTING_TABLE.identifier().getPath(), () -> new BurnableBlockItem(AerialHellBlocks.AERIAL_TREE_CRAFTING_TABLE.get(), new Item.Properties().setId(Keys.AERIAL_TREE_CRAFTING_TABLE).useBlockDescriptionPrefix(), 300));

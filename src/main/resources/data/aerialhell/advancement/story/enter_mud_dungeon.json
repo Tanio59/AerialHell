@@ -1,9 +1,15 @@
 {
   "parent": "aerialhell:classic/ruby_tools",
   "display": {
-    "icon": {"id": "aerialhell:light_mud_bricks"},
-    "title": {"translate": "advancements.story.enter_mud_dungeon.title"},
-    "description": {"translate": "advancements.story.enter_mud_dungeon.desc"},
+    "icon": {
+      "id": "aerialhell:light_mud_bricks"
+    },
+    "title": {
+      "translate": "advancements.story.enter_mud_dungeon.title"
+    },
+    "description": {
+      "translate": "advancements.story.enter_mud_dungeon.desc"
+    },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
@@ -13,17 +19,25 @@
     "in_mud_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {"location": {"structures": "aerialhell:mud_dungeon"}}
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "location": {
+              "structures": "aerialhell:mud_dungeon"
+            }
           }
-        ]
+        }
       }
     }
   },
-  "requirements": [["in_mud_dungeon"]],
-  "rewards": {"function": "aerialhell:advancement_story_sound"},
+  "requirements": [
+    [
+      "in_mud_dungeon"
+    ]
+  ],
+  "rewards": {
+    "function": "aerialhell:advancement_story_sound"
+  },
   "sends_telemetry_event": false
 }

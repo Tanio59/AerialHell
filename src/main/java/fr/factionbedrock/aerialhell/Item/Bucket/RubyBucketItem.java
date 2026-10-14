@@ -1,5 +1,6 @@
 package fr.factionbedrock.aerialhell.Item.Bucket;
 
+import net.minecraft.util.Prediction;
 import fr.factionbedrock.aerialhell.Registry.AerialHellBlocks;
 import fr.factionbedrock.aerialhell.Registry.AerialHellFluids;
 import fr.factionbedrock.aerialhell.Registry.AerialHellItems;
@@ -75,7 +76,7 @@ public class RubyBucketItem extends Item
         if (emptyBucket.getCount() > 1)
         {
             emptyBucket.shrink(1);
-            if (!player.getInventory().add(filledBucket)) {player.drop(filledBucket, false);}
+            if (!player.getInventory().add(filledBucket)) {player.drop(filledBucket, false, Prediction.PREDICTED);}
             return InteractionResult.SUCCESS;
         }
         else

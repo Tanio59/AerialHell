@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import fr.factionbedrock.aerialhell.World.Features.Util.FeaturePlaceContext;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -182,7 +182,7 @@ public class StraightLine
             }
             else //if (this.generationMode == GenerationMode.SIMULATE)
             {
-                BlockPos blockpos = new BlockPos(pos);
+                BlockPos blockpos = pos.immutable();
                 if (!generatePosList.contains(blockpos)) {generatePosList.add(blockpos);}
             }
             return true;

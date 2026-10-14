@@ -1,6 +1,5 @@
 package fr.factionbedrock.aerialhell.Block.Furnaces;
 
-import com.mojang.serialization.MapCodec;
 import fr.factionbedrock.aerialhell.BlockEntity.FreezerBlockEntity;
 import fr.factionbedrock.aerialhell.Client.Registry.AerialHellParticleTypes;
 import fr.factionbedrock.aerialhell.Registry.AerialHellBlockEntities;
@@ -25,14 +24,10 @@ import org.joml.Vector3d;
 
 public class FreezerBlock extends AbstractAerialHellFurnaceBlock
 {
-	public static final MapCodec<FreezerBlock> CODEC = simpleCodec(FreezerBlock::new);
-
 	public FreezerBlock(BlockBehaviour.Properties properties)
 	{
 		super(properties);
 	}
-
-	@Override protected @NotNull MapCodec<? extends AbstractFurnaceBlock> codec() {return CODEC;}
 
 	@Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {return new FreezerBlockEntity(pos, state);}
 	
